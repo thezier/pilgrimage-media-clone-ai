@@ -10,6 +10,20 @@
   "name": "pilgrimage-media-clone-ai",
   "compatibility_date": "2026-07-21",
 
+  // Declared here rather than clicked in the dashboard so the hostname lives in
+  // version control with everything else. Cloudflare creates the DNS record and
+  // manages the certificate itself — nothing to add by hand in the zone.
+  //
+  // Deliberately a subdomain, not the apex: pilgrimage.media still points at
+  // Squarespace, and this runs alongside it for comparison rather than
+  // replacing it.
+  "routes": [
+    {
+      "pattern": "new.pilgrimage.media",
+      "custom_domain": true
+    }
+  ],
+
   "assets": {
     "directory": "./site",
 
