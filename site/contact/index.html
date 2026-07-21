@@ -84,9 +84,17 @@
       <!-- ===== enquiry form ===== -->
       <section class="contact-form-section">
         <div class="contact-form-section__inner">
-          <!-- No action: this is a static site with no form backend yet. See
-               the note in the repo README about wiring it to a handler. -->
-          <form class="contact-form" id="enquiry">
+          <!-- Posts to the Worker at /api/contact. Works without JavaScript
+               (native POST → an HTML thank-you page); main.js enhances it to
+               submit in place. -->
+          <form class="contact-form" id="enquiry" action="/api/contact" method="post">
+            <!-- Honeypot: hidden from people, catnip for bots. A submission
+                 with this filled is dropped server-side. -->
+            <div class="hp-field" aria-hidden="true">
+              <label for="company">Company</label>
+              <input id="company" name="company" type="text" tabindex="-1" autocomplete="off" />
+            </div>
+
             <fieldset class="field-group">
               <legend>Name</legend>
               <div class="field-row">
@@ -159,6 +167,9 @@
             </div>
 
             <button class="btn btn-solid contact-form__submit" type="submit">Send</button>
+
+            <!-- Filled in by main.js after a fetch submit. -->
+            <p class="form-status" id="form-status" role="status" aria-live="polite" hidden></p>
           </form>
         </div>
       </section>

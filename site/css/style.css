@@ -726,6 +726,23 @@ body.menu-open { overflow: hidden; }
   margin-top: 0.5rem;
 }
 
+/* Honeypot — kept out of the layout and out of the accessibility tree, but not
+   display:none (some bots skip hidden fields; this stays "present"). */
+.hp-field {
+  position: absolute;
+  left: -9999px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.form-status {
+  margin-top: 0.5rem;
+  font-size: 14px;
+}
+.form-status.is-error {
+  color: #ff9d9d;
+}
+
 /* Accessible label that stays out of the visual design. */
 .visually-hidden {
   position: absolute;

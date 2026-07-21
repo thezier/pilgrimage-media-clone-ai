@@ -4,11 +4,22 @@
   // "build output directory" field, so the assets directory is declared here
   // instead.
   //
-  // There is deliberately no "main" entry: this is a static site with no Worker
-  // script, which is a supported configuration. Cloudflare serves the files in
-  // ./site directly from its edge.
+  // Mostly a static site. The one dynamic route is POST /api/contact, handled
+  // by this Worker; every other request falls through to the static assets
+  // below. Static files are still served directly from the edge without
+  // invoking the Worker — it only runs for requests that don't match a file.
   "name": "pilgrimage-media-clone-ai",
+  "main": "worker/contact.js",
   "compatibility_date": "2026-07-21",
+
+  // CONTACT_FROM is a public role address, fine to commit. RESEND_API_KEY
+  // (secret) AND CONTACT_TO (the inbox enquiries land in) are set in the
+  // dashboard — Workers & Pages → this project → Settings → Variables and
+  // Secrets — and deliberately NOT committed: this repo is public, and the
+  // delivery address shouldn't be scraped from source.
+  "vars": {
+    "CONTACT_FROM": "Pilgrimage Media <contact@pilgrimage.media>"
+  },
 
   // Declared here rather than clicked in the dashboard so the hostname lives in
   // version control with everything else. Cloudflare creates the DNS record and
@@ -26,6 +37,10 @@
 
   "assets": {
     "directory": "./site",
+
+    // Lets the Worker serve static files via env.ASSETS.fetch() for anything
+    // that isn't its API route.
+    "binding": "ASSETS",
 
     // Serve the nearest 404.html for unmatched paths. The alternative,
     // "single-page-application", would return 200 + index.html for every
