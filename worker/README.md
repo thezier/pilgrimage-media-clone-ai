@@ -13,18 +13,19 @@ thank-you page. A hidden honeypot field drops the obvious bots.
 Two settings live in the Cloudflare dashboard, **not** in this repo (it's public
 — the delivery address and the API key don't belong in source):
 
-**1. Verify `pilgrimagemedia.com` in Resend**
+**1. Verify `pilgrimage.media` in Resend**
 - Sign up at <https://resend.com> (free tier is ample for a contact form).
-- Add the domain `pilgrimagemedia.com`. Its DNS is already in Cloudflare, so add
+- Add the domain `pilgrimage.media`. Its DNS is already in Cloudflare, so add
   the records Resend shows you in that zone's Cloudflare dashboard.
-- **⚠️ Don't touch the existing Proton mail records.** `pilgrimagemedia.com`
-  already receives mail via Proton (a root `MX` → `protonmail.ch` and a root
-  `SPF` TXT). Resend's records are additive — a DKIM selector like
-  `resend._domainkey`, and its own `MX`/`SPF` on a `send.` subdomain — so they
-  don't collide. Just **add** what Resend gives you; do not edit or replace the
-  root `MX` or the existing root `SPF` record, or you'll break Proton email.
-- The **from** address is `contact@pilgrimagemedia.com` (committed default in
-  `CONTACT_FROM`), which lives on this verified domain.
+- `pilgrimage.media` has **no existing mail records**, so this is a clean add —
+  nothing to work around. (We deliberately use it rather than `pilgrimagemedia.com`,
+  which runs Proton mail: sending *from* the same domain the enquiry is delivered
+  *to*, but via Resend rather than Proton, is the pattern spam filters treat as
+  spoofing. Sending from a different domain sidesteps that, and it matches the
+  site the visitor used.)
+- The **from** address is `contact@pilgrimage.media` (committed default in
+  `CONTACT_FROM`). There's no real mailbox behind it — it's a notification
+  sender; replies go to the enquirer via `reply_to`.
 
 **2. Set the Worker's variables**
 Workers & Pages → `pilgrimage-media-clone-ai` → Settings → Variables and Secrets:

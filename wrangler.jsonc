@@ -18,7 +18,7 @@
   // Secrets — and deliberately NOT committed: this repo is public, and the
   // delivery address shouldn't be scraped from source.
   "vars": {
-    "CONTACT_FROM": "Pilgrimage Media <contact@pilgrimagemedia.com>"
+    "CONTACT_FROM": "Pilgrimage Media <contact@pilgrimage.media>"
   },
 
   // Declared here rather than clicked in the dashboard so the hostname lives in
