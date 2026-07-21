@@ -1,0 +1,30 @@
+{
+  "images": [
+    "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/89e074f7-48e4-4c4e-a5d6-66b3bd2604ee/topographic2.png?format=1500w",
+    "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/2d9fe28a-430b-4dd4-a593-bc239b6acf66/2025-03-Kalia-Fitness-218.jpg?format=500w",
+    "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/7db8a7f0-3fad-4372-afd9-25def62e5ffe/2055483-R1-E024.jpg?format=750w",
+    "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/7ffd5837-da84-4512-bb58-e3befc572f44/LauraHeikkila-20220420-104.jpg?format=300w",
+    "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/be5ed23f-2124-46d7-ae5c-be01fc89ddd1/2025-03-Kalia-Fitness-bg.jpg?format=1500w",
+    "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/d1da865c-151e-478f-bcff-071f9465c49c/2025-03-Kalia-Fitness-bg2.jpg?format=1500w",
+    ""
+  ],
+  "videos": [],
+  "bgImages": [
+    "url(\"https://assets.squarespace.com/universal/images-v6/damask/play-button.png\")"
+  ],
+  "favicons": [
+    {
+      "href": "https://assets.squarespace.com/universal/default-favicon.ico",
+      "sizes": ""
+    }
+  ],
+  "fontFiles": [
+    "https://file.squarespace-cdn.com/content/v2/namespaces/fonts/libraries/sqsp/assets/e5e749f1-48ba-4f00-a27f-f72a17c9a623/latin.woff2",
+    "https://file.squarespace-cdn.com/content/v2/namespaces/fonts/libraries/sqsp/assets/2595f273-26c7-4c0f-8037-efba863257d7/latin.woff2",
+    "https://file.squarespace-cdn.com/content/v2/namespaces/fonts/libraries/sqsp/assets/6a593813-ec24-462c-9f42-361b2f35d12b/latin.woff2",
+    "https://file.squarespace-cdn.com/content/v2/namespaces/fonts/libraries/sqsp/assets/922e9326-9778-4b7b-a6be-5087d7c0cc53/latin.woff2",
+    "https://file.squarespace-cdn.com/content/v2/namespaces/fonts/libraries/sqsp/assets/0db41cb1-eaec-41d6-90e2-2e8c37da2880/latin.woff2",
+    "https://file.squarespace-cdn.com/content/v2/namespaces/fonts/libraries/sqsp/assets/fa9015b8-d965-48b6-9327-6723eec80b55/latin.woff2"
+  ],
+  "description": ""
+}

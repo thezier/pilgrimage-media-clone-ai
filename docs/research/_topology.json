@@ -1,0 +1,259 @@
+[
+  {
+    "i": 0,
+    "id": "682ce02dc0c702098fd3e3ab",
+    "theme": "",
+    "rect": {
+      "top": 0,
+      "h": 1068
+    },
+    "sec": {
+      "bg": "rgba(0, 0, 0, 0)",
+      "marginTop": "0px",
+      "zIndex": "6",
+      "position": "relative",
+      "padding": "134.5px 0px 86.4px"
+    },
+    "border": {
+      "bg": "rgb(57, 57, 57)",
+      "bgImage": "none",
+      "position": "absolute",
+      "inset": "0px",
+      "clipPath": "url(\"#section-divider-682ce02dc0c702098fd3e3ab\")",
+      "zIndex": "auto"
+    },
+    "clipPoly": {
+      "tag": "path",
+      "points": null,
+      "d": "M2, 0.92 L2, 1 l0,0 l-1,-0.08 l0,0.08l0,0 l-1,-0.08 l0,0.08l0,0 l-1,-0.08 l0,0.08 L-1, -1 L2, -1 z",
+      "units": "objectBoundingBox"
+    },
+    "imgs": [
+      {
+        "src": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/89e074f7-48e4-4c4e-a5d6-66b3bd2604ee/topographic2.png?format=1500w",
+        "w": 1440,
+        "h": 960,
+        "fit": "cover",
+        "pos": "50% 50%"
+      },
+      {
+        "src": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/2d9fe28a-430b-4dd4-a593-bc239b6acf66/2025-03-Kalia-Fitness-218.jpg?format=500w",
+        "w": 434,
+        "h": 578,
+        "fit": "contain",
+        "pos": "50% 50%"
+      },
+      {
+        "src": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/7db8a7f0-3fad-4372-afd9-25def62e5ffe/2055483-R1-E024.jpg?format=750w",
+        "w": 514,
+        "h": 344,
+        "fit": "contain",
+        "pos": "50% 50%"
+      },
+      {
+        "src": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/7ffd5837-da84-4512-bb58-e3befc572f44/LauraHeikkila-20220420-104.jpg?format=300w",
+        "w": 282,
+        "h": 423,
+        "fit": "contain",
+        "pos": "50% 50%"
+      }
+    ],
+    "text": "MEDIA FOR THOSE ON \nA JOURNEY TO MAKE \nTHEMSELVES AND \nOTHERS BETTER. "
+  },
+  {
+    "i": 1,
+    "id": "portfolio",
+    "theme": "bright",
+    "rect": {
+      "top": 1068,
+      "h": 1051
+    },
+    "sec": {
+      "bg": "rgba(0, 0, 0, 0)",
+      "marginTop": "0px",
+      "zIndex": "5",
+      "position": "relative",
+      "padding": "0px 0px 86.4px"
+    },
+    "border": {
+      "bg": "rgb(105, 109, 94)",
+      "bgImage": "none",
+      "position": "absolute",
+      "inset": "-86.4px 0px 0px",
+      "clipPath": "url(\"#section-divider-682ce02dc0c702098fd3e3b1\")",
+      "zIndex": "auto"
+    },
+    "clipPoly": {
+      "tag": "path",
+      "points": null,
+      "d": "M-1, 0.925 L-1, 1 l0,0 l1,-0.075 l0,0.075l0,0 l1,-0.075 l0,0.075l0,0 l1,-0.075 l0,0.075 L2, -1 L-1, -1 z",
+      "units": "objectBoundingBox"
+    },
+    "imgs": [
+      {
+        "src": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/be5ed23f-2124-46d7-ae5c-be01fc89ddd1/2025-03-Kalia-Fitness-bg.jpg?format=1500w",
+        "w": 1440,
+        "h": 897,
+        "fit": "cover",
+        "pos": "50% 50%"
+      }
+    ],
+    "text": "VIEW THE GALLERIES\n\nPortfolio image categories\n\nATHLETES & FITNESS\nSPORTS & EVENTS\nHEALTH & ADVENTURE\n\nI strive to craft visuals that inspire everyday people to pursue strength, vitality, and a more active life — Let’s inspire action and elevate lives through authentic, impactful media.\n\nLET'S CONNECT"
+  },
+  {
+    "i": 2,
+    "id": "682ce02dc0c702098fd3e3b4",
+    "theme": "bright",
+    "rect": {
+      "top": 2118,
+      "h": 467
+    },
+    "sec": {
+      "bg": "rgba(0, 0, 0, 0)",
+      "marginTop": "0px",
+      "zIndex": "4",
+      "position": "relative",
+      "padding": "0px 0px 86.4px"
+    },
+    "border": {
+      "bg": "rgb(105, 109, 94)",
+      "bgImage": "none",
+      "position": "absolute",
+      "inset": "-86.4px 0px 0px",
+      "clipPath": "url(\"#section-divider-682ce02dc0c702098fd3e3b4\")",
+      "zIndex": "auto"
+    },
+    "clipPoly": {
+      "tag": "path",
+      "points": null,
+      "d": "M2, 0.846 L2, 1 l0,0 l-1,-0.154 l0,0.154l0,0 l-1,-0.154 l0,0.154l0,0 l-1,-0.154 l0,0.154 L-1, -1 L2, -1 z",
+      "units": "objectBoundingBox"
+    },
+    "imgs": [],
+    "text": "ATHLETICISM IS FOR EVERYONE\nA HEALTHIER WORLD STARTS WITH LIVING VIBRANTLY AND LEADING BY EXAMPLE."
+  },
+  {
+    "i": 3,
+    "id": "services",
+    "theme": "white",
+    "rect": {
+      "top": 2585,
+      "h": 885
+    },
+    "sec": {
+      "bg": "rgba(0, 0, 0, 0)",
+      "marginTop": "0px",
+      "zIndex": "3",
+      "position": "relative",
+      "padding": "0px 0px 86.4px"
+    },
+    "border": {
+      "bg": "rgb(255, 255, 255)",
+      "bgImage": "none",
+      "position": "absolute",
+      "inset": "-86.4px 0px 0px",
+      "clipPath": "url(\"#section-divider-682ce02dc0c702098fd3e3b7\")",
+      "zIndex": "auto"
+    },
+    "clipPoly": {
+      "tag": "path",
+      "points": null,
+      "d": "M-1, 0.912 L-1, 1 l0,0 l1,-0.088 l0,0.088l0,0 l1,-0.088 l0,0.088l0,0 l1,-0.088 l0,0.088 L2, -1 L-1, -1 z",
+      "units": "objectBoundingBox"
+    },
+    "imgs": [
+      {
+        "src": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/d1da865c-151e-478f-bcff-071f9465c49c/2025-03-Kalia-Fitness-bg2.jpg?format=1500w",
+        "w": 1440,
+        "h": 736,
+        "fit": "cover",
+        "pos": "50% 50%"
+      }
+    ],
+    "text": "SERVICES\nPHOTOGRAPHY / VIDEOGRAPHY\n\nPersonal Branding for athletes, trainers, and coaches building a healthier, more vibrant future through movement and discipline.\n\nCommercial photography & videography for teams and brands that inspire action, build community, and redefine what it means to live vibrantly.\n\nContent for Web & Social Media — Stay consistent and relevant with curated visuals optimize"
+  },
+  {
+    "i": 4,
+    "id": "yui_3_17_2_1_1784598031628_104",
+    "theme": "white",
+    "rect": {
+      "top": 3470,
+      "h": 1000
+    },
+    "sec": {
+      "bg": "rgba(0, 0, 0, 0)",
+      "marginTop": "0px",
+      "zIndex": "auto",
+      "position": "relative",
+      "padding": "0px"
+    },
+    "border": {
+      "bg": "rgb(255, 255, 255)",
+      "bgImage": "none",
+      "position": "absolute",
+      "inset": "-86.4px 0px 0px",
+      "clipPath": "none",
+      "zIndex": "auto"
+    },
+    "clipPoly": null,
+    "imgs": [
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "fit": "fill",
+        "pos": "50% 50%"
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "fit": "fill",
+        "pos": "50% 50%"
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "fit": "fill",
+        "pos": "50% 50%"
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "fit": "fill",
+        "pos": "50% 50%"
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "fit": "fill",
+        "pos": "50% 50%"
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "fit": "fill",
+        "pos": "50% 50%"
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "fit": "fill",
+        "pos": "50% 50%"
+      },
+      {
+        "src": "",
+        "w": 0,
+        "h": 0,
+        "fit": "fill",
+        "pos": "50% 50%"
+      }
+    ],
+    "text": "LATEST POSTS\nMore posts"
+  }
+]

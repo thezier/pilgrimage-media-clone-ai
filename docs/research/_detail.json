@@ -1,0 +1,561 @@
+{
+  "galInfo": {
+    "cls": "\n  sqs-gallery-container\n  sqs-gallery-block-grid\n  sqs-gallery-aspect-ratio-three-four-vertical\n  sqs-gallery-thumbnails-per-row-4\n  sqs-gallery-has-controls\n  \n\n  \n    \n    \n  \n  sqs-gallery-block-show-meta\n  \n  \n\n  \n  \n\n  \n  block-animation-none\n  clear",
+    "rect": {
+      "x": 169,
+      "w": 1102,
+      "h": 735
+    },
+    "items": [
+      {
+        "src": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1759780010498-DJPS89VK92TFS0S3VSJ3/image-asset.jpeg?format=300w",
+        "dataSrc": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1759780010498-DJPS89VK92TFS0S3VSJ3/image-asset.jpeg",
+        "dataImage": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1759780010498-DJPS89VK92TFS0S3VSJ3/image-asset.jpeg",
+        "alt": "Simple movement. Real effort. The small milestones that make up a bigger story.\n\nThat&rsquo;s what Progress Sessions are all about&mdash;mini photo + video sessions that document the ongoing work of becoming stronger. They&rsquo;re not transformation",
+        "fit": "fill",
+        "pos": "50% 50%",
+        "rect": {
+          "x": 169,
+          "y": 3641,
+          "w": 261,
+          "h": 348
+        },
+        "wrapCls": "\n                    image-slide-anchor\n                    \n                    content-f",
+        "href": "https://www.instagram.com/p/DPeh0HdkkwX/"
+      },
+      {
+        "src": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1759379030290-1V2C5Z5Y71E0QQXV1JRD/image-asset.jpeg?format=300w",
+        "dataSrc": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1759379030290-1V2C5Z5Y71E0QQXV1JRD/image-asset.jpeg",
+        "alt": "",
+        "fit": "fill",
+        "pos": "50% 50%",
+        "rect": {
+          "x": 449,
+          "y": 3583,
+          "w": 261,
+          "h": 464
+        },
+        "wrapCls": "sqs-video-overlay"
+      },
+      {
+        "src": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1758904412583-O86JUH4O6VTQ9JX6MWQU/image-asset.jpeg?format=300w",
+        "dataSrc": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1758904412583-O86JUH4O6VTQ9JX6MWQU/image-asset.jpeg",
+        "dataImage": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1758904412583-O86JUH4O6VTQ9JX6MWQU/image-asset.jpeg",
+        "alt": "Small steps, big results. Tie your shoes and see where they take you.\n\n#TemeculaRunning #SanDiegoRunners #RunCalifornia #RunningCoaches #TrainerLife #StrengthInMotion #FitnessBranding #ContentForCoaches #AthleticismForAll",
+        "fit": "fill",
+        "pos": "50% 50%",
+        "rect": {
+          "x": 730,
+          "y": 3642,
+          "w": 261,
+          "h": 348
+        },
+        "wrapCls": "\n                    image-slide-anchor\n                    \n                    content-f",
+        "href": "https://www.instagram.com/p/DPEgDesEYBD/"
+      },
+      {
+        "src": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1758753854282-76XY747ORXE4AR0V1KC5/image-asset.jpeg?format=300w",
+        "dataSrc": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1758753854282-76XY747ORXE4AR0V1KC5/image-asset.jpeg",
+        "dataImage": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1758753854282-76XY747ORXE4AR0V1KC5/image-asset.jpeg",
+        "alt": "Strength isn&rsquo;t built in comfort; it&rsquo;s forged in sweat, grit, and repetition. Every jump is a step toward the athlete we&rsquo;re all capable of becoming.\n\n#TemeculaFitness #SanDiegoAthletics #AthleticismForAll #StrengthInMotion #FitnessBr",
+        "fit": "fill",
+        "pos": "50% 50%",
+        "rect": {
+          "x": 1011,
+          "y": 3641,
+          "w": 261,
+          "h": 348
+        },
+        "wrapCls": "\n                    image-slide-anchor\n                    \n                    content-f",
+        "href": "https://www.instagram.com/p/DPAEwqMkprD/"
+      },
+      {
+        "src": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1757026435711-VZR45QAV9GWMUU342Q99/image-asset.jpeg?format=300w",
+        "dataSrc": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1757026435711-VZR45QAV9GWMUU342Q99/image-asset.jpeg",
+        "alt": "",
+        "fit": "fill",
+        "pos": "50% 50%",
+        "rect": {
+          "x": 169,
+          "y": 3951,
+          "w": 261,
+          "h": 464
+        },
+        "wrapCls": "sqs-video-overlay"
+      },
+      {
+        "src": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1756928494356-I7R8I4Q59SLH2887DA6L/image-asset.jpeg?format=300w",
+        "dataSrc": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1756928494356-I7R8I4Q59SLH2887DA6L/image-asset.jpeg",
+        "alt": "",
+        "fit": "fill",
+        "pos": "50% 50%",
+        "rect": {
+          "x": 449,
+          "y": 3951,
+          "w": 261,
+          "h": 464
+        },
+        "wrapCls": "sqs-video-overlay"
+      },
+      {
+        "src": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1756827277679-HG2BIH34IAZH75XGECBS/image-asset.jpeg?format=300w",
+        "dataSrc": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1756827277679-HG2BIH34IAZH75XGECBS/image-asset.jpeg",
+        "dataImage": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1756827277679-HG2BIH34IAZH75XGECBS/image-asset.jpeg",
+        "alt": "You don&rsquo;t need to be a pro athlete to train like one. Strength training is about showing up consistently and doing what you can today. Capturing people leaning into that process and growing into their potential is why I love what I do.\n\n#fitnes",
+        "fit": "fill",
+        "pos": "50% 50%",
+        "rect": {
+          "x": 729,
+          "y": 4009,
+          "w": 263,
+          "h": 347
+        },
+        "wrapCls": "\n                    image-slide-anchor\n                    \n                    content-f",
+        "href": "https://www.instagram.com/p/DOGsA-IEYT8/"
+      },
+      {
+        "src": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1756777401915-7IFIYAE5KHYXHUJW5P4U/image-asset.jpeg?format=300w",
+        "dataSrc": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1756777401915-7IFIYAE5KHYXHUJW5P4U/image-asset.jpeg",
+        "dataImage": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/1756777401915-7IFIYAE5KHYXHUJW5P4U/image-asset.jpeg",
+        "alt": "Health isn&rsquo;t just about workouts. It&rsquo;s about giving yourself the strength, energy, and clarity to fully live the life you&rsquo;re meant to.\n\n#fitnessmotivation #strengthtraining #strengthandconditioning #mobility #healthiswealth #running",
+        "fit": "fill",
+        "pos": "50% 50%",
+        "rect": {
+          "x": 1011,
+          "y": 4009,
+          "w": 261,
+          "h": 348
+        },
+        "wrapCls": "\n                    image-slide-anchor\n                    \n                    content-f",
+        "href": "https://www.instagram.com/p/DOFMlEGiar7/"
+      }
+    ]
+  },
+  "header": {
+    "el": {
+      "display": "block",
+      "position": "absolute",
+      "width": "1440px",
+      "height": "134.5px",
+      "maxWidth": "none",
+      "minHeight": "0px",
+      "padding": "0px",
+      "margin": "0px",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(255, 255, 255)",
+      "border": "0px none rgb(255, 255, 255)",
+      "borderRadius": "0px",
+      "fontSize": "16px",
+      "fontFamily": "\"IBM Plex Mono\"",
+      "fontWeight": "600",
+      "letterSpacing": "-0.32px",
+      "textTransform": "none",
+      "lineHeight": "16px",
+      "alignItems": "normal",
+      "justifyContent": "normal",
+      "objectFit": "fill",
+      "objectPosition": "50% 50%",
+      "transition": "background 0.3s ease-in-out, padding 0.14s ease-in-out, transform 0.14s ease-in-out 0.14s",
+      "gap": "normal",
+      "flexDirection": "row",
+      "textAlign": "start",
+      "whiteSpace": "normal",
+      "_rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 135
+      },
+      "_text": "Skip to Content\nPILGRIMAGE MEDIA\nPortfolio\nServices\nAbout\nContact"
+    },
+    "inner": {
+      "display": "block",
+      "position": "relative",
+      "width": "1440px",
+      "height": "134.5px",
+      "maxWidth": "none",
+      "minHeight": "0px",
+      "padding": "20.16px 57.6px",
+      "margin": "0px",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(255, 255, 255)",
+      "border": "0px none rgb(255, 255, 255)",
+      "borderRadius": "0px",
+      "fontSize": "16px",
+      "fontFamily": "\"IBM Plex Mono\"",
+      "fontWeight": "600",
+      "letterSpacing": "-0.32px",
+      "textTransform": "none",
+      "lineHeight": "16px",
+      "alignItems": "normal",
+      "justifyContent": "normal",
+      "objectFit": "fill",
+      "objectPosition": "50% 50%",
+      "transition": "all",
+      "gap": "normal",
+      "flexDirection": "row",
+      "textAlign": "start",
+      "whiteSpace": "normal",
+      "_rect": {
+        "x": 0,
+        "y": 0,
+        "w": 1440,
+        "h": 135
+      },
+      "_text": "Skip to Content\nPILGRIMAGE MEDIA\nPortfolio\nServices\nAbout\nContact"
+    },
+    "titleNav": {
+      "display": "flex",
+      "position": "static",
+      "width": "662.406px",
+      "height": "94.1875px",
+      "maxWidth": "none",
+      "minHeight": "auto",
+      "padding": "0px",
+      "margin": "0px 0px 0px 331.203px",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(255, 255, 255)",
+      "border": "0px none rgb(255, 255, 255)",
+      "borderRadius": "0px",
+      "fontSize": "16px",
+      "fontFamily": "\"IBM Plex Mono\"",
+      "fontWeight": "600",
+      "letterSpacing": "-0.32px",
+      "textTransform": "none",
+      "lineHeight": "16px",
+      "alignItems": "center",
+      "justifyContent": "center",
+      "objectFit": "fill",
+      "objectPosition": "50% 50%",
+      "transition": "all",
+      "gap": "normal",
+      "flexDirection": "row",
+      "textAlign": "start",
+      "whiteSpace": "normal",
+      "_rect": {
+        "x": 389,
+        "y": 20,
+        "w": 662,
+        "h": 94
+      },
+      "_text": "PILGRIMAGE MEDIA\nPortfolio\nServices\nAbout\nContact"
+    },
+    "title": {
+      "display": "block",
+      "position": "static",
+      "width": "662.406px",
+      "height": "29.5625px",
+      "maxWidth": "none",
+      "minHeight": "auto",
+      "padding": "0px",
+      "margin": "0px",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(255, 255, 255)",
+      "border": "0px none rgb(255, 255, 255)",
+      "borderRadius": "0px",
+      "fontSize": "16px",
+      "fontFamily": "\"IBM Plex Mono\"",
+      "fontWeight": "600",
+      "letterSpacing": "-0.32px",
+      "textTransform": "none",
+      "lineHeight": "16px",
+      "alignItems": "normal",
+      "justifyContent": "normal",
+      "objectFit": "fill",
+      "objectPosition": "50% 50%",
+      "transition": "opacity 0.9s",
+      "gap": "normal",
+      "flexDirection": "row",
+      "textAlign": "center",
+      "whiteSpace": "normal",
+      "_rect": {
+        "x": 389,
+        "y": 20,
+        "w": 662,
+        "h": 30
+      },
+      "_text": "PILGRIMAGE MEDIA"
+    },
+    "navList": {
+      "display": "inline-flex",
+      "position": "static",
+      "width": "355.531px",
+      "height": "27.1875px",
+      "maxWidth": "none",
+      "minHeight": "0px",
+      "padding": "0px",
+      "margin": "0px",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(255, 255, 255)",
+      "border": "0px none rgb(255, 255, 255)",
+      "borderRadius": "0px",
+      "fontSize": "16px",
+      "fontFamily": "\"IBM Plex Mono\"",
+      "fontWeight": "600",
+      "letterSpacing": "-0.32px",
+      "textTransform": "none",
+      "lineHeight": "16px",
+      "alignItems": "normal",
+      "justifyContent": "center",
+      "objectFit": "fill",
+      "objectPosition": "50% 50%",
+      "transition": "all",
+      "gap": "normal",
+      "flexDirection": "row",
+      "textAlign": "center",
+      "whiteSpace": "normal",
+      "_rect": {
+        "x": 542,
+        "y": 87,
+        "w": 356,
+        "h": 27
+      },
+      "_text": "Portfolio\nServices\nAbout\nContact"
+    },
+    "navItem": {
+      "display": "flex",
+      "position": "static",
+      "width": "83.5312px",
+      "height": "27.1875px",
+      "maxWidth": "none",
+      "minHeight": "auto",
+      "padding": "0px",
+      "margin": "0px 10.8px",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(255, 255, 255)",
+      "border": "0px none rgb(255, 255, 255)",
+      "borderRadius": "0px",
+      "fontSize": "16px",
+      "fontFamily": "\"IBM Plex Mono\"",
+      "fontWeight": "600",
+      "letterSpacing": "-0.32px",
+      "textTransform": "none",
+      "lineHeight": "24px",
+      "alignItems": "normal",
+      "justifyContent": "normal",
+      "objectFit": "fill",
+      "objectPosition": "50% 50%",
+      "transition": "all",
+      "gap": "normal",
+      "flexDirection": "row",
+      "textAlign": "center",
+      "whiteSpace": "nowrap",
+      "_rect": {
+        "x": 553,
+        "y": 87,
+        "w": 84,
+        "h": 27
+      },
+      "_text": "Portfolio"
+    },
+    "burger": {
+      "display": "none",
+      "position": "static",
+      "width": "auto",
+      "height": "auto",
+      "maxWidth": "none",
+      "minHeight": "0px",
+      "padding": "0px",
+      "margin": "0px",
+      "backgroundColor": "rgba(0, 0, 0, 0)",
+      "color": "rgb(255, 255, 255)",
+      "border": "0px none rgb(255, 255, 255)",
+      "borderRadius": "0px",
+      "fontSize": "16px",
+      "fontFamily": "\"IBM Plex Mono\"",
+      "fontWeight": "600",
+      "letterSpacing": "-0.32px",
+      "textTransform": "none",
+      "lineHeight": "16px",
+      "alignItems": "center",
+      "justifyContent": "center",
+      "objectFit": "fill",
+      "objectPosition": "50% 50%",
+      "transition": "opacity 0.9s 0.0631579s",
+      "gap": "normal",
+      "flexDirection": "row",
+      "textAlign": "start",
+      "whiteSpace": "normal",
+      "_rect": {
+        "x": 0,
+        "y": 3951,
+        "w": 0,
+        "h": 0
+      },
+      "_text": "\n  \n    Open Menu\n    Close Menu\n    \n      \n        \n        \n        \n      \n "
+    }
+  },
+  "buttons": [
+    {
+      "text": "LET'S CONNECT",
+      "href": "https://www.pilgrimage.media/contact",
+      "bg": "rgba(0, 0, 0, 0)",
+      "color": "rgb(255, 255, 255)",
+      "border": "1px solid rgb(255, 255, 255)",
+      "padding": "0px 34.736px",
+      "fontSize": "16px",
+      "letterSpacing": "1.6px",
+      "textTransform": "uppercase",
+      "w": 212,
+      "h": 68,
+      "transition": "background-color 0.1s linear, color 0.1s linear"
+    },
+    {
+      "text": "Let's Connect",
+      "href": "https://www.pilgrimage.media/contact",
+      "bg": "rgb(105, 109, 94)",
+      "color": "rgb(255, 255, 255)",
+      "border": "0px solid rgb(255, 255, 255)",
+      "padding": "0px 34.736px",
+      "fontSize": "16px",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "w": 267,
+      "h": 68,
+      "transition": "opacity 0.1s linear"
+    },
+    {
+      "text": "More posts",
+      "href": "https://instagram.com/pilgrimagemedia",
+      "bg": "rgb(105, 109, 94)",
+      "color": "rgb(255, 255, 255)",
+      "border": "0px solid rgb(255, 255, 255)",
+      "padding": "0px 34.736px",
+      "fontSize": "16px",
+      "letterSpacing": "normal",
+      "textTransform": "none",
+      "w": 323,
+      "h": 68,
+      "transition": "opacity 0.1s linear"
+    }
+  ],
+  "hrs": [
+    {
+      "bg": "rgb(255, 255, 255)",
+      "h": "1px",
+      "border": "0px none rgb(187, 187, 187)",
+      "w": 490,
+      "rh": 1,
+      "section": "portfolio"
+    },
+    {
+      "bg": "rgb(0, 0, 0)",
+      "h": "1px",
+      "border": "0px none rgb(187, 187, 187)",
+      "w": 490,
+      "rh": 1,
+      "section": "services"
+    }
+  ],
+  "catLinks": [
+    {
+      "text": "ATHLETES & FITNESS",
+      "href": "https://www.pilgrimage.media/fitness-athletes",
+      "blockBorderBottom": "0px none rgb(255, 255, 255)",
+      "blockPadding": "0px"
+    },
+    {
+      "text": "SPORTS & EVENTS",
+      "href": "https://www.pilgrimage.media/sports-events",
+      "blockBorderBottom": "0px none rgb(255, 255, 255)",
+      "blockPadding": "0px"
+    },
+    {
+      "text": "HEALTH & ADVENTURE",
+      "href": "https://www.pilgrimage.media/health-adventure",
+      "blockBorderBottom": "0px none rgb(255, 255, 255)",
+      "blockPadding": "0px"
+    }
+  ],
+  "footerRaw": "PILGRIMAGE MEDIA\nAthletes & Fitness\nSports & Events\nHealth & Adventure\nAbout\nContact\n\nStay in the Loop\n—\n\nSUBSCRIBE TO OUR NEWSLETTER\n\n Sign up",
+  "heroImgs": [
+    {
+      "src": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/89e074f7-48e4-4c4e-a5d6-66b3bd2604ee/topographic2.png?format=1500w",
+      "w": 1440,
+      "h": 960,
+      "fit": "cover",
+      "rw": 1440,
+      "rh": 1068
+    },
+    {
+      "src": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/2d9fe28a-430b-4dd4-a593-bc239b6acf66/2025-03-Kalia-Fitness-218.jpg?format=500w",
+      "w": 434,
+      "h": 578,
+      "fit": "contain",
+      "rw": 434,
+      "rh": 579
+    },
+    {
+      "src": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/7db8a7f0-3fad-4372-afd9-25def62e5ffe/2055483-R1-E024.jpg?format=750w",
+      "w": 514,
+      "h": 344,
+      "fit": "contain",
+      "rw": 514,
+      "rh": 344
+    },
+    {
+      "src": "https://images.squarespace-cdn.com/content/v1/682ce02bc0c702098fd3e26d/7ffd5837-da84-4512-bb58-e3befc572f44/LauraHeikkila-20220420-104.jpg?format=500w",
+      "w": 282,
+      "h": 423,
+      "fit": "contain",
+      "rw": 282,
+      "rh": 423
+    }
+  ],
+  "navLinks": [
+    {
+      "text": "Portfolio",
+      "href": "/#portfolio"
+    },
+    {
+      "text": "Services",
+      "href": "/#services"
+    },
+    {
+      "text": "About",
+      "href": "/about"
+    },
+    {
+      "text": "Contact",
+      "href": "/contact"
+    },
+    {
+      "text": "Portfolio",
+      "href": "/#portfolio"
+    },
+    {
+      "text": "Services",
+      "href": "/#services"
+    },
+    {
+      "text": "\n        About\n      ",
+      "href": "/about"
+    },
+    {
+      "text": "\n        Contact\n      ",
+      "href": "/contact"
+    }
+  ],
+  "footerLinks": [
+    {
+      "text": "Athletes & Fitness",
+      "href": "/fitness-athletes"
+    },
+    {
+      "text": "Sports & Events",
+      "href": "/sports-events"
+    },
+    {
+      "text": "Health & Adventure",
+      "href": "/health-adventure"
+    },
+    {
+      "text": "About",
+      "href": "/about"
+    },
+    {
+      "text": "Contact",
+      "href": "/contact"
+    }
+  ]
+}

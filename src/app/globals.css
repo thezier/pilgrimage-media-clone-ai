@@ -2,129 +2,268 @@
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+/* =====================================================================
+   Pilgrimage Media — design tokens taken from the live site's computed
+   styles (see docs/research/*.json), not estimated.
+   ===================================================================== */
 
 @theme inline {
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  --font-sans: "Geist", "Geist Fallback", ui-sans-serif, system-ui, sans-serif;
-  --font-mono: "Geist Mono", "Geist Mono Fallback", ui-monospace, monospace;
-  --font-heading: var(--font-sans);
-  --color-sidebar-ring: var(--sidebar-ring);
-  --color-sidebar-border: var(--sidebar-border);
-  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
-  --color-sidebar-accent: var(--sidebar-accent);
-  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
-  --color-sidebar-primary: var(--sidebar-primary);
-  --color-sidebar-foreground: var(--sidebar-foreground);
-  --color-sidebar: var(--sidebar);
-  --color-chart-5: var(--chart-5);
-  --color-chart-4: var(--chart-4);
-  --color-chart-3: var(--chart-3);
-  --color-chart-2: var(--chart-2);
-  --color-chart-1: var(--chart-1);
-  --color-ring: var(--ring);
-  --color-input: var(--input);
-  --color-border: var(--border);
-  --color-destructive: var(--destructive);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-accent: var(--accent);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-muted: var(--muted);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-secondary: var(--secondary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-primary: var(--primary);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-popover: var(--popover);
-  --color-card-foreground: var(--card-foreground);
-  --color-card: var(--card);
-  --radius-sm: calc(var(--radius) * 0.6);
-  --radius-md: calc(var(--radius) * 0.8);
-  --radius-lg: var(--radius);
-  --radius-xl: calc(var(--radius) * 1.4);
-  --radius-2xl: calc(var(--radius) * 1.8);
-  --radius-3xl: calc(var(--radius) * 2.2);
-  --radius-4xl: calc(var(--radius) * 2.6);
+  --color-dark: var(--dark);
+  --color-olive: var(--olive);
+  --font-sans: var(--font-roboto-condensed), "Roboto Condensed", sans-serif;
+  --font-mono: var(--font-plex-mono), "IBM Plex Mono", monospace;
+  --font-heading: var(--font-roboto-condensed), "Roboto Condensed", sans-serif;
 }
 
 :root {
-  --background: oklch(1 0 0);
-  --foreground: oklch(0.145 0 0);
-  --card: oklch(1 0 0);
-  --card-foreground: oklch(0.145 0 0);
-  --popover: oklch(1 0 0);
-  --popover-foreground: oklch(0.145 0 0);
-  --primary: oklch(0.205 0 0);
-  --primary-foreground: oklch(0.985 0 0);
-  --secondary: oklch(0.97 0 0);
-  --secondary-foreground: oklch(0.205 0 0);
-  --muted: oklch(0.97 0 0);
-  --muted-foreground: oklch(0.556 0 0);
-  --accent: oklch(0.97 0 0);
-  --accent-foreground: oklch(0.205 0 0);
-  --destructive: oklch(0.577 0.245 27.325);
-  --border: oklch(0.922 0 0);
-  --input: oklch(0.922 0 0);
-  --ring: oklch(0.708 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --radius: 0.625rem;
-  --sidebar: oklch(0.985 0 0);
-  --sidebar-foreground: oklch(0.145 0 0);
-  --sidebar-primary: oklch(0.205 0 0);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.97 0 0);
-  --sidebar-accent-foreground: oklch(0.205 0 0);
-  --sidebar-border: oklch(0.922 0 0);
-  --sidebar-ring: oklch(0.708 0 0);
+  /* Palette — exact rgb() values read off the live site. */
+  --dark: #393939; /* rgb(57,57,57)    section + body background */
+  --olive: #696d5e; /* rgb(105,109,94)  buttons, mission block, portfolio bleed */
+  --white: #ffffff;
+  --black: #000000;
+
+  --background: var(--dark);
+  --foreground: var(--white);
+
+  /* Squarespace Fluid Engine geometry.
+     Gap is a flat 11px at every viewport (measured 390 → 1920).
+     The outer gutter column is `gutter - gap` wide so that
+     (gutter-col + gap) lands exactly on the page gutter. */
+  --fe-gap: 11px;
+  --fe-gutter: 6vw; /* < 768px  */
+  --fe-row: 24px; /* < 768px, Squarespace's mobile row unit */
+
+  /* Diagonal section divider depth — a flat 6vw at every viewport
+     (measured: 23.4px @390, 46.08 @768, 59.52 @992, 86.4 @1440, 115.2 @1920). */
+  --divider: 6vw;
+
+  /* Fluid type. Every heading level is `16px + N·vw` between 768 and 1440 —
+     the 16px intercept is identical across the whole scale, which is why
+     these are expressed as calc() rather than clamp(). Below 768 the site
+     switches to a fixed mobile scale; above 1440 the slope halves. */
+  --fs-h1: 48.384px;
+  --fs-h2: 35.4px;
+  --fs-h3: 29px;
+  --fs-em: 22.5px;
+  --fs-wordmark: 21.4px;
+
+  /* Hero top padding = the (absolutely positioned) header's own height.
+     Below the 800px nav breakpoint that is 12vw of padding + the wordmark
+     line; fitted to measurements at 390/600/768 (83.8 / 109 / 129.2). */
+  --header-h: calc(37px + 12.011vw);
 }
 
-.dark {
-  --background: oklch(0.145 0 0);
-  --foreground: oklch(0.985 0 0);
-  --card: oklch(0.205 0 0);
-  --card-foreground: oklch(0.985 0 0);
-  --popover: oklch(0.205 0 0);
-  --popover-foreground: oklch(0.985 0 0);
-  --primary: oklch(0.922 0 0);
-  --primary-foreground: oklch(0.205 0 0);
-  --secondary: oklch(0.269 0 0);
-  --secondary-foreground: oklch(0.985 0 0);
-  --muted: oklch(0.269 0 0);
-  --muted-foreground: oklch(0.708 0 0);
-  --accent: oklch(0.269 0 0);
-  --accent-foreground: oklch(0.985 0 0);
-  --destructive: oklch(0.704 0.191 22.216);
-  --border: oklch(1 0 0 / 10%);
-  --input: oklch(1 0 0 / 15%);
-  --ring: oklch(0.556 0 0);
-  --chart-1: oklch(0.87 0 0);
-  --chart-2: oklch(0.556 0 0);
-  --chart-3: oklch(0.439 0 0);
-  --chart-4: oklch(0.371 0 0);
-  --chart-5: oklch(0.269 0 0);
-  --sidebar: oklch(0.205 0 0);
-  --sidebar-foreground: oklch(0.985 0 0);
-  --sidebar-primary: oklch(0.488 0.243 264.376);
-  --sidebar-primary-foreground: oklch(0.985 0 0);
-  --sidebar-accent: oklch(0.269 0 0);
-  --sidebar-accent-foreground: oklch(0.985 0 0);
-  --sidebar-border: oklch(1 0 0 / 10%);
-  --sidebar-ring: oklch(0.556 0 0);
+@media (min-width: 768px) {
+  :root {
+    --fe-gutter: 4vw;
+    --fe-row: 1.979vw; /* 28.5px @1440 — verified against 4 blocks' spans */
+    --fs-h1: calc(16px + 3.601vw);
+    --fs-h2: calc(16px + 2.158vw);
+    --fs-h3: calc(16px + 1.429vw);
+    --fs-em: calc(16px + 0.729vw);
+    --fs-wordmark: calc(16px + 0.595vw);
+  }
+}
+
+/* 800px is where the nav un-collapses from the burger and the header switches
+   from 6vw-all-round padding to 1.4vw/4vw. Fitted to 900/992/1200/1440. */
+@media (min-width: 800px) {
+  :root {
+    --header-h: calc(46.5px + 6.11vw);
+  }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --fs-h1: calc(39.6px + 1.958vw);
+    --fs-h2: calc(30.3px + 1.167vw);
+    --fs-h3: calc(25.3px + 0.792vw);
+    --fs-em: calc(21px + 0.375vw);
+    --fs-wordmark: calc(19.8px + 0.333vw);
+  }
 }
 
 @layer base {
-  * {
-    @apply border-border outline-ring/50;
-  }
-  body {
-    @apply bg-background text-foreground;
-  }
   html {
-    @apply font-sans;
+    scroll-behavior: smooth;
   }
+
+  body {
+    background: var(--dark);
+    color: var(--white);
+    /* Body copy is IBM Plex Mono 600 with NEGATIVE tracking site-wide —
+       set here so it cascades to nav, buttons, list items and paragraphs. */
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 600;
+    line-height: 24px;
+    letter-spacing: -0.02em;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: var(--font-heading);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.07em; /* 4.7488/67.84 — identical at every level */
+    margin: 0;
+  }
+
+  h1 {
+    font-size: var(--fs-h1);
+    line-height: 1.056;
+  }
+  h2 {
+    font-size: var(--fs-h2);
+    line-height: 1.114;
+  }
+  h3 {
+    font-size: var(--fs-h3);
+    line-height: 1.143;
+  }
+
+  img {
+    display: block;
+    max-width: 100%;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+/* =====================================================================
+   Fluid Engine grid
+   A 26-column grid at >=768px (2 gutter columns + 24 content columns) and
+   a 10-column grid below (2 gutters + 8 content). Block positions are real
+   `grid-area` values lifted from the live stylesheet. Rows are minmax(_,auto)
+   so a row grows when text wraps to more lines than the reference viewport
+   did — fixed row heights are what made an earlier attempt at this collide
+   at in-between widths.
+   ===================================================================== */
+.fe-grid {
+  display: grid;
+  position: relative;
+  gap: var(--fe-gap);
+  grid-template-columns:
+    calc(var(--fe-gutter) - var(--fe-gap))
+    repeat(8, 1fr)
+    calc(var(--fe-gutter) - var(--fe-gap));
+  grid-auto-rows: minmax(var(--fe-row), auto);
+}
+
+@media (min-width: 768px) {
+  .fe-grid {
+    grid-template-columns:
+      calc(var(--fe-gutter) - var(--fe-gap))
+      repeat(24, 1fr)
+      calc(var(--fe-gutter) - var(--fe-gap));
+  }
+}
+
+.fe-grid > * {
+  min-width: 0;
+}
+
+/* =====================================================================
+   Section shell + diagonal dividers
+
+   The real mechanism, read straight off the live DOM: every section holds an
+   absolutely-positioned `.section-border` carrying the background, inset
+   -6vw at the top so it BLEEDS UPWARD into the previous section, and clipped
+   at its own bottom edge by a 6vw diagonal. Sections then carry DESCENDING
+   z-index (6,5,4,3,auto) so an earlier section paints OVER the next one — the
+   triangle its clip removes is what reveals the next section's bled-up
+   background. Without the descending z-index the later section paints over
+   the notch and the seam looks flat.
+   ===================================================================== */
+.section {
+  position: relative;
+  padding-bottom: var(--divider);
+}
+
+.section-border {
+  position: absolute;
+  inset: calc(-1 * var(--divider)) 0 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+/* The hero is first in the document, so it has nothing to bleed into. */
+.section-border--flush {
+  inset: 0;
+}
+
+/* Bottom edge drops left→right: high on the left, flush at the right. */
+.divider-down {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - var(--divider)));
+}
+
+/* Bottom edge rises left→right: flush at the left, high on the right. */
+.divider-up {
+  clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--divider)), 0 100%);
+}
+
+.section-content {
+  position: relative;
+  z-index: 1;
+}
+
+/* =====================================================================
+   Buttons — three real variants measured on the live site.
+   ===================================================================== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  height: 68px;
+  padding: 0 34.736px;
+  font-family: var(--font-mono);
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+}
+
+/* Outline, uppercase, 0.1em tracking — the portfolio CTA. */
+.btn-outline {
+  border: 1px solid var(--white);
+  background: transparent;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition:
+    background-color 0.1s linear,
+    color 0.1s linear;
+}
+.btn-outline:hover {
+  background: var(--white);
+  color: var(--black);
+}
+
+/* Solid olive, mixed case, NORMAL tracking — Services + "More posts". */
+.btn-solid {
+  border: 0;
+  background: var(--olive);
+  color: var(--white);
+  text-transform: none;
+  letter-spacing: normal;
+  transition: opacity 0.1s linear;
+}
+.btn-solid:hover {
+  opacity: 0.8;
+}
+
+/* Squarespace's 1px rule block. */
+.rule {
+  height: 1px;
+  border: 0;
+  margin: 8px 0;
+  background: currentColor;
 }
