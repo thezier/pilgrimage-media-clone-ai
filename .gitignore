@@ -50,3 +50,6 @@ temp/
 
 # Transient agent worktrees
 .claude/worktrees/
+
+# Static export output
+/out/
