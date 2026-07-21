@@ -1,0 +1,195 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contact — Pilgrimage Media</title>
+    <meta
+      name="description"
+      content="Get in touch about personal branding, commercial photography and videography, or content for web and social."
+    />
+    <link rel="canonical" href="https://pilgrimage.media/contact/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Contact — Pilgrimage Media" />
+    <meta property="og:description" content="Let's connect." />
+    <meta property="og:image" content="https://pilgrimage.media/images/contact/strip-4.jpg" />
+
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="preload" href="/fonts/roboto-condensed-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+
+  <!-- The hero on this page is WHITE, so the transparent header's white text
+       would be invisible. This class flips it to black. -->
+  <body class="header-on-light">
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="wordmark" href="/">Pilgrimage Media</a>
+        <nav class="site-nav" aria-label="Primary">
+          <ul>
+            <li><a href="/#portfolio">Portfolio</a></li>
+            <li><a href="/#services">Services</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </nav>
+        <button type="button" class="nav-toggle" id="nav-toggle" aria-label="Open menu" aria-expanded="false" aria-controls="mobile-menu">
+          <svg viewBox="0 0 25 19" width="25" height="19" fill="none" aria-hidden="true">
+            <rect y="0" width="25" height="1.5" fill="currentColor" />
+            <rect y="8.75" width="25" height="1.5" fill="currentColor" />
+            <rect y="17.5" width="25" height="1.5" fill="currentColor" />
+          </svg>
+        </button>
+      </div>
+      <div class="mobile-menu" id="mobile-menu" hidden>
+        <button type="button" class="mobile-menu__close" id="nav-close" aria-label="Close menu">
+          <svg viewBox="0 0 25 25" width="25" height="25" fill="none" aria-hidden="true">
+            <rect x="1" y="0" width="32" height="1.5" fill="currentColor" transform="rotate(45 1 0)" />
+            <rect x="0" y="23" width="32" height="1.5" fill="currentColor" transform="rotate(-45 0 23)" />
+          </svg>
+        </button>
+        <ul>
+          <li><a href="/#portfolio">Portfolio</a></li>
+          <li><a href="/#services">Services</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <main>
+      <!-- ===== white hero ===== -->
+      <section class="section section--no-pad contact-hero">
+        <div class="section-border section-border--flush bg-white"></div>
+        <div class="section-content fe-grid contact-hero__grid on-light">
+          <h1 class="contact-hero__heading">Let’s Connect</h1>
+        </div>
+      </section>
+
+      <!-- ===== full-bleed image strip =====
+           The live site scrolls this as a carousel with arrow controls. Built
+           as a static strip: no JS, and it reads the same at a glance. -->
+      <div class="contact-strip" role="presentation">
+        <img src="/images/contact/strip-1.jpg" alt="" loading="lazy" />
+        <img src="/images/contact/strip-2.jpg" alt="" loading="lazy" />
+        <img src="/images/contact/strip-3.jpg" alt="" loading="lazy" />
+        <img src="/images/contact/strip-4.jpg" alt="" loading="lazy" />
+        <img src="/images/contact/strip-5.jpg" alt="" loading="lazy" />
+        <img src="/images/contact/strip-6.jpg" alt="" loading="lazy" />
+        <img src="/images/contact/strip-7.jpg" alt="" loading="lazy" />
+      </div>
+
+      <!-- ===== enquiry form ===== -->
+      <section class="contact-form-section">
+        <div class="contact-form-section__inner">
+          <!-- No action: this is a static site with no form backend yet. See
+               the note in the repo README about wiring it to a handler. -->
+          <form class="contact-form" id="enquiry">
+            <fieldset class="field-group">
+              <legend>Name</legend>
+              <div class="field-row">
+                <div class="field">
+                  <label for="fname">First Name <span aria-hidden="true">*</span></label>
+                  <input id="fname" name="fname" type="text" required autocomplete="given-name" />
+                </div>
+                <div class="field">
+                  <label for="lname">Last Name <span aria-hidden="true">*</span></label>
+                  <input id="lname" name="lname" type="text" required autocomplete="family-name" />
+                </div>
+              </div>
+            </fieldset>
+
+            <div class="field">
+              <label for="email">Email <span aria-hidden="true">*</span></label>
+              <input id="email" name="email" type="email" required autocomplete="email" />
+            </div>
+
+            <div class="checkbox-row">
+              <input id="subscribe" name="subscribe" type="checkbox" />
+              <label for="subscribe">Sign up for news and updates</label>
+            </div>
+
+            <div class="field">
+              <label for="phone">Phone</label>
+              <input id="phone" name="phone" type="tel" autocomplete="tel" />
+            </div>
+
+            <fieldset class="field-group">
+              <legend>What services are you interested in?</legend>
+              <div class="checkbox-row">
+                <input id="svc-branding" name="services" type="checkbox" value="Personal Branding / Portraits" />
+                <label for="svc-branding">Personal Branding / Portraits</label>
+              </div>
+              <div class="checkbox-row">
+                <input id="svc-commercial" name="services" type="checkbox" value="Commercial Photography / Videography" />
+                <label for="svc-commercial">Commercial Photography / Videography</label>
+              </div>
+              <div class="checkbox-row">
+                <input id="svc-content" name="services" type="checkbox" value="Content Creation" />
+                <label for="svc-content">Content Creation</label>
+              </div>
+            </fieldset>
+
+            <div class="field">
+              <label for="date">Preferred Date (Estimated)</label>
+              <input id="date" name="date" type="date" />
+            </div>
+
+            <div class="field">
+              <label for="budget">What is your budget?</label>
+              <input id="budget" name="budget" type="text" />
+            </div>
+
+            <div class="field">
+              <label for="source">How did you hear about us?</label>
+              <select id="source" name="source">
+                <option value="">Select…</option>
+                <option>Instagram</option>
+                <option>Google</option>
+                <option>Referral</option>
+                <option>Other</option>
+              </select>
+            </div>
+
+            <div class="field">
+              <label for="message">Message <span aria-hidden="true">*</span></label>
+              <textarea id="message" name="message" rows="6" required></textarea>
+            </div>
+
+            <button class="btn btn-solid contact-form__submit" type="submit">Send</button>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="fe-pad fe-grid site-footer__grid">
+        <h3 class="site-footer__wordmark">Pilgrimage Media</h3>
+        <p class="site-footer__link-1"><a href="/fitness-athletes/">Athletes &amp; Fitness</a></p>
+        <p class="site-footer__link-2"><a href="/sports-events/">Sports &amp; Events</a></p>
+        <p class="site-footer__link-3"><a href="/health-adventure/">Health &amp; Adventure</a></p>
+        <p class="site-footer__link-4"><a href="/about/">About</a></p>
+        <p class="site-footer__link-5"><a href="/contact/">Contact</a></p>
+
+        <p class="site-footer__loop">Stay in the Loop<br />&mdash;</p>
+
+        <div class="site-footer__news">
+          <h2 class="newsletter__heading">Subscribe to our newsletter</h2>
+          <form class="newsletter__form">
+            <div class="newsletter__field">
+              <label class="visually-hidden" for="newsletter-email">Email address</label>
+              <input class="newsletter__input" id="newsletter-email" type="email" name="email" />
+            </div>
+            <div class="newsletter__button-wrap">
+              <button class="newsletter__button" type="button">Sign up</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </footer>
+
+    <script src="/js/main.js" defer></script>
+  </body>
+</html>

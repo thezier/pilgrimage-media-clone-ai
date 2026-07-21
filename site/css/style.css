@@ -560,6 +560,172 @@ body.menu-open { overflow: hidden; }
 }
 .newsletter__button:hover { opacity: 0.8; }
 
+/* ---------------------------------------------------------------------
+   About page
+   Neither section on this page has a diagonal divider — verified
+   clip-path: none on both.
+   --------------------------------------------------------------------- */
+.about-intro { padding-top: var(--header-h); }
+.about-intro__grid { --fe-rows: 34; }
+@media (min-width: 768px) { .about-intro__grid { --fe-rows: 15; } }
+
+.about-intro__heading  { grid-area: 1 / 2 / 3 / 10; }
+.about-intro__sub      { grid-area: 3 / 2 / 6 / 10; }
+.about-intro__portrait { grid-area: 6 / 2 / 18 / 10; }
+.about-intro__body     { grid-area: 19 / 2 / 35 / 10; }
+@media (min-width: 768px) {
+  .about-intro__heading  { grid-area: 1 / 2 / 3 / 15; }
+  .about-intro__sub      { grid-area: 3 / 2 / 5 / 15; }
+  .about-intro__portrait { grid-area: 2 / 16 / 15 / 25; }
+  .about-intro__body     { grid-area: 5 / 2 / 16 / 15; }
+}
+
+/* Unlike the hero images, this portrait is in normal flow on purpose: on the
+   live site it is TALLER than its grid area and grows the row to fit. Pinning
+   it absolutely (as the hero images need) would cap it at the area and lose
+   ~230px of height. It fills the column width and takes whatever height that
+   implies. */
+.about-intro__portrait img {
+  width: 100%;
+  height: auto;
+}
+.about-intro__body p { margin: 0 0 1em; }
+.about-intro__body p:last-child { margin-bottom: 0; }
+
+.fun-facts {
+  background: var(--white);
+  color: var(--black);
+  padding: clamp(3rem, 7vw, 5rem) 0;
+}
+.fun-facts__inner {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 var(--fe-gutter);
+}
+.fun-facts__heading { text-align: center; }
+.fun-facts__image {
+  max-width: 820px;
+  width: 100%;
+  height: auto;
+  margin: clamp(2rem, 5vw, 3rem) auto;
+}
+.fun-facts__list {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 2.5rem;
+  text-align: center;
+}
+.fun-facts__list p { margin: 0; }
+.fun-facts__list a { border-bottom: 1px solid currentColor; }
+
+/* ---------------------------------------------------------------------
+   Contact page
+   --------------------------------------------------------------------- */
+/* The hero here is white, so the transparent header's white text would be
+   invisible. `header-on-light` on <body> flips it. */
+.header-on-light .site-header { color: var(--black); }
+
+.contact-hero { padding-top: var(--header-h); }
+.contact-hero__grid { --fe-rows: 4; }
+.contact-hero__heading { grid-area: 2 / 3 / 4 / 9; }
+@media (min-width: 768px) { .contact-hero__heading { grid-area: 2 / 5 / 4 / 23; } }
+
+/* Full-bleed horizontal strip. Images keep their own aspect ratio at a fixed
+   height, exactly as the live carousel lays them out. */
+.contact-strip {
+  display: flex;
+  overflow-x: auto;
+  background: var(--dark);
+  scrollbar-width: none;
+}
+.contact-strip::-webkit-scrollbar { display: none; }
+.contact-strip img {
+  height: 270px;
+  width: auto;
+  flex: 0 0 auto;
+  object-fit: cover;
+}
+
+.contact-form-section {
+  background: var(--dark);
+  color: var(--white);
+  padding: clamp(3rem, 8vw, 5rem) 0 clamp(4rem, 10vw, 6rem);
+}
+.contact-form-section__inner {
+  max-width: 1500px;
+  margin: 0 auto;
+  padding: 0 var(--fe-gutter);
+}
+.contact-form {
+  display: grid;
+  gap: 1.15rem;
+  max-width: 640px;
+}
+.contact-form .field-group {
+  border: 0;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  gap: 0.8rem;
+}
+.contact-form legend {
+  padding: 0;
+  margin-bottom: 0.4rem;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  opacity: 0.8;
+}
+.field-row { display: grid; gap: 1.2rem; grid-template-columns: 1fr; }
+@media (min-width: 600px) { .field-row { grid-template-columns: 1fr 1fr; } }
+
+.contact-form .field label {
+  display: block;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+  margin-bottom: 0.5rem;
+  opacity: 0.8;
+}
+.contact-form input[type="text"],
+.contact-form input[type="email"],
+.contact-form input[type="tel"],
+.contact-form input[type="date"],
+.contact-form select,
+.contact-form textarea {
+  width: 100%;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.4);
+  color: var(--white);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  padding: 0.6rem 0;
+}
+.contact-form textarea { resize: vertical; min-height: 110px; }
+.contact-form select option { background: var(--dark); }
+.contact-form input:focus-visible,
+.contact-form select:focus-visible,
+.contact-form textarea:focus-visible {
+  outline: 2px solid var(--white);
+  outline-offset: 2px;
+}
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-size: 14px;
+}
+.checkbox-row label { margin: 0; opacity: 0.9; }
+.contact-form__submit {
+  height: 68px;
+  justify-self: start;
+  margin-top: 0.5rem;
+}
+
 /* Accessible label that stays out of the visual design. */
 .visually-hidden {
   position: absolute;
