@@ -13,14 +13,18 @@ thank-you page. A hidden honeypot field drops the obvious bots.
 Two settings live in the Cloudflare dashboard, **not** in this repo (it's public
 — the delivery address and the API key don't belong in source):
 
-**1. Verify a sending domain in Resend**
+**1. Verify `pilgrimagemedia.com` in Resend**
 - Sign up at <https://resend.com> (free tier is ample for a contact form).
-- Add a domain and verify it. `pilgrimage.media` is the natural choice since it
-  matches the site and its DNS is already in Cloudflare — Resend gives you a few
-  DNS records (DKIM/SPF); add them in the Cloudflare dashboard for the zone.
-- The **from** address must be on this verified domain. The committed default is
-  `contact@pilgrimagemedia.com` (see `CONTACT_FROM` in `wrangler.jsonc`). If you
-  verify a different domain, override `CONTACT_FROM` in the dashboard.
+- Add the domain `pilgrimagemedia.com`. Its DNS is already in Cloudflare, so add
+  the records Resend shows you in that zone's Cloudflare dashboard.
+- **⚠️ Don't touch the existing Proton mail records.** `pilgrimagemedia.com`
+  already receives mail via Proton (a root `MX` → `protonmail.ch` and a root
+  `SPF` TXT). Resend's records are additive — a DKIM selector like
+  `resend._domainkey`, and its own `MX`/`SPF` on a `send.` subdomain — so they
+  don't collide. Just **add** what Resend gives you; do not edit or replace the
+  root `MX` or the existing root `SPF` record, or you'll break Proton email.
+- The **from** address is `contact@pilgrimagemedia.com` (committed default in
+  `CONTACT_FROM`), which lives on this verified domain.
 
 **2. Set the Worker's variables**
 Workers & Pages → `pilgrimage-media-clone-ai` → Settings → Variables and Secrets:
