@@ -14,8 +14,15 @@ import sharp from "sharp";
 
 const PB = process.env.PB_URL || "http://127.0.0.1:8090";
 const ROOT = import.meta.dirname;
-const OUT = path.join(ROOT, "dist", "portfolio");
-const WIDTHS = [640, 1024, 1600]; // covers mobile → desktop 2x-ish
+// Writes straight into the hand-written static site, so there is one site
+// rather than two. The generated pages ARE committed: Cloudflare Pages builds
+// from git and can't reach PocketBase, so whatever is in the repo is what
+// publishes. That also gives published content a version history.
+const OUT = path.resolve(ROOT, "../../site/portfolio");
+// A full-width gallery row is ~1325px at a 1440 viewport, so 2400 covers it on
+// a retina screen. Variants wider than the source are skipped, so small uploads
+// simply produce fewer of these rather than being blown up.
+const WIDTHS = [640, 1024, 1600, 2400];
 const CARD_WIDTH = 800;
 
 const esc = (s = "") =>
@@ -78,9 +85,20 @@ for (const p of projects) {
   const coverImg = p.cover ? await responsive(p, p.cover, p.slug, [CARD_WIDTH, 1600]) : null;
 
   const figures = [];
-  for (const g of p.gallery ?? []) {
+  for (const [i, g] of (p.gallery ?? []).entries()) {
     const img = await responsive(p, g, p.slug, WIDTHS);
-    figures.push(`<figure>${picture(img, `${p.title} — photograph`, "(min-width: 768px) 50vw, 100vw")}</figure>`);
+    // Every third figure spans the full row (see .project-gallery in the CSS),
+    // so it needs a different `sizes` hint. Declaring 50vw for all of them made
+    // the browser under-select on exactly the images that need most resolution.
+    const isFullWidth = i % 3 === 0;
+    const sizesAttr = isFullWidth ? "(min-width: 768px) 92vw, 100vw" : "(min-width: 768px) 46vw, 100vw";
+    // Cap the figure at the photo's own width so a modest upload is never
+    // stretched past 1:1 — a 720px source in a 1325px row would otherwise be
+    // upscaled ~2x and render visibly soft. With real camera files this never
+    // binds; it only protects against small ones.
+    figures.push(
+      `<figure style="max-width:${img.width}px">${picture(img, `${p.title} — photograph`, sizesAttr)}</figure>`,
+    );
   }
 
   const shotOn = p.shot_on
@@ -116,10 +134,10 @@ for (const p of projects) {
   console.log(`  /portfolio/${p.slug}/  — ${figures.length} images`);
 
   cards.push(
-    `<a class="card" href="/portfolio/${p.slug}/">
+    `<a class="project-card" href="/portfolio/${p.slug}/">
           ${coverImg ? picture(coverImg, p.title, "(min-width: 768px) 33vw, 100vw") : ""}
           <h3>${esc(p.title)}</h3>
-          <p class="eyebrow">${esc(p.category)}</p>
+          <p class="project-eyebrow">${esc(p.category)}</p>
         </a>`,
   );
 }
@@ -128,6 +146,8 @@ await writeFile(
   path.join(OUT, "index.html"),
   fill(indexTpl, { cards: cards.join("\n        "), count: String(projects.length) }),
 );
-await writeFile(path.join(OUT, "portfolio.css"), await tpl("portfolio.css"));
+// Lives with the rest of the site's stylesheets, not inside /portfolio/,
+// because the project pages share /css/style.css for tokens and chrome.
+await writeFile(path.resolve(OUT, "../css/portfolio.css"), await tpl("portfolio.css"));
 
 console.log(`\n  wrote ${OUT}`);

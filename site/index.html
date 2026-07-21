@@ -1,0 +1,248 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Pilgrimage Media</title>
+    <meta
+      name="description"
+      content="Media for those on a journey to make themselves and others better. Photography and videography for athletes, teams and brands."
+    />
+    <link rel="canonical" href="https://pilgrimage.media/" />
+
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Pilgrimage Media" />
+    <meta
+      property="og:description"
+      content="Media for those on a journey to make themselves and others better."
+    />
+    <meta property="og:image" content="https://pilgrimage.media/images/portfolio-bg.jpg" />
+
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <!-- Preload the two faces used above the fold so headings don't reflow. -->
+    <link rel="preload" href="/fonts/roboto-condensed-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin />
+  </head>
+
+  <body>
+    <!-- ================= header =================
+         Absolute and transparent: it floats over the hero's own
+         background so the two read as one surface, and it scrolls away.
+         Not sticky — verified identical computed styles at scroll 0/800. -->
+    <header class="site-header">
+      <div class="site-header__inner">
+        <a class="wordmark" href="/">Pilgrimage Media</a>
+
+        <nav class="site-nav" aria-label="Primary">
+          <ul>
+            <li><a href="/#portfolio">Portfolio</a></li>
+            <li><a href="/#services">Services</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </nav>
+
+        <button
+          type="button"
+          class="nav-toggle"
+          id="nav-toggle"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <svg viewBox="0 0 25 19" width="25" height="19" fill="none" aria-hidden="true">
+            <rect y="0" width="25" height="1.5" fill="currentColor" />
+            <rect y="8.75" width="25" height="1.5" fill="currentColor" />
+            <rect y="17.5" width="25" height="1.5" fill="currentColor" />
+          </svg>
+        </button>
+      </div>
+
+      <div class="mobile-menu" id="mobile-menu" hidden>
+        <button type="button" class="mobile-menu__close" id="nav-close" aria-label="Close menu">
+          <svg viewBox="0 0 25 25" width="25" height="25" fill="none" aria-hidden="true">
+            <rect x="1" y="0" width="32" height="1.5" fill="currentColor" transform="rotate(45 1 0)" />
+            <rect x="0" y="23" width="32" height="1.5" fill="currentColor" transform="rotate(-45 0 23)" />
+          </svg>
+        </button>
+        <ul>
+          <li><a href="/#portfolio">Portfolio</a></li>
+          <li><a href="/#services">Services</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
+    </header>
+
+    <main>
+      <!-- ================= hero ================= -->
+      <section class="section hero">
+        <div class="section-border section-border--flush divider-down bg-dark">
+          <img src="/images/topographic2.png" alt="" fetchpriority="high" />
+        </div>
+        <div class="section-content fe-pad fe-grid hero__grid">
+          <h2 class="hero__heading">
+            Media for those on<br />
+            a journey to make<br />
+            themselves and<br />
+            others better.
+          </h2>
+          <div class="hero__figure hero__img-1">
+            <img src="/images/hero-1.jpg" alt="" width="434" height="578" fetchpriority="high" />
+          </div>
+          <div class="hero__figure hero__img-2">
+            <img src="/images/hero-2.jpg" alt="" width="514" height="344" loading="lazy" />
+          </div>
+          <div class="hero__figure hero__img-3">
+            <img src="/images/hero-3.jpg" alt="" width="282" height="423" loading="lazy" />
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= portfolio ================= -->
+      <section class="section portfolio" id="portfolio">
+        <div class="section-border divider-up bg-olive">
+          <img src="/images/portfolio-bg.jpg" alt="" loading="lazy" />
+        </div>
+        <div class="section-content fe-grid portfolio__grid on-dark">
+          <h1 class="portfolio__heading">View the Galleries</h1>
+          <hr class="rule portfolio__rule" />
+          <p class="portfolio__eyebrow">Portfolio image categories</p>
+
+          <h3 class="portfolio__cat portfolio__cat-1">
+            <a href="/fitness-athletes/">Athletes &amp; Fitness</a>
+          </h3>
+          <h3 class="portfolio__cat portfolio__cat-2">
+            <a href="/sports-events/">Sports &amp; Events</a>
+          </h3>
+          <h3 class="portfolio__cat portfolio__cat-3">
+            <a href="/health-adventure/">Health &amp; Adventure</a>
+          </h3>
+
+          <p class="portfolio__body">
+            I strive to craft visuals that inspire everyday people to pursue
+            strength, vitality, and a more active life — Let’s inspire action and
+            elevate lives through authentic, impactful media.
+          </p>
+
+          <a class="btn btn-outline portfolio__cta" href="/contact/">Let's Connect</a>
+        </div>
+      </section>
+
+      <!-- ================= mission ================= -->
+      <section class="section mission">
+        <div class="section-border divider-down bg-olive"></div>
+        <div class="section-content fe-pad fe-grid mission__grid on-dark">
+          <div class="mission__block">
+            <p class="mission__eyebrow">Athleticism is for everyone</p>
+            <h2 class="mission__heading">
+              A healthier world starts with living vibrantly and leading by example.
+            </h2>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================= services ================= -->
+      <section class="section services" id="services">
+        <div class="section-border divider-up bg-white">
+          <img src="/images/services-bg.jpg" alt="" loading="lazy" />
+        </div>
+        <div class="section-content fe-grid services__grid on-light">
+          <h1 class="services__heading">Services</h1>
+          <hr class="rule services__rule" />
+          <p class="services__eyebrow">Photography / Videography</p>
+
+          <div class="services__body">
+            <p>
+              <em>Personal Branding</em> for athletes, trainers, and coaches
+              building a healthier, more vibrant future through movement and
+              discipline.
+            </p>
+            <p>
+              <em>Commercial photography &amp; videography</em> for teams and
+              brands that inspire action, build community, and redefine what it
+              means to live vibrantly.
+            </p>
+            <p>
+              <em>Content for Web &amp; Social Media</em> — Stay consistent and
+              relevant with curated visuals optimized for digital
+              platforms—built to connect, convert, and inspire.
+            </p>
+          </div>
+
+          <a class="btn btn-solid services__cta" href="/contact/">Let's Connect</a>
+        </div>
+      </section>
+
+      <!-- ================= latest posts =================
+           The one section with no diagonal: it keeps the upward bleed
+           (that is what reveals Services' notch) but has no clip-path. -->
+      <section class="section section--no-pad posts">
+        <div class="section-border bg-white"></div>
+        <div class="section-content fe-pad fe-grid posts__grid on-light">
+          <h2 class="posts__heading">Latest Posts</h2>
+
+          <div class="posts__gallery">
+            <a href="https://www.instagram.com/p/DPeh0HdkkwX/" target="_blank" rel="noopener noreferrer">
+              <img src="/images/posts/post-1.jpg" alt="" loading="lazy" />
+            </a>
+            <div><img src="/images/posts/post-2.jpg" alt="" loading="lazy" /></div>
+            <a href="https://www.instagram.com/p/DPEgDesEYBD/" target="_blank" rel="noopener noreferrer">
+              <img src="/images/posts/post-3.jpg" alt="" loading="lazy" />
+            </a>
+            <a href="https://www.instagram.com/p/DPAEwqMkprD/" target="_blank" rel="noopener noreferrer">
+              <img src="/images/posts/post-4.jpg" alt="" loading="lazy" />
+            </a>
+            <div><img src="/images/posts/post-5.jpg" alt="" loading="lazy" /></div>
+            <div><img src="/images/posts/post-6.jpg" alt="" loading="lazy" /></div>
+            <a href="https://www.instagram.com/p/DOGsA-IEYT8/" target="_blank" rel="noopener noreferrer">
+              <img src="/images/posts/post-7.jpg" alt="" loading="lazy" />
+            </a>
+            <a href="https://www.instagram.com/p/DOFMlEGiar7/" target="_blank" rel="noopener noreferrer">
+              <img src="/images/posts/post-8.jpg" alt="" loading="lazy" />
+            </a>
+          </div>
+
+          <a
+            class="btn btn-solid posts__cta"
+            href="https://instagram.com/pilgrimagemedia"
+            target="_blank"
+            rel="noopener noreferrer"
+            >More posts</a
+          >
+        </div>
+      </section>
+    </main>
+
+    <!-- ================= footer ================= -->
+    <footer class="site-footer">
+      <div class="fe-pad fe-grid site-footer__grid">
+        <h3 class="site-footer__wordmark">Pilgrimage Media</h3>
+
+        <p class="site-footer__link-1"><a href="/fitness-athletes/">Athletes &amp; Fitness</a></p>
+        <p class="site-footer__link-2"><a href="/sports-events/">Sports &amp; Events</a></p>
+        <p class="site-footer__link-3"><a href="/health-adventure/">Health &amp; Adventure</a></p>
+        <p class="site-footer__link-4"><a href="/about/">About</a></p>
+        <p class="site-footer__link-5"><a href="/contact/">Contact</a></p>
+
+        <p class="site-footer__loop">Stay in the Loop<br />&mdash;</p>
+
+        <div class="site-footer__news">
+          <h2 class="newsletter__heading">Subscribe to our newsletter</h2>
+          <form class="newsletter__form" id="newsletter">
+            <div class="newsletter__field">
+              <label class="visually-hidden" for="newsletter-email">Email address</label>
+              <input class="newsletter__input" id="newsletter-email" type="email" name="email" />
+            </div>
+            <div class="newsletter__button-wrap">
+              <button class="newsletter__button" type="button">Sign up</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </footer>
+
+    <script src="/js/main.js" defer></script>
+  </body>
+</html>

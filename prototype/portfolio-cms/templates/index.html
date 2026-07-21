@@ -4,28 +4,63 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <title>Portfolio — Pilgrimage Media</title>
-    <meta name="description" content="Selected projects — athletes, sports events, health and adventure." />
-
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,600;1,600&family=Roboto+Condensed:ital,wght@0,600;1,600&display=swap"
-      rel="stylesheet"
+    <meta
+      name="description"
+      content="Selected projects — athletes and fitness, sports and events, health and adventure."
     />
-    <link rel="stylesheet" href="/portfolio/portfolio.css" />
+    <link rel="canonical" href="https://pilgrimage.media/portfolio/" />
+
+    <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/css/style.css" />
+    <link rel="stylesheet" href="/css/portfolio.css" />
+    <link rel="preload" href="/fonts/roboto-condensed-600.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin />
   </head>
+
   <body>
     <header class="site-header">
-      <a class="wordmark" href="/">Pilgrimage Media</a>
-      <nav class="site-nav">
-        <a href="/#portfolio">Portfolio</a>
-        <a href="/#services">Services</a>
-        <a href="/about">About</a>
-        <a href="/contact">Contact</a>
-      </nav>
+      <div class="site-header__inner">
+        <a class="wordmark" href="/">Pilgrimage Media</a>
+        <nav class="site-nav" aria-label="Primary">
+          <ul>
+            <li><a href="/#portfolio">Portfolio</a></li>
+            <li><a href="/#services">Services</a></li>
+            <li><a href="/about/">About</a></li>
+            <li><a href="/contact/">Contact</a></li>
+          </ul>
+        </nav>
+        <button
+          type="button"
+          class="nav-toggle"
+          id="nav-toggle"
+          aria-label="Open menu"
+          aria-expanded="false"
+          aria-controls="mobile-menu"
+        >
+          <svg viewBox="0 0 25 19" width="25" height="19" fill="none" aria-hidden="true">
+            <rect y="0" width="25" height="1.5" fill="currentColor" />
+            <rect y="8.75" width="25" height="1.5" fill="currentColor" />
+            <rect y="17.5" width="25" height="1.5" fill="currentColor" />
+          </svg>
+        </button>
+      </div>
+      <div class="mobile-menu" id="mobile-menu" hidden>
+        <button type="button" class="mobile-menu__close" id="nav-close" aria-label="Close menu">
+          <svg viewBox="0 0 25 25" width="25" height="25" fill="none" aria-hidden="true">
+            <rect x="1" y="0" width="32" height="1.5" fill="currentColor" transform="rotate(45 1 0)" />
+            <rect x="0" y="23" width="32" height="1.5" fill="currentColor" transform="rotate(-45 0 23)" />
+          </svg>
+        </button>
+        <ul>
+          <li><a href="/#portfolio">Portfolio</a></li>
+          <li><a href="/#services">Services</a></li>
+          <li><a href="/about/">About</a></li>
+          <li><a href="/contact/">Contact</a></li>
+        </ul>
+      </div>
     </header>
 
-    <main class="wrap">
+    <main class="portfolio-page" style="padding-top: var(--header-h)">
       <section class="project-hero">
         <h1>Portfolio</h1>
         <p class="project-body">{{count}} projects.</p>
@@ -35,10 +70,16 @@
     </main>
 
     <footer class="site-footer">
-      <div class="wrap">
-        <h3>Pilgrimage Media</h3>
-        <p>Media for those on a journey to make themselves and others better.</p>
+      <div class="fe-pad fe-grid site-footer__grid">
+        <h3 class="site-footer__wordmark">Pilgrimage Media</h3>
+        <p class="site-footer__link-1"><a href="/fitness-athletes/">Athletes &amp; Fitness</a></p>
+        <p class="site-footer__link-2"><a href="/sports-events/">Sports &amp; Events</a></p>
+        <p class="site-footer__link-3"><a href="/health-adventure/">Health &amp; Adventure</a></p>
+        <p class="site-footer__link-4"><a href="/about/">About</a></p>
+        <p class="site-footer__link-5"><a href="/contact/">Contact</a></p>
       </div>
     </footer>
+
+    <script src="/js/main.js" defer></script>
   </body>
 </html>

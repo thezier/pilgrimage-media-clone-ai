@@ -1,0 +1,36 @@
+// The only JavaScript on the site: the mobile menu toggle.
+// Everything else is static HTML — the page renders fully without this file.
+(function () {
+  "use strict";
+
+  var toggle = document.getElementById("nav-toggle");
+  var close = document.getElementById("nav-close");
+  var menu = document.getElementById("mobile-menu");
+  if (!toggle || !close || !menu) return;
+
+  function setOpen(open) {
+    menu.hidden = !open;
+    toggle.setAttribute("aria-expanded", String(open));
+    // Class rather than an inline style, so the rule lives in the CSS
+    // where you'd look for it.
+    document.body.classList.toggle("menu-open", open);
+    (open ? close : toggle).focus();
+  }
+
+  toggle.addEventListener("click", function () {
+    setOpen(true);
+  });
+  close.addEventListener("click", function () {
+    setOpen(false);
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (e.key === "Escape" && !menu.hidden) setOpen(false);
+  });
+
+  // Close after following an in-page anchor, otherwise the overlay stays
+  // up over the section you just jumped to.
+  menu.addEventListener("click", function (e) {
+    if (e.target.closest("a")) setOpen(false);
+  });
+})();

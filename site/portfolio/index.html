@@ -3,26 +3,18 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>{{title}} — Pilgrimage Media</title>
-    <meta name="description" content="{{summary}}" />
-
-    <!-- The live Squarespace site has empty meta descriptions on every page;
-         generating them here fixes that for free. -->
-    <meta property="og:type" content="article" />
-    <meta property="og:title" content="{{title}} — Pilgrimage Media" />
-    <meta property="og:description" content="{{summary}}" />
-    <meta property="og:image" content="{{ogImage}}" />
-    <link rel="canonical" href="https://pilgrimage.media/portfolio/{{slug}}/" />
+    <title>Portfolio — Pilgrimage Media</title>
+    <meta
+      name="description"
+      content="Selected projects — athletes and fitness, sports and events, health and adventure."
+    />
+    <link rel="canonical" href="https://pilgrimage.media/portfolio/" />
 
     <link rel="icon" href="/favicon.ico" />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="stylesheet" href="/css/portfolio.css" />
     <link rel="preload" href="/fonts/roboto-condensed-600.woff2" as="font" type="font/woff2" crossorigin />
     <link rel="preload" href="/fonts/ibm-plex-mono-600.woff2" as="font" type="font/woff2" crossorigin />
-
-    <script type="application/ld+json">
-      {{jsonld}}
-    </script>
   </head>
 
   <body>
@@ -70,16 +62,22 @@
 
     <main class="portfolio-page" style="padding-top: var(--header-h)">
       <section class="project-hero">
-        <p class="project-eyebrow">{{category}}</p>
-        <h1>{{title}}</h1>
-        <p class="project-lead">{{summary}}</p>
-        <div class="project-body">{{body}}</div>
-        <p class="project-meta">{{shotOn}}</p>
+        <h1>Portfolio</h1>
+        <p class="project-body">2 projects.</p>
       </section>
 
-      <div class="project-gallery">{{gallery}}</div>
-
-      <a class="back-link" href="/portfolio/">← All projects</a>
+      <div class="project-grid"><a class="project-card" href="/portfolio/kalia-strength-sessions/">
+          <img src="/portfolio/kalia-strength-sessions/img/hero_1_w3axmonvyb-800.webp" srcset="/portfolio/kalia-strength-sessions/img/hero_1_w3axmonvyb-800.webp 800w" sizes="(min-width: 768px) 33vw, 100vw"
+        width="1000" height="1333" alt="Kalia — Strength Sessions" loading="lazy" decoding="async" />
+          <h3>Kalia — Strength Sessions</h3>
+          <p class="project-eyebrow">Athletes &amp; Fitness</p>
+        </a>
+        <a class="project-card" href="/portfolio/trail-series-season-opener/">
+          <img src="/portfolio/trail-series-season-opener/img/hero_2_gn354xwg6z-800.webp" srcset="/portfolio/trail-series-season-opener/img/hero_2_gn354xwg6z-800.webp 800w" sizes="(min-width: 768px) 33vw, 100vw"
+        width="1000" height="669" alt="Trail Series — Season Opener" loading="lazy" decoding="async" />
+          <h3>Trail Series — Season Opener</h3>
+          <p class="project-eyebrow">Sports &amp; Events</p>
+        </a></div>
     </main>
 
     <footer class="site-footer">

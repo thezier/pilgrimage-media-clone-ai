@@ -1,0 +1,572 @@
+/* =====================================================================
+   Pilgrimage Media
+   Plain CSS. Every value here was measured off the live site with
+   getComputedStyle at 1920/1440/992/768/390 — see the Obsidian note
+   "Pilgrimage Media - Brand System" and docs/research/ in this repo.
+   Safe to hand-edit; there is no build step.
+   ===================================================================== */
+
+@import url("fonts.css");
+
+/* ---------------------------------------------------------------------
+   Tokens
+   --------------------------------------------------------------------- */
+:root {
+  --dark: #393939;   /* rgb(57,57,57)    */
+  --olive: #696d5e;  /* rgb(105,109,94)  */
+  --white: #ffffff;
+  --black: #000000;
+
+  /* Squarespace Fluid Engine geometry. Gap is a flat 11px at every
+     viewport; the outer gutter column is (gutter - gap) wide so that
+     gutter-col + gap lands exactly on the page gutter. */
+  --fe-gap: 11px;
+  --fe-gutter: 6vw;   /* < 768px */
+  --fe-row: 24px;     /* < 768px, Squarespace's mobile row unit */
+  --fe-pad-y: 9px;    /* .content-wrapper inset, < 768px */
+
+  /* Diagonal divider depth: a flat 6vw at every viewport
+     (23.4px @390 · 46.08 @768 · 59.52 @992 · 86.4 @1440 · 115.2 @1920). */
+  --divider: 6vw;
+
+  /* Fluid type. Between 768 and 1440 every heading level is
+     `16px + N·vw` — the 16px intercept is identical at every level,
+     which is why these are calc() and not clamp(). Below 768 the scale
+     is fixed, and is LARGER than at 768. */
+  --fs-h1: 48.384px;
+  --fs-h2: 35.4px;
+  --fs-h3: 29px;
+  --fs-em: 22.5px;
+  --fs-wordmark: 21.4px;
+
+  /* Hero top padding = the absolutely-positioned header's own height. */
+  --header-h: calc(37px + 12.011vw);
+}
+
+@media (min-width: 768px) {
+  :root {
+    --fe-gutter: 4vw;
+    --fe-row: 1.979vw;  /* 28.5px @1440 */
+    --fe-pad-y: 1vw;    /* 14.4px @1440 */
+    --fs-h1: calc(16px + 3.601vw);
+    --fs-h2: calc(16px + 2.158vw);
+    --fs-h3: calc(16px + 1.429vw);
+    --fs-em: calc(16px + 0.729vw);
+    --fs-wordmark: calc(16px + 0.595vw);
+  }
+}
+
+/* 800px is where the nav un-collapses and the header padding changes. */
+@media (min-width: 800px) {
+  :root { --header-h: calc(46.5px + 6.11vw); }
+}
+
+@media (min-width: 1440px) {
+  :root {
+    --fs-h1: calc(39.6px + 1.958vw);
+    --fs-h2: calc(30.3px + 1.167vw);
+    --fs-h3: calc(25.3px + 0.792vw);
+    --fs-em: calc(21px + 0.375vw);
+    --fs-wordmark: calc(19.8px + 0.333vw);
+  }
+}
+
+/* ---------------------------------------------------------------------
+   Base
+   --------------------------------------------------------------------- */
+*, *::before, *::after { box-sizing: border-box; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  margin: 0;
+  background: var(--dark);
+  color: var(--white);
+  /* Body copy is 600 weight with NEGATIVE tracking site-wide — set here
+     so it cascades to nav, buttons and list items. */
+  font-family: "IBM Plex Mono", ui-monospace, monospace;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  letter-spacing: -0.02em;
+  -webkit-font-smoothing: antialiased;
+}
+
+h1, h2, h3 {
+  font-family: "Roboto Condensed", sans-serif;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.07em;   /* 4.7488/67.84 — identical at every level */
+  margin: 0;
+}
+h1 { font-size: var(--fs-h1); line-height: 1.056; }
+h2 { font-size: var(--fs-h2); line-height: 1.114; }
+h3 { font-size: var(--fs-h3); line-height: 1.143; }
+
+p { margin: 0; }
+img { display: block; max-width: 100%; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; letter-spacing: inherit; }
+
+/* ---------------------------------------------------------------------
+   Fluid Engine grid
+   26 columns at >=768px (2 gutters + 24 content), 10 below (2 + 8).
+   Rows are minmax(_, auto) so a row grows when text wraps to more lines
+   than the reference viewport did — fixed heights collide at in-between
+   widths. Row COUNT is set per section: the live site declares it
+   explicitly and includes trailing empty rows that pad section height.
+   --------------------------------------------------------------------- */
+.fe-grid {
+  display: grid;
+  position: relative;
+  gap: var(--fe-gap);
+  grid-template-columns:
+    calc(var(--fe-gutter) - var(--fe-gap))
+    repeat(8, 1fr)
+    calc(var(--fe-gutter) - var(--fe-gap));
+  grid-template-rows: repeat(var(--fe-rows, 1), minmax(var(--fe-row), auto));
+  grid-auto-rows: minmax(var(--fe-row), auto);
+}
+@media (min-width: 768px) {
+  .fe-grid {
+    grid-template-columns:
+      calc(var(--fe-gutter) - var(--fe-gap))
+      repeat(24, 1fr)
+      calc(var(--fe-gutter) - var(--fe-gap));
+  }
+}
+.fe-grid > * { min-width: 0; }
+
+/* Squarespace's .content-wrapper vertical inset. Present on hero,
+   mission, latest-posts and footer — NOT on the two full-bleed-photo
+   sections (portfolio, services). */
+.fe-pad { padding-top: var(--fe-pad-y); padding-bottom: var(--fe-pad-y); }
+
+/* ---------------------------------------------------------------------
+   Sections + diagonal dividers
+
+   The real mechanism: each section holds an absolutely-positioned
+   background layer, inset -6vw at the top so it BLEEDS UPWARD into the
+   previous section, clipped at its own bottom by a 6vw diagonal.
+   Sections then carry DESCENDING z-index (6,5,4,3,auto) so an earlier
+   section paints OVER the next — the triangle its clip removes is what
+   reveals the next section's bled-up background. Without the descending
+   z-index every seam renders flat.
+   --------------------------------------------------------------------- */
+.section { position: relative; padding-bottom: var(--divider); }
+.section--no-pad { padding-bottom: 0; }
+
+.section-border {
+  position: absolute;
+  inset: calc(-1 * var(--divider)) 0 0;
+  z-index: 0;
+  overflow: hidden;
+}
+/* The hero is first in the document, so it has nothing to bleed into. */
+.section-border--flush { inset: 0; }
+
+.section-border > img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* Bottom edge drops left→right. */
+.divider-down { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - var(--divider))); }
+/* Bottom edge rises left→right. */
+.divider-up   { clip-path: polygon(0 0, 100% 0, 100% calc(100% - var(--divider)), 0 100%); }
+
+.section-content { position: relative; z-index: 1; }
+
+.bg-dark  { background: var(--dark); }
+.bg-olive { background: var(--olive); }
+.bg-white { background: var(--white); }
+.on-dark  { color: var(--white); }
+.on-light { color: var(--black); }
+
+/* Squarespace's 1px rule block. Colour comes from currentColor so the
+   same class is white in Portfolio and black in Services. */
+.rule { height: 1px; border: 0; margin: 8px 0; background: currentColor; }
+
+/* ---------------------------------------------------------------------
+   Buttons
+   Size comes from the grid area, NOT a fixed height: the same button is
+   212x68 in Portfolio and 323x68 in Latest Posts at 1440, and 59px tall
+   at 390 — in each case exactly the span of its area.
+   --------------------------------------------------------------------- */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0 34.736px;
+  font-size: 16px;
+  font-weight: 600;
+  text-align: center;
+  white-space: nowrap;
+  cursor: pointer;
+}
+/* Outline, uppercase, 0.1em tracking — the Portfolio CTA. */
+.btn-outline {
+  border: 1px solid var(--white);
+  background: transparent;
+  color: var(--white);
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  transition: background-color 0.1s linear, color 0.1s linear;
+}
+.btn-outline:hover { background: var(--white); color: var(--black); }
+/* Solid olive, mixed case, NORMAL tracking — Services + "More posts". */
+.btn-solid {
+  border: 0;
+  background: var(--olive);
+  color: var(--white);
+  text-transform: none;
+  letter-spacing: normal;
+  transition: opacity 0.1s linear;
+}
+.btn-solid:hover { opacity: 0.8; }
+
+/* ---------------------------------------------------------------------
+   Header — absolute, transparent, NOT sticky. Computed styles at scroll
+   0 and 800 are byte-identical on the live site; do not add a scroll
+   behaviour.
+   --------------------------------------------------------------------- */
+.site-header {
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  z-index: 10;
+  width: 100%;
+  color: var(--white);
+}
+.site-header__inner { position: relative; padding: 6vw; }
+@media (min-width: 800px) { .site-header__inner { padding: 1.4vw 4vw; } }
+
+.wordmark {
+  display: block;
+  width: 100%;
+  text-align: center;
+  font-family: "Roboto Condensed", sans-serif;
+  font-weight: 600;
+  font-size: var(--fs-wordmark);
+  line-height: 1.2;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+
+.site-nav { display: none; }
+@media (min-width: 800px) {
+  .site-nav { display: flex; justify-content: center; width: 100%; }
+}
+.site-nav ul {
+  display: inline-flex;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.site-nav li { margin: 0 10.8px; white-space: nowrap; }
+.site-nav a { display: block; padding: 1.6px 0; text-align: center; }
+
+.nav-toggle {
+  position: absolute;
+  top: 50%;
+  right: 6vw;
+  transform: translateY(-50%);
+  display: flex;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--white);
+  cursor: pointer;
+}
+@media (min-width: 800px) { .nav-toggle { display: none; } }
+
+/* Mobile overlay menu */
+.mobile-menu {
+  position: fixed;
+  inset: 0;
+  z-index: 20;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 32px;
+  background: var(--dark);
+}
+.mobile-menu[hidden] { display: none; }
+.mobile-menu ul {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 32px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.mobile-menu__close {
+  position: absolute;
+  top: 6vw;
+  right: 6vw;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: var(--white);
+  cursor: pointer;
+}
+body.menu-open { overflow: hidden; }
+
+/* ---------------------------------------------------------------------
+   Hero
+   --------------------------------------------------------------------- */
+.hero { z-index: 6; padding-top: var(--header-h); }
+.hero__grid { --fe-rows: 24; }
+@media (min-width: 768px) { .hero__grid { --fe-rows: 21; } }
+
+/* object-fit is CONTAIN, not cover — these render at essentially their
+   natural intrinsic size. cover crops them and is visibly wrong.
+
+   The img is absolutely positioned so it contributes NO intrinsic height:
+   the box is defined purely by its grid area, and the photo letterboxes
+   inside it. Left in normal flow, `width:100%` scales each photo up to its
+   column and pushes the rows taller — that alone made the hero 232px too
+   tall at 1440. */
+.hero__figure { position: relative; }
+.hero__figure img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* The hero heading is the one block on the page that is vertically CENTRED
+   within its grid area (measured offset 28px = (265-210)/2). Every other
+   block is top-aligned. Squarespace sets this per block via justify-content
+   on the block's inner flex wrapper. */
+.hero__heading { grid-area: 1 / 2 / 7 / 11; align-self: center; }
+.hero__img-1   { grid-area: 6 / 6 / 16 / 11; }
+.hero__img-2   { grid-area: 11 / 1 / 17 / 7; }  /* bleeds into the gutter on purpose */
+.hero__img-3   { grid-area: 15 / 5 / 23 / 8; }
+@media (min-width: 768px) {
+  .hero__heading { grid-area: 2 / 11 / 9 / 21; }
+  .hero__img-1   { grid-area: 1 / 2 / 18 / 10; }
+  .hero__img-2   { grid-area: 13 / 9 / 22 / 19; }
+  .hero__img-3   { grid-area: 9 / 16 / 20 / 24; }
+}
+
+/* ---------------------------------------------------------------------
+   Portfolio
+   --------------------------------------------------------------------- */
+.portfolio { z-index: 5; }
+.portfolio__grid { --fe-rows: 29; }
+@media (min-width: 768px) { .portfolio__grid { --fe-rows: 24; } }
+
+.portfolio__heading { grid-area: 3 / 2 / 6 / 10; }
+.portfolio__rule    { grid-area: 6 / 2 / 7 / 10; }
+.portfolio__eyebrow { grid-area: 7 / 2 / 8 / 10; font-style: italic; }
+.portfolio__cat-1   { grid-area: 11 / 2 / 13 / 11; }
+.portfolio__cat-2   { grid-area: 14 / 2 / 16 / 11; }
+.portfolio__cat-3   { grid-area: 17 / 2 / 19 / 11; }
+.portfolio__body    { grid-area: 20 / 2 / 25 / 9; }
+.portfolio__cta     { grid-area: 25 / 2 / 27 / 7; }
+@media (min-width: 768px) {
+  .portfolio__heading { grid-area: 5 / 11 / 9 / 26; }
+  .portfolio__rule    { grid-area: 7 / 11 / 8 / 20; }
+  .portfolio__eyebrow { grid-area: 8 / 11 / 9 / 20; }
+  .portfolio__cat-1   { grid-area: 10 / 11 / 12 / 26; }
+  .portfolio__cat-2   { grid-area: 12 / 11 / 14 / 26; }
+  .portfolio__cat-3   { grid-area: 14 / 11 / 16 / 26; }
+  .portfolio__body    { grid-area: 17 / 11 / 19 / 21; }
+  .portfolio__cta     { grid-area: 20 / 11 / 22 / 15; }
+}
+/* The category anchors are inline on the live site — only as wide as
+   their text, not the full block. No hover style is declared there. */
+.portfolio__cat a { display: inline; }
+
+/* ---------------------------------------------------------------------
+   Mission — flat olive, no photo, no gradient.
+   --------------------------------------------------------------------- */
+.mission { z-index: 4; }
+.mission__grid { --fe-rows: 11; }
+@media (min-width: 768px) { .mission__grid { --fe-rows: 7; } }
+
+.mission__block { grid-area: 2 / 2 / 11 / 10; }
+@media (min-width: 768px) { .mission__block { grid-area: 2 / 9 / 7 / 19; } }
+
+/* Roboto Condensed ITALIC — not the mono italic used elsewhere. */
+.mission__eyebrow {
+  font-family: "Roboto Condensed", sans-serif;
+  font-weight: 600;
+  font-style: italic;
+  font-size: var(--fs-em);
+  line-height: 1.171;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+  text-align: center;
+}
+.mission__heading { margin-top: 32px; text-align: center; }
+
+/* ---------------------------------------------------------------------
+   Services — first light section. No scrim: the live site's computed
+   background-image on the text and its whole ancestor chain is `none`.
+   --------------------------------------------------------------------- */
+.services { z-index: 3; }
+.services__grid { --fe-rows: 32; }
+@media (min-width: 768px) { .services__grid { --fe-rows: 20; } }
+.services .section-border > img { object-position: 50% 50%; }
+
+.services__heading { grid-area: 3 / 2 / 5 / 10; }
+.services__rule    { grid-area: 5 / 2 / 6 / 10; }
+.services__eyebrow { grid-area: 6 / 2 / 8 / 10; }
+.services__body    { grid-area: 8 / 2 / 16 / 9; }
+/* Row 27 on mobile is deliberate — rows 16-27 are empty so the photo
+   shows through below the text. Reproduce via grid-area, not a margin. */
+.services__cta     { grid-area: 27 / 3 / 29 / 9; }
+@media (min-width: 768px) {
+  .services__heading { grid-area: 4 / 2 / 6 / 14; }
+  .services__rule    { grid-area: 6 / 2 / 7 / 11; }
+  .services__eyebrow { grid-area: 8 / 2 / 9 / 14; }
+  .services__body    { grid-area: 9 / 2 / 14 / 14; }
+  .services__cta     { grid-area: 15 / 2 / 17 / 7; }
+}
+
+/* Heading-styled and UPRIGHT — not the mono italic used in Portfolio. */
+.services__eyebrow {
+  font-family: "Roboto Condensed", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  font-size: var(--fs-em);
+  line-height: 1.17;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+.services__body p { margin: 16px 0; }
+.services__body p:first-child { margin: 0 0 16px; }
+.services__body p:last-child  { margin: 16px 0 0; }
+/* The two lead weights genuinely differ on the live site. */
+.services__body em { font-style: italic; font-weight: 600; }
+.services__body p:first-child em { font-weight: 700; }
+
+/* ---------------------------------------------------------------------
+   Latest Posts — the ONE section with no diagonal. It keeps the upward
+   bleed (that is what reveals Services' notch) but has no clip-path.
+   --------------------------------------------------------------------- */
+.posts__grid { --fe-rows: 18; }
+@media (min-width: 768px) { .posts__grid { --fe-rows: 17; } }
+
+.posts__heading { grid-area: 3 / 2 / 5 / 10; text-align: left; }
+.posts__gallery { grid-area: 5 / 2 / 17 / 10; }
+.posts__cta     { grid-area: 17 / 4 / 19 / 8; }
+@media (min-width: 768px) {
+  .posts__heading { grid-area: 3 / 4 / 5 / 24; }
+  .posts__gallery { grid-area: 5 / 4 / 16 / 24; }
+  .posts__cta     { grid-area: 16 / 11 / 18 / 17; }
+}
+
+/* Zero gap: measured slide pitch equals slide width exactly (280.5 vs
+   281 @1440, 182 vs 182 @390). No hover effect is declared on the live
+   thumbnails. */
+.posts__gallery {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+}
+@media (min-width: 768px) {
+  .posts__gallery { grid-template-columns: repeat(4, 1fr); }
+}
+.posts__gallery > * { position: relative; aspect-ratio: 0.7282; }
+@media (min-width: 768px) { .posts__gallery > * { aspect-ratio: 3 / 4; } }
+.posts__gallery img { width: 100%; height: 100%; object-fit: cover; }
+
+/* ---------------------------------------------------------------------
+   Footer — plain block. No divider, no bleed, no z-index. No bottom
+   padding, unlike the four sections above it.
+   --------------------------------------------------------------------- */
+.site-footer {
+  display: flex;
+  align-items: center;
+  background: var(--white);
+  color: var(--black);
+}
+.site-footer__grid { --fe-rows: 23; width: 100%; }
+@media (min-width: 768px) { .site-footer__grid { --fe-rows: 9; } }
+
+.site-footer__wordmark { grid-area: 2 / 2 / 5 / 6; text-align: left; }
+.site-footer__link-1 { grid-area: 5 / 2 / 6 / 10; }
+.site-footer__link-2 { grid-area: 6 / 2 / 7 / 10; }
+.site-footer__link-3 { grid-area: 7 / 2 / 8 / 10; }
+.site-footer__link-4 { grid-area: 8 / 2 / 9 / 10; }
+.site-footer__link-5 { grid-area: 9 / 2 / 10 / 10; }
+.site-footer__loop   { grid-area: 12 / 2 / 14 / 10; }
+.site-footer__news   { grid-area: 14 / 2 / 24 / 10; }
+@media (min-width: 768px) {
+  .site-footer__wordmark { grid-area: 2 / 2 / 4 / 14; }
+  .site-footer__link-1 { grid-area: 4 / 2 / 5 / 10; }
+  .site-footer__link-2 { grid-area: 5 / 2 / 6 / 10; }
+  .site-footer__link-3 { grid-area: 6 / 2 / 7 / 10; }
+  .site-footer__link-4 { grid-area: 7 / 2 / 8 / 10; }
+  .site-footer__link-5 { grid-area: 8 / 2 / 9 / 10; }
+  .site-footer__loop   { grid-area: 2 / 17 / 4 / 26; }
+  .site-footer__news   { grid-area: 4 / 17 / 10 / 26; }
+}
+
+/* Squarespace's `sqsrte-small`. Two lines: the label, then the em-dash
+   alone below it. */
+.site-footer__loop { font-size: 14px; line-height: 21.4px; }
+
+/* Although it is an <h2>, its measured size is the h3 size. */
+.newsletter__heading {
+  font-size: var(--fs-h3);
+  line-height: 1.2;
+  margin: 0 0 16px;
+  text-align: left;
+}
+.newsletter__form { display: flex; flex-wrap: wrap; }
+.newsletter__field { margin-top: 16px; }
+.newsletter__input {
+  width: 284px;
+  max-width: 100%;
+  height: 66px;
+  padding: 22.4px 32px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: var(--white);
+  color: var(--black);
+  font-family: inherit;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19.2px;
+  letter-spacing: -0.02em;
+}
+.newsletter__button-wrap { margin-top: 16px; padding: 8px 4px 8px 0; }
+.newsletter__button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 131px;
+  height: 64px;
+  padding: 22.4px 32px;
+  border: 0;
+  background: var(--olive);
+  color: var(--white);
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 19.2px;
+  /* Without nowrap the label wraps to two lines at this width. */
+  white-space: nowrap;
+  cursor: pointer;
+  transition: opacity 0.1s linear;
+}
+.newsletter__button:hover { opacity: 0.8; }
+
+/* Accessible label that stays out of the visual design. */
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  margin: -1px; padding: 0;
+  overflow: hidden;
+  clip: rect(0 0 0 0);
+  white-space: nowrap;
+  border: 0;
+}
