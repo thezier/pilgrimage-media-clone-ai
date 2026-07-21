@@ -1,0 +1,9 @@
+# PocketBase binary (30MB) — download per-machine from the releases page
+pocketbase
+pb.log
+# SQLite database + uploaded originals. This IS the CMS content; back it up
+# separately, but don't commit it.
+pb_data/
+# Build output
+dist/
+node_modules/
