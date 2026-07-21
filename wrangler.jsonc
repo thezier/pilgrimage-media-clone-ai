@@ -1,0 +1,22 @@
+{
+  // Cloudflare Workers Builds config. This is what the dashboard's
+  // "Deploy command: npx wrangler deploy" reads — the newer Workers flow has no
+  // "build output directory" field, so the assets directory is declared here
+  // instead.
+  //
+  // There is deliberately no "main" entry: this is a static site with no Worker
+  // script, which is a supported configuration. Cloudflare serves the files in
+  // ./site directly from its edge.
+  "name": "pilgrimage-media-clone-ai",
+  "compatibility_date": "2026-07-21",
+
+  "assets": {
+    "directory": "./site",
+
+    // Serve the nearest 404.html for unmatched paths. The alternative,
+    // "single-page-application", would return 200 + index.html for every
+    // unknown URL — wrong here, and actively bad for SEO, since every typo'd
+    // path would look like a real page to a crawler.
+    "not_found_handling": "404-page"
+  }
+}
