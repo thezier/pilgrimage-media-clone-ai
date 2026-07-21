@@ -80,6 +80,13 @@ unchanged.
   directory *is* the whole CMS; copying it is a complete backup.
 - Wire the build into `deploy-to-pi.sh` so publishing is one command.
 
+## Decisions made
+
+- **One layout for all projects** (decided 2026-07-20). Projects vary by words and
+  photos, not arrangement. If a future shoot needs to break the pattern, add a
+  `layout` select field to the collection and branch in the template — don't
+  start hand-maintaining per-project HTML.
+
 ## Known limits
 
 - PocketBase is v0.39.x with no 1.0 and no support guarantees. Acceptable here
