@@ -28,7 +28,20 @@ If the user provides additional instructions (specific fidelity level, customiza
 
 ## Pre-Flight
 
-1. **Browser automation is required.** Check for available browser MCP tools (Chrome MCP, Playwright MCP, Browserbase MCP, Puppeteer MCP, etc.). Use whichever is available — if multiple exist, prefer Chrome MCP. If none are detected, ask the user which browser tool they have and how to connect it. This skill cannot work without browser automation.
+1. **Browser automation is required — and for measurement it must be Playwright.**
+
+   Install it in a scratch directory (`npm i playwright`) and drive it from a script.
+   Browsers are usually already cached at `~/Library/Caches/ms-playwright`.
+
+   > ⚠️ **Do not measure through a browser extension.** Claude-in-Chrome's
+   > `resize_window` reports "Successfully resized" but `window.innerWidth` never
+   > changes in some environments. Every computed style and rect you read is then
+   > silently at the wrong viewport, which invalidates the entire extraction.
+   > **Verify before trusting any tool: resize, then assert `window.innerWidth`
+   > actually equals what you asked for.** If it doesn't, switch to Playwright.
+
+   An extension-based browser is still fine for interactive poking — clicking around,
+   watching what happens. It is not fine for numbers.
 2. Parse `$ARGUMENTS` as one or more URLs. Normalize and validate each URL; if any are invalid, ask the user to correct them before proceeding. For each valid URL, verify it is accessible via your browser MCP tool.
 3. Verify the base project builds: `npm run build`. The Next.js + shadcn/ui + Tailwind v4 scaffold should already be in place. If not, tell the user to set it up first.
 4. Create the output directories if they don't exist: `docs/research/`, `docs/research/components/`, `docs/design-references/`, `scripts/`. For multiple clones, also prepare per-site folders like `docs/research/<hostname>/` and `docs/design-references/<hostname>/`.
@@ -115,7 +128,38 @@ Every component gets a specification file in `docs/research/components/` BEFORE 
 
 The spec file is not optional. It is not a nice-to-have. If you dispatch a builder without first writing a spec file, you are shipping incomplete instructions based on whatever you can remember from a browser MCP session, and the builder will guess to fill gaps.
 
-### 9. Build Must Always Compile
+### 9. Extract the Layout Engine, Not Just the Layout
+
+Site builders (Squarespace Fluid Engine, Webflow, Framer, Elementor) generate a real
+layout system, and its parameters are sitting in the page's own stylesheets. Walking
+`document.styleSheets` for the rules that target each block beats any amount of
+eyeballed flexbox.
+
+Squarespace 7.1, for example, gives every block an explicit `grid-area`, declared
+twice — a mobile rule and a `@media (min-width: 768px)` override. Extracting those
+verbatim is the difference between a layout that matches and one that approximates.
+
+**Ask of every value: is this declared somewhere, or am I inferring it?** Inferred
+values are where clones break. A grid's row *count* is typically declared explicitly
+and includes trailing empty rows that pad out section height — deriving it from "the
+last row a block occupies" silently loses hundreds of pixels.
+
+Also ask: **what determines this element's size?** A button whose height you hard-code
+will be right in one section and wrong in another if the real site sizes it from its
+grid area.
+
+### 10. Sample Across Widths to Find the Formula
+
+Measure a value at 5+ viewport widths (1920 / 1440 / 992 / 768 / 390), then fit it.
+One sample gives a number; five give the rule that generated it.
+
+This is how a type scale resolves into something exact rather than approximated —
+e.g. fitting five widths revealed every heading level followed `calc(16px + N·vw)`
+with an identical intercept, which no single-width reading would have shown. Fit
+each segment separately; scales often change slope at a breakpoint, and may be
+fixed (not fluid) below one.
+
+### 11. Build Must Always Compile
 
 Every builder agent must verify `npx tsc --noEmit` passes before finishing. After merging worktrees, you verify `npm run build` passes. A broken build is never acceptable, even temporarily.
 
@@ -134,6 +178,32 @@ Extract these from the page before doing anything else:
 **Fonts** — Inspect `<link>` tags for Google Fonts or self-hosted fonts. Check computed `font-family` on key elements (headings, body, code, labels). Document every family, weight, and style actually used. Configure them in `src/app/layout.tsx` using `next/font/google` or `next/font/local`.
 
 **Colors** — Extract the site's color palette from computed styles across the page. Update `src/app/globals.css` with the target's actual colors in the `:root` and `.dark` CSS variable blocks. Map them to shadcn's token names (background, foreground, primary, muted, etc.) where they fit. Add custom properties for colors that don't map to shadcn tokens.
+
+**Type scale** — Measure font-size, line-height and letter-spacing for every text role at **all five widths**, then fit each to a formula (see Guiding Principle 10). Check whether the scale is fluid throughout or fixed below a breakpoint — and don't assume mobile is the small end of the ramp; it is sometimes *larger* than at tablet.
+
+**Layout engine** — Walk `document.styleSheets` for the rules positioning each content block, and dump them verbatim to `docs/research/`. Capture the grid's declared track counts, gaps, gutters and row sizing at each breakpoint, plus any per-section overrides. This is the single highest-value extraction on the page:
+
+```javascript
+// Pull every declared grid-area / grid-template-rows, with its media query
+(() => {
+  const out = {};
+  for (const sheet of document.styleSheets) {
+    let rules; try { rules = sheet.cssRules; } catch { continue; }   // skip cross-origin
+    (function walk(rs, media) {
+      for (const r of rs) {
+        if (r.media) { walk(r.cssRules, r.conditionText); continue; }
+        const s = r.style;
+        if (!s || !r.selectorText) continue;
+        if (s.gridArea || s.gridTemplateRows || s.gridTemplateColumns) {
+          (out[r.selectorText.trim()] ||= {})[media || 'base'] =
+            [s.gridArea, s.gridTemplateRows, s.gridTemplateColumns].filter(Boolean).join(' | ');
+        }
+      }
+    })(rules, null);
+  }
+  return JSON.stringify(out, null, 2);
+})();
+```
 
 **Favicons & Meta** — Download favicons, apple-touch-icons, OG images, webmanifest to `public/seo/`. Update `layout.tsx` metadata.
 
@@ -392,6 +462,23 @@ Based on complexity, dispatch builder agent(s) in worktree(s):
 - Instruction to verify with `npx tsc --noEmit` before finishing
 - For responsive behavior: the specific breakpoint values and what changes
 
+> ⚠️ **Commit the foundation before dispatching, and verify the worktrees have it.**
+> Worktree agents branch from `HEAD` at dispatch time. If the foundation (globals.css,
+> content, types, assets) isn't committed — or the worktree was created earlier — the
+> agents open the files you told them already exist and find the untouched scaffold.
+> They will then improvise: some merge `master` themselves, some write throwaway stubs,
+> some just build blind to spec. All of that is wasted work and a source of drift.
+>
+> After dispatch, sanity-check one worktree actually contains the foundation.
+> Also add the worktree directory to `.gitignore` — otherwise it gets committed as a
+> set of embedded git repositories.
+
+Give every builder the **anti-instructions** too, not just the spec. Telling an agent
+"there is no gradient here", "these items have no bottom border", "do NOT uppercase
+this button", "the empty band on mobile is intentional — reproduce it via the
+grid-area, not a margin" measurably stops it from producing the plausible-looking
+wrong thing. Past QA findings are the best source of these.
+
 **Don't wait.** As soon as you've dispatched the builder(s) for one section, move to extracting the next section. Builders work in parallel in their worktrees while you continue extraction.
 
 ### Step 4: Merge
@@ -416,19 +503,64 @@ After all sections are built and merged, wire everything together in `src/app/pa
 
 ## Phase 5: Visual QA Diff
 
-After assembly, do NOT declare the clone complete. Take side-by-side comparison screenshots:
+After assembly, do NOT declare the clone complete.
 
-1. Open the original site and your clone side-by-side (or take screenshots at the same viewport widths)
-2. Compare section by section, top to bottom, at desktop (1440px)
-3. Compare again at mobile (390px)
-4. For each discrepancy found:
-   - Check the component spec file — was the value extracted correctly?
-   - If the spec was wrong: re-extract from browser MCP, update the spec, fix the component
-   - If the spec was right but the builder got it wrong: fix the component to match the spec
-5. Test all interactive behaviors: scroll through the page, click every button/tab, hover over interactive elements
-6. Verify smooth scroll feels right, header transitions work, tab switching works, animations play
+**Screenshot comparison is not QA.** Eyeballing two images side by side reliably misses
+the errors that actually matter — inverted diagonals, wrong grid row counts, missing
+copy, a section 400px short. Every one of those looks fine in a shrunk screenshot.
 
-Only after this visual QA pass is the clone complete.
+**QA is a numeric diff loop.** Write a script that drives the live site and your clone
+at matched viewports and diffs measured values. Iterate until the deltas are zero.
+
+### The diff harness
+
+Serve the clone locally, then for each viewport (1440 / 768 / 390) collect from *both*:
+
+- **Total document height** — the headline number. Chase this first; a large delta
+  means something structural, not cosmetic.
+- **Per-section `top` and `height`** — this localises the problem immediately. A
+  section with correct height but wrong `top` means the error is *above* it.
+- **Per-element computed styles** on matched pairs — font-size, line-height,
+  letter-spacing, colour, margin, rect.
+
+Report as `live X → clone Y (Δ)` so discrepancies are unmissable. Drive it down in
+passes; each round exposes a concrete cause.
+
+### Measuring angled or curved edges
+
+For diagonal dividers and any non-axis-aligned boundary, **measure the slope in pixels**:
+crop a thin band at the seam on both sites, sample luminance transitions down many
+x-columns, and take the **median of all pairwise slopes** (Theil–Sen).
+
+Use the median, not least-squares. Ordinary regression gets fooled by a handful of
+false edges from photo texture and can return the **wrong sign** — reporting a seam as
+going up when it goes down. That failure mode has silently passed review before.
+
+Compare direction *and* magnitude against the live site.
+
+### Verify text content separately
+
+Dump every heading and paragraph's `textContent` from both sites and diff the lists.
+This catches whole missing paragraphs and mis-transcribed sentences, which no
+geometric check will find. Watch for curly vs. straight apostrophes.
+
+### Then verify behaviour
+
+Drive the clone programmatically: toggle the mobile menu, assert body-scroll lock and
+Escape-to-close, hover each button and assert the computed style actually changes,
+confirm anchor targets exist, count links against the original.
+
+### For each discrepancy
+
+- Check the component spec — was the value extracted correctly?
+- If the spec was wrong: re-extract, **update the spec**, then fix the component.
+- If the spec was right: fix the component to match it.
+- Re-run the whole diff after each fix. Fixes introduce regressions; a previous clone
+  had two bugs that were created by the fix pass itself, not missed originally.
+
+Record what the diff caught, plus any remaining known gaps, in `docs/research/VISUAL_QA.md`.
+
+Only after the deltas are zero (or explicitly accepted and documented) is the clone complete.
 
 ## Pre-Dispatch Checklist
 
@@ -442,7 +574,10 @@ Before dispatching ANY builder agent, verify you can check every box. If you can
 - [ ] For hover states: before/after values and transition timing are recorded
 - [ ] All images in the section are identified (including overlays and layered compositions)
 - [ ] Responsive behavior is documented for at least desktop and mobile
-- [ ] Text content is verbatim from the site, not paraphrased
+- [ ] Text content came from per-element `textContent`, not a container's truncated `innerText`
+- [ ] Declared layout values (grid areas, track counts, gaps) are copied verbatim, not derived
+- [ ] Nothing is hard-coded that the layout actually sizes
+- [ ] The foundation is committed and the worktrees can see it
 - [ ] The builder prompt is under ~150 lines of spec; if over, the section needs to be split
 
 ## What NOT to Do
@@ -460,6 +595,13 @@ These are lessons from previous failed clones — each one cost hours of rework:
 - **Don't give a builder agent too much scope.** If you're writing a builder prompt and it's getting long because the section is complex, that's a signal to break it into smaller tasks.
 - **Don't bundle unrelated sections into one agent.** A CTA section and a footer are different components with different designs — don't hand them both to one agent and hope for the best.
 - **Don't skip responsive extraction.** If you only inspect at desktop width, the clone will break at tablet and mobile. Test at 1440, 768, and 390 during extraction.
+- **Don't trust a browser tool that can't prove it resized.** Assert `window.innerWidth` after every resize. A tool that reports success while silently staying at one width will corrupt every measurement you take.
+- **Don't read copy from a container's `innerText`.** It truncates, and you will ship a missing paragraph or a mangled sentence. Pull `textContent` from each individual element, and diff the full text inventory against the live site.
+- **Don't derive a value the page declares.** Grid row counts, column counts and track sizes are usually written down in the stylesheet. Deriving them from what the content happens to occupy loses the trailing empty tracks that pad out section height.
+- **Don't hard-code a dimension the layout is supplying.** If the same component renders at different sizes in different sections, its size comes from its container — hard-coding it makes one instance right and the rest wrong.
+- **Don't assume uniform spacing.** Verify gaps by measuring *pitch minus size*, not by dividing container width by item count — the latter silently invents a gap that isn't there.
+- **Don't assume every section shares the same padding.** Check each one; the last section before the footer commonly differs.
+- **Don't call it done on a screenshot comparison.** Diff numbers. See Phase 5.
 - **Don't forget smooth scroll libraries.** Check for Lenis (`.lenis` class), Locomotive Scroll, or similar. Default browser scrolling feels noticeably different and the user will spot it immediately.
 - **Don't dispatch builders without a spec file.** The spec file forces exhaustive extraction and creates an auditable artifact. Skipping it means the builder gets whatever you can fit in a prompt from memory.
 
