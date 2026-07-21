@@ -12,7 +12,10 @@ import { mkdir, readFile, writeFile, rm } from "node:fs/promises";
 import path from "node:path";
 import sharp from "sharp";
 
-const PB = process.env.PB_URL || "http://127.0.0.1:8090";
+// The Pi over the tailnet is the real instance. Override with PB_URL for a
+// local copy. It is bound to the tailnet address only, so this requires
+// Tailscale to be up — which is the point: the CMS has no public surface.
+const PB = process.env.PB_URL || "http://100.123.155.98:8090";
 const ROOT = import.meta.dirname;
 // Writes straight into the hand-written static site, so there is one site
 // rather than two. The generated pages ARE committed: Cloudflare Pages builds
