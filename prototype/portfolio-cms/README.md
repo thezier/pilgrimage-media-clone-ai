@@ -1,20 +1,33 @@
-# Portfolio CMS — prototype
+# Portfolio CMS
 
-A working proof of the "PocketBase for authoring, static HTML for delivery" route.
-Everything here runs on your Mac; nothing touches the Pi.
+PocketBase for authoring, static HTML for delivery.
 
-## Try it
+**The live instance runs on the Pi**, bound to the tailnet address only:
+
+| | |
+|---|---|
+| Admin UI | <http://100.123.155.98:8090/_/> (Tailscale must be up) |
+| Service | `pocketbase.service` on the Pi, enabled at boot |
+| Data | `/mnt/mtp1/pocketbase/pb_data` (SSD, not the SD card) |
+
+It has **no public surface**: no Caddy block, no tunnel ingress, not bound to
+`0.0.0.0`. An admin login has no business facing the internet.
+
+## Publishing
 
 ```bash
-bash start.sh          # starts PocketBase + creates the schema
-node seed.mjs          # optional: two sample projects using real photos
-node build.mjs         # generates plain static HTML into dist/
-cd dist && python3 -m http.server 4400
+bash scripts/publish.sh      # from the repo root
 ```
 
-Then:
-- **Edit** at <http://127.0.0.1:8090/_/> → Collections → `projects`
-- **View** at <http://localhost:4400/portfolio/>
+Regenerates the project pages from the CMS, commits, and pushes. Cloudflare
+deploys within about a minute.
+
+## Running a local copy instead
+
+```bash
+bash start.sh                       # local PocketBase on 127.0.0.1:8090
+PB_URL=http://127.0.0.1:8090 node build.mjs
+```
 
 ## The editing flow
 
