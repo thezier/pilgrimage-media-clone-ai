@@ -48,21 +48,35 @@ Heading-styled, **not** the mono italic used in Portfolio:
 - font-size: `var(--fs-em)` → ~26.4px @1440; line-height ~1.17
 - text-transform: uppercase; letter-spacing: 0.07em; color: `rgb(0,0,0)`
 
-### body paragraphs (2)
+### body paragraphs (THREE)
+> **Corrected during visual QA.** This spec originally listed only two paragraphs
+> and had paragraph 2's copy wrong — both from reading a truncated `innerText`
+> during extraction instead of per-`<p>` `textContent`.
 - "IBM Plex Mono" 600; 16px / 24px; letter-spacing -0.02em; color: `rgb(0,0,0)`
-- Paragraph 1 margin: `0 0 16px`; paragraph 2 margin: `16px 0`
+- Margins, measured: p1 `0 0 16px`, p2 `16px 0`, p3 `16px 0 0` — the last
+  paragraph has **no bottom margin** (worth 16px of section height).
 - Each opens with an **italic** lead phrase:
   - `Personal Branding` — font-style italic, **font-weight 700**
   - `Commercial photography & videography` — font-style italic, **font-weight 600**
   (The weights genuinely differ on the live site; match them exactly.)
 
 ### button "Let's Connect" → `/contact`
-- Use `.btn .btn-solid`: height 68px; padding 0 34.736px; border 0;
+- Use `.btn .btn-solid`: padding 0 34.736px; border 0;
+  (no fixed height — buttons size from their grid area, see below);
   background `rgb(105,109,94)`; color `#fff`;
   **text-transform: none; letter-spacing: normal** (mixed case — unlike the
   Portfolio button, which is uppercase with 0.1em tracking)
 - transition: `opacity .1s linear`
 - Rendered size @1440: 267×68
+
+## Grid row count
+`--fe-rows`: **32** below 768px, **20** at/above. Squarespace declares the row
+count explicitly, including trailing empty rows; deriving it from the last block
+used leaves the section short.
+
+> **Button sizing (corrected in QA):** buttons take their box from the grid area,
+> not a fixed height — 267x68 here @1440, 59px tall @390, in each case exactly the
+> span of the area. Do not hard-code a height.
 
 ## Fluid Engine grid-areas (verbatim)
 
@@ -89,7 +103,8 @@ below the text. That gap is intentional; reproduce it via the grid-area, not a m
 - H1: `Services`
 - Eyebrow: `Photography / Videography`
 - Paragraph 1: *(italic bold)* `Personal Branding` + ` for athletes, trainers, and coaches building a healthier, more vibrant future through movement and discipline.`
-- Paragraph 2: *(italic)* `Commercial photography & videography` + ` for teams and brands that want their story told with intent.`
+- Paragraph 2: *(italic)* `Commercial photography & videography` + ` for teams and brands that inspire action, build community, and redefine what it means to live vibrantly.`
+- Paragraph 3: *(italic)* `Content for Web & Social Media` + ` — Stay consistent and relevant with curated visuals optimized for digital platforms—built to connect, convert, and inspire.`
 - Button: `Let's Connect` → `/contact` (mixed case — do NOT uppercase)
 
 Import the paragraphs from `SERVICE_LINES` in `@/lib/content`.

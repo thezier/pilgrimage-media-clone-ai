@@ -34,6 +34,7 @@
   --fe-gap: 11px;
   --fe-gutter: 6vw; /* < 768px  */
   --fe-row: 24px; /* < 768px, Squarespace's mobile row unit */
+  --fe-pad-y: 9px; /* .content-wrapper vertical inset, < 768px */
 
   /* Diagonal section divider depth — a flat 6vw at every viewport
      (measured: 23.4px @390, 46.08 @768, 59.52 @992, 86.4 @1440, 115.2 @1920). */
@@ -58,7 +59,11 @@
 @media (min-width: 768px) {
   :root {
     --fe-gutter: 4vw;
-    --fe-row: 1.979vw; /* 28.5px @1440 — verified against 4 blocks' spans */
+    /* Squarespace computes this as container-width × a scaling factor; since the
+       container width is itself proportional to the viewport, it reduces exactly
+       to 1.979vw (28.5px @1440, 15.2px @768 — both verified). */
+    --fe-row: 1.979vw;
+    --fe-pad-y: 1vw; /* 14.4px @1440 */
     --fs-h1: calc(16px + 3.601vw);
     --fs-h2: calc(16px + 2.158vw);
     --fs-h3: calc(16px + 1.429vw);
@@ -154,7 +159,20 @@
     calc(var(--fe-gutter) - var(--fe-gap))
     repeat(8, 1fr)
     calc(var(--fe-gutter) - var(--fe-gap));
+  /* Row COUNT is declared explicitly per section, not derived from the blocks.
+     Sections carry trailing empty rows that pad out their height — deriving the
+     count from the last block used makes every section short. Each section
+     component sets --fe-rows for mobile and again at md:. */
+  grid-template-rows: repeat(var(--fe-rows, 1), minmax(var(--fe-row), auto));
   grid-auto-rows: minmax(var(--fe-row), auto);
+}
+
+/* Squarespace's .content-wrapper — a vertical inset between the section's own
+   padding and the grid. Present on hero/mission/posts/footer; the two
+   full-bleed-photo sections (portfolio, services) do not have it. */
+.fe-pad {
+  padding-top: var(--fe-pad-y);
+  padding-bottom: var(--fe-pad-y);
 }
 
 @media (min-width: 768px) {
@@ -187,6 +205,12 @@
   padding-bottom: var(--divider);
 }
 
+/* Latest Posts and the footer have NO bottom padding on the live site
+   (measured `padding: 0px`), unlike the four sections above them. */
+.section--no-pad {
+  padding-bottom: 0;
+}
+
 .section-border {
   position: absolute;
   inset: calc(-1 * var(--divider)) 0 0;
@@ -217,11 +241,14 @@
 /* =====================================================================
    Buttons — three real variants measured on the live site.
    ===================================================================== */
+/* Buttons take their box size from the grid area they occupy, NOT from a fixed
+   height: the same button measures 212x68 in Portfolio and 323x68 in Latest
+   Posts at 1440, and 59px tall at 390 — in every case exactly the span of its
+   grid-area. So no width/height here; the default grid `stretch` supplies both. */
 .btn {
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  height: 68px;
   padding: 0 34.736px;
   font-family: var(--font-mono);
   font-size: 16px;

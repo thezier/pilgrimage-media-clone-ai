@@ -29,9 +29,13 @@ export const PORTFOLIO_CATEGORIES: PortfolioCategory[] = [
   { label: "Health & Adventure", href: "/health-adventure" },
 ];
 
+// Note the curly apostrophe in "Let’s" — the live site uses U+2019 here, but a
+// straight quote in the "Let's Connect" button labels.
 export const PORTFOLIO_BODY =
-  "I strive to craft visuals that inspire everyday people to pursue strength, vitality, and a more active life — Let's inspire action and elevate lives through authentic, impactful media.";
+  "I strive to craft visuals that inspire everyday people to pursue strength, vitality, and a more active life — Let’s inspire action and elevate lives through authentic, impactful media.";
 
+// Three paragraphs. Only the first wraps its lead in <strong><em> (weight 700);
+// the other two use a plain <em> (weight 600).
 export const SERVICE_LINES: ServiceLine[] = [
   {
     lead: "Personal Branding",
@@ -39,7 +43,11 @@ export const SERVICE_LINES: ServiceLine[] = [
   },
   {
     lead: "Commercial photography & videography",
-    body: " for teams and brands that want their story told with intent.",
+    body: " for teams and brands that inspire action, build community, and redefine what it means to live vibrantly.",
+  },
+  {
+    lead: "Content for Web & Social Media",
+    body: " — Stay consistent and relevant with curated visuals optimized for digital platforms—built to connect, convert, and inspire.",
   },
 ];
 

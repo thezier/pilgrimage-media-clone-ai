@@ -56,6 +56,36 @@ a `@media (min-width: 768px)` override. Extracted verbatim into `_grid-areas.jso
 Rows must be `minmax(_, auto)` so they grow when text wraps to more lines than the
 reference viewport did. Fixed row heights collide at in-between widths.
 
+### Row COUNT is declared per section, not derived
+
+Each section sets `grid-template-rows: repeat(N, minmax(<row>, auto))` with an
+explicit N that includes **trailing empty rows**. Deriving N from the last block
+used leaves every section short — the page was 384px short at 1440 before this
+was found.
+
+| Section | rows <768 | rows ≥768 |
+|---|---|---|
+| Hero | 24 | 21 |
+| Portfolio | 29 | 24 |
+| Mission | 11 | 7 |
+| Services | 32 | 20 |
+| Latest Posts | 18 | 17 |
+| Footer | 23 | 9 |
+
+### Two more things that carry real height
+
+- **`.content-wrapper`** adds a vertical inset around the grid — `1vw` at ≥768px
+  (14.4px @1440), `9px` below. Present on hero, mission, Latest Posts and the
+  footer; **absent** on portfolio and services (the two full-bleed-photo sections).
+- **Section bottom padding is 6vw on the first four sections only.** Latest Posts
+  and the footer measure `padding: 0px`.
+
+### Buttons size from their grid area
+
+Not from a fixed height. The same button measures 212×68 in Portfolio and 323×68
+in Latest Posts at 1440, and 59px tall at 390 — in each case exactly the span of
+its grid-area. Setting `height: 68px` (or `justify-self`) breaks this.
+
 ## Interaction model
 
 **The page is entirely static.** See `BEHAVIORS.md` — there is no scroll-driven

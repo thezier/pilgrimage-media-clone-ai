@@ -7,7 +7,7 @@
 
 ## DOM Structure
 ```
-<section class="section">            NO z-index; padding-bottom: 6vw
+<section class="section section--no-pad">   NO z-index; NO bottom padding
   <div class="section-border">       inset: -6vw 0 0; background: #FFFFFF; NO clip class
   </div>
   <div class="section-content fe-grid">
@@ -22,7 +22,10 @@
 
 ### section
 - z-index: **auto** (it is last in the divider chain; the sections above paint over it)
-- padding-bottom: 6vw; height @1440: 1000px
+- **`padding-bottom: 0`** — measured `padding: 0px`. Unlike the four sections
+  above it, this one has no 6vw bottom padding. Use `.section--no-pad`.
+- `--fe-rows`: **18** below 768px, **17** at/above.
+- height @1440: 1000px
 - Text colour: `rgb(0, 0, 0)`
 
 ### .section-border
