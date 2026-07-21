@@ -12,7 +12,11 @@
   Cache-Control: public, max-age=31536000, immutable
 
 # Generated at build time with content-specific names.
-/portfolio/*/img/*
+# Note the `:slug` placeholder rather than a second `*`: only ONE splat is
+# allowed per pattern, so `/portfolio/*/img/*` silently matched nothing and
+# these fell through to the default. A placeholder matches a single path
+# segment, which leaves the one splat for the filename.
+/portfolio/:slug/img/*
   Cache-Control: public, max-age=31536000, immutable
 
 /images/*
