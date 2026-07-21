@@ -38,16 +38,16 @@ PB_URL=http://127.0.0.1:8090 node build.mjs
    build** — not by the build script remembering to filter, but because the
    collection's read rule is `published = true`, so drafts aren't in the API
    response at all.
-5. Run `node build.mjs`.
+5. Run `bash scripts/publish.sh` from the repo root.
 
 ## What you get out
 
 ```
-dist/portfolio/
+site/portfolio/
   index.html                      the project index
-  portfolio.css                   plain, hand-editable CSS
   <slug>/index.html               one page per project
   <slug>/img/*.webp               responsive images, generated at build time
+site/css/portfolio.css            portfolio-only rules; tokens come from style.css
 ```
 
 Plain HTML and CSS. No JavaScript framework, no build-time magic beyond string
@@ -59,7 +59,7 @@ substitution — open `templates/project.html` and it reads like HTML, because i
 get files, so the public site stays fast and indexable, and can be hosted
 anywhere — including somewhere that isn't a Pi on a coffee shop's uplink.
 
-**Images processed once, at build.** Each photo becomes 640/1024/1600px WebP with
+**Images processed once, at build.** Each photo becomes 640/1024/1600/2400px WebP with
 correct `srcset`/`sizes` and intrinsic `width`/`height` so the page doesn't jump
 while loading. Originals are never served. Measured on the sample content: a
 104KB JPEG becomes a 30KB WebP at 640px. The build never upscales — a small
@@ -81,17 +81,15 @@ unchanged.
 | `seed.mjs` | sample content, using real photos from `public/images/` |
 | `build.mjs` | PocketBase → static HTML + responsive WebP |
 | `templates/` | the HTML and CSS you'd actually maintain |
-| `pb_data/` | SQLite database + uploaded originals (gitignored) |
-| `dist/` | build output (gitignored) |
+| `pb_data/` | local copy only; the real one lives on the Pi (gitignored) |
 
-## If you adopt this
+## Operating it
 
-- Change the password. `prototype-password-change-me` is a placeholder.
-- Deploy PocketBase to the Pi behind Caddy on its own hostname, and keep it
-  private (Cloudflare Access, or tailnet-only) — it's your admin surface.
-- Back up `pb_data/` — it's the SQLite file plus the uploaded originals. That
-  directory *is* the whole CMS; copying it is a complete backup.
-- Wire the build into `deploy-to-pi.sh` so publishing is one command.
+- **Back up `/mnt/mtp1/pocketbase/pb_data` on the Pi.** That directory *is* the
+  whole CMS — SQLite file plus every uploaded original. Copying it is a
+  complete backup; nothing else needs saving. It is currently NOT backed up.
+- Service control: `sudo systemctl {status,restart} pocketbase` on the Pi.
+- Reaching the admin UI requires Tailscale to be up. That is deliberate.
 
 ## Decisions made
 
