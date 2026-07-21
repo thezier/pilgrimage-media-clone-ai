@@ -115,7 +115,7 @@ async function handleContact(request, env) {
       "Content-Type": "application/json",
     },
     body: JSON.stringify({
-      from: env.CONTACT_FROM || "Pilgrimage Media <contact@pilgrimage.media>",
+      from: env.CONTACT_FROM || "Pilgrimage Media <contact@pilgrimagemedia.com>",
       to: [env.CONTACT_TO],
       reply_to: String(data.email).trim(), // so a reply goes straight to them
       subject: `New enquiry from ${name}`,

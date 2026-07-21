@@ -19,7 +19,7 @@ Two settings live in the Cloudflare dashboard, **not** in this repo (it's public
   matches the site and its DNS is already in Cloudflare — Resend gives you a few
   DNS records (DKIM/SPF); add them in the Cloudflare dashboard for the zone.
 - The **from** address must be on this verified domain. The committed default is
-  `contact@pilgrimage.media` (see `CONTACT_FROM` in `wrangler.jsonc`). If you
+  `contact@pilgrimagemedia.com` (see `CONTACT_FROM` in `wrangler.jsonc`). If you
   verify a different domain, override `CONTACT_FROM` in the dashboard.
 
 **2. Set the Worker's variables**
