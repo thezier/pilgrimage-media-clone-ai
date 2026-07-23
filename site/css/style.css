@@ -90,10 +90,10 @@ body {
   margin: 0;
   background: var(--dark);
   color: var(--white);
-  /* Space Grotesk — nav, labels, buttons, body copy. Normal tracking;
-     the tight negative tracking was an IBM Plex Mono characteristic that
-     doesn't belong on a proportional grotesk. */
-  font-family: "Space Grotesk", sans-serif;
+  /* Nunito — the reading voice: body copy, paragraphs, form fields.
+     Nav/labels/buttons override to Lexend below; headings override to
+     Gelasio. */
+  font-family: "Nunito", sans-serif;
   font-size: 16px;
   font-weight: 400;
   line-height: 24px;
@@ -102,7 +102,7 @@ body {
 }
 
 h1, h2, h3 {
-  font-family: "Playfair Display", serif;
+  font-family: "Gelasio", serif;
   font-weight: 400;
   margin: 0;
 }
@@ -221,6 +221,7 @@ button { font: inherit; letter-spacing: inherit; }
   align-items: center;
   justify-content: center;
   padding: 0 34.736px;
+  font-family: "Lexend", sans-serif;
   font-size: 16px;
   font-weight: 500;
   text-align: center;
@@ -296,6 +297,7 @@ button { font: inherit; letter-spacing: inherit; }
   display: block;
   padding: 1.6px 0;
   text-align: center;
+  font-family: "Lexend", sans-serif;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -340,6 +342,7 @@ button { font: inherit; letter-spacing: inherit; }
   list-style: none;
 }
 .mobile-menu a {
+  font-family: "Lexend", sans-serif;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -389,15 +392,15 @@ body.menu-open { overflow: hidden; }
 .hero__heading {
   grid-area: 1 / 2 / 7 / 11;
   align-self: center;
-  font-family: "Space Grotesk", sans-serif;
+  font-family: "Lexend", sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
-/* "on a journey" — italic Playfair Display in the highlight gold, standing
-   out against the bold uppercase Space Grotesk around it. */
+/* "on a journey" — italic Gelasio in the highlight gold, standing out
+   against the bold uppercase Lexend around it. */
 .hero__heading em {
-  font-family: "Playfair Display", serif;
+  font-family: "Gelasio", serif;
   font-style: italic;
   font-weight: 400;
   text-transform: none;
@@ -423,10 +426,11 @@ body.menu-open { overflow: hidden; }
 
 .portfolio__heading { grid-area: 3 / 2 / 6 / 10; }
 .portfolio__rule    { grid-area: 6 / 2 / 7 / 10; }
-/* Upright, tracked Space Grotesk — not italic. Italic is now reserved for
-   Playfair Display display headlines only, matching the reference. */
+/* Upright, tracked Lexend — not italic. Italic is reserved for Gelasio
+   display headlines only. */
 .portfolio__eyebrow {
   grid-area: 7 / 2 / 8 / 10;
+  font-family: "Lexend", sans-serif;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.16em;
@@ -466,9 +470,10 @@ body.menu-open { overflow: hidden; }
 .mission__block { grid-area: 2 / 2 / 11 / 10; }
 @media (min-width: 768px) { .mission__block { grid-area: 2 / 9 / 7 / 19; } }
 
-/* Upright, tracked Space Grotesk — italic is reserved for Playfair Display
-   display headlines now (see the mission__heading emphasis words below). */
+/* Upright, tracked Lexend — italic is reserved for Gelasio display
+   headlines (see the mission__heading emphasis words below). */
 .mission__eyebrow {
+  font-family: "Lexend", sans-serif;
   font-weight: 500;
   font-size: var(--fs-em);
   line-height: 1.171;
@@ -502,9 +507,10 @@ body.menu-open { overflow: hidden; }
   .services__cta     { grid-area: 15 / 2 / 17 / 7; }
 }
 
-/* Upright, tracked Space Grotesk — same eyebrow treatment as Portfolio
-   and Mission now use. */
+/* Upright, tracked Lexend — same eyebrow treatment as Portfolio and
+   Mission. */
 .services__eyebrow {
+  font-family: "Lexend", sans-serif;
   font-weight: 500;
   font-size: var(--fs-em);
   line-height: 1.17;
@@ -515,8 +521,8 @@ body.menu-open { overflow: hidden; }
 .services__body p:first-child { margin: 0 0 16px; }
 .services__body p:last-child  { margin: 16px 0 0; }
 /* The two lead weights genuinely differ on the live site. */
-/* Bold, not italic — Space Grotesk's italic face isn't loaded (italic is
-   reserved for Playfair Display headlines), so emphasis here is weight only. */
+/* Bold, not italic — Nunito's italic face isn't loaded (italic is
+   reserved for Gelasio headlines), so emphasis here is weight only. */
 .services__body em { font-style: normal; font-weight: 600; }
 .services__body p:first-child em { font-weight: 700; }
 
@@ -635,6 +641,7 @@ body.menu-open { overflow: hidden; }
   border: 0;
   background: var(--olive);
   color: var(--white);
+  font-family: "Lexend", sans-serif;
   font-size: 16px;
   font-weight: 500;
   line-height: 19.2px;

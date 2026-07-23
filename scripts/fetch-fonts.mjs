@@ -11,18 +11,24 @@ const ROOT = path.resolve(import.meta.dirname, "..");
 const FONT_DIR = path.join(ROOT, "site", "fonts");
 const CSS_OUT = path.join(ROOT, "site", "css", "fonts.css");
 
-// Playfair Display (headings + italic emphasis words within them) and
-// Space Grotesk (nav/labels/body/buttons) — pulled from the Variant concept
-// reference Mike sent (2026-07-23), replacing Roboto Condensed / IBM Plex
-// Mono site-wide.
+// Three-way split Mike asked for (2026-07-23), replacing Playfair Display +
+// Space Grotesk:
+// - Gelasio: serif headings + the italic accent phrase (Playfair's old role).
+// - Lexend: nav/eyebrows/buttons/the bold uppercase hero heading — the
+//   structural/label voice.
+// - Nunito: body copy paragraphs — a second, softer sans so the label voice
+//   and the reading voice are distinct fonts, not just different weights.
 const FACES = [
-  { family: "Playfair Display", weight: 400, style: "normal" },
-  { family: "Playfair Display", weight: 700, style: "normal" },
-  { family: "Playfair Display", weight: 400, style: "italic" },
-  { family: "Space Grotesk", weight: 400, style: "normal" },
-  { family: "Space Grotesk", weight: 500, style: "normal" },
-  { family: "Space Grotesk", weight: 600, style: "normal" },
-  { family: "Space Grotesk", weight: 700, style: "normal" },
+  { family: "Gelasio", weight: 400, style: "normal" },
+  { family: "Gelasio", weight: 700, style: "normal" },
+  { family: "Gelasio", weight: 400, style: "italic" },
+  { family: "Lexend", weight: 400, style: "normal" },
+  { family: "Lexend", weight: 500, style: "normal" },
+  { family: "Lexend", weight: 600, style: "normal" },
+  { family: "Lexend", weight: 700, style: "normal" },
+  { family: "Nunito", weight: 400, style: "normal" },
+  { family: "Nunito", weight: 600, style: "normal" },
+  { family: "Nunito", weight: 700, style: "normal" },
 ];
 
 // A modern-browser UA so Google serves woff2 rather than ttf.
