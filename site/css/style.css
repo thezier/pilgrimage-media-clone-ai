@@ -39,8 +39,12 @@
   --fs-em: 22.5px;
   --fs-wordmark: 21.4px;
 
-  /* Hero top padding = the absolutely-positioned header's own height. */
-  --header-h: calc(37px + 12.011vw);
+  /* Hero top padding = the absolutely-positioned header's own height.
+     The logo swap made the wordmark taller than the single text line
+     this was originally measured against — padded out by the delta
+     (logo height 5.8x minus the ~1.2x line-height it replaced) so hero
+     content still clears the header at every breakpoint. */
+  --header-h: calc(37px + 12.011vw + var(--fs-wordmark) * 4.6);
 }
 
 @media (min-width: 768px) {
@@ -58,7 +62,7 @@
 
 /* 800px is where the nav un-collapses and the header padding changes. */
 @media (min-width: 800px) {
-  :root { --header-h: calc(46.5px + 6.11vw); }
+  :root { --header-h: calc(46.5px + 6.11vw + var(--fs-wordmark) * 4.6); }
 }
 
 @media (min-width: 1440px) {
@@ -251,7 +255,7 @@ button { font: inherit; letter-spacing: inherit; }
 
 .wordmark__logo {
   display: inline-block;
-  height: calc(var(--fs-wordmark) * 4.2);
+  height: calc(var(--fs-wordmark) * 5.8);
   width: auto;
 }
 
