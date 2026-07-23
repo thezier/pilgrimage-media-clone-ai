@@ -11,15 +11,18 @@ const ROOT = path.resolve(import.meta.dirname, "..");
 const FONT_DIR = path.join(ROOT, "site", "fonts");
 const CSS_OUT = path.join(ROOT, "site", "css", "fonts.css");
 
-// Exactly the families/weights/styles measured on the live site.
-// Roboto Condensed 600 (headings, and italic for the mission eyebrow).
-// IBM Plex Mono 600 (body + italic eyebrows) and 700 italic (one service lead).
+// Playfair Display (headings + italic emphasis words within them) and
+// Space Grotesk (nav/labels/body/buttons) — pulled from the Variant concept
+// reference Mike sent (2026-07-23), replacing Roboto Condensed / IBM Plex
+// Mono site-wide.
 const FACES = [
-  { family: "Roboto Condensed", weight: 600, style: "normal" },
-  { family: "Roboto Condensed", weight: 600, style: "italic" },
-  { family: "IBM Plex Mono", weight: 600, style: "normal" },
-  { family: "IBM Plex Mono", weight: 600, style: "italic" },
-  { family: "IBM Plex Mono", weight: 700, style: "italic" },
+  { family: "Playfair Display", weight: 400, style: "normal" },
+  { family: "Playfair Display", weight: 700, style: "normal" },
+  { family: "Playfair Display", weight: 400, style: "italic" },
+  { family: "Space Grotesk", weight: 400, style: "normal" },
+  { family: "Space Grotesk", weight: 500, style: "normal" },
+  { family: "Space Grotesk", weight: 600, style: "normal" },
+  { family: "Space Grotesk", weight: 700, style: "normal" },
 ];
 
 // A modern-browser UA so Google serves woff2 rather than ttf.
