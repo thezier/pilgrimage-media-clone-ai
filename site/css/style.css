@@ -251,7 +251,7 @@ button { font: inherit; letter-spacing: inherit; }
 
 .wordmark__logo {
   display: inline-block;
-  height: calc(var(--fs-wordmark) * 1.9);
+  height: calc(var(--fs-wordmark) * 4.2);
   width: auto;
 }
 
