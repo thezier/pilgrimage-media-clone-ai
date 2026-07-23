@@ -386,7 +386,24 @@ body.menu-open { overflow: hidden; }
    within its grid area (measured offset 28px = (265-210)/2). Every other
    block is top-aligned. Squarespace sets this per block via justify-content
    on the block's inner flex wrapper. */
-.hero__heading { grid-area: 1 / 2 / 7 / 11; align-self: center; }
+.hero__heading {
+  grid-area: 1 / 2 / 7 / 11;
+  align-self: center;
+  font-family: "Space Grotesk", sans-serif;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+/* "on a journey" — italic Playfair Display in the highlight gold, standing
+   out against the bold uppercase Space Grotesk around it. */
+.hero__heading em {
+  font-family: "Playfair Display", serif;
+  font-style: italic;
+  font-weight: 400;
+  text-transform: none;
+  letter-spacing: normal;
+  color: var(--highlight);
+}
 .hero__img-1   { grid-area: 6 / 6 / 16 / 11; }
 .hero__img-2   { grid-area: 11 / 1 / 17 / 7; }  /* bleeds into the gutter on purpose */
 .hero__img-3   { grid-area: 15 / 5 / 23 / 8; }
