@@ -1,4 +1,4 @@
-// The only JavaScript on the site: the mobile menu toggle.
+// Site JavaScript: mobile menu toggle, smooth-scroll nav, and the contact form.
 // Everything else is static HTML — the page renders fully without this file.
 (function () {
   "use strict";
@@ -32,6 +32,59 @@
   // up over the section you just jumped to.
   menu.addEventListener("click", function (e) {
     if (e.target.closest("a")) setOpen(false);
+  });
+})();
+
+// Smooth-scroll nav: clicking a nav link that points to a section on THIS page
+// (e.g. "/#portfolio" while on the homepage) glides down to it instead of
+// jumping. Links that genuinely go elsewhere — About, Contact, or "/#portfolio"
+// clicked from a subpage — navigate normally, and the homepage then lands on
+// the section as usual. Honors prefers-reduced-motion.
+(function () {
+  "use strict";
+
+  var reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+  var onHome =
+    location.pathname === "/" || location.pathname === "/index.html";
+
+  // Given a link's href, return the target element ONLY if it's a section on
+  // the current page; otherwise null (let the browser navigate normally).
+  function sectionOnThisPage(href) {
+    if (!href) return null;
+    var hash = href.indexOf("#");
+    if (hash === -1) return null; // no fragment → a real navigation
+    var id = href.slice(hash + 1);
+    if (!id) return null;
+    var pathPart = href.slice(0, hash);
+    // "/#id" or absolute "…/#id" is only in-page when we're on the homepage;
+    // from a subpage it must navigate home first.
+    var pathIsHome = pathPart === "" || pathPart === "/" || pathPart === location.pathname;
+    if (!pathIsHome || (pathPart !== "" && !onHome)) return null;
+    return document.getElementById(id);
+  }
+
+  function glideTo(el) {
+    // "instant" (not "auto") forces an immediate jump for reduced-motion users;
+    // "auto" would defer to the CSS scroll-behavior, which is smooth.
+    el.scrollIntoView({ behavior: reduce ? "instant" : "smooth", block: "start" });
+  }
+
+  // Delegated so it covers both the desktop nav and the mobile overlay (the
+  // overlay closes itself first, then this scrolls the now-unlocked page).
+  document.addEventListener("click", function (e) {
+    if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest("a[href]");
+    if (!a) return;
+    var linkTarget = a.getAttribute("target");
+    if (linkTarget && linkTarget !== "_self") return;
+
+    var el = sectionOnThisPage(a.getAttribute("href"));
+    if (!el) return;
+
+    e.preventDefault();
+    glideTo(el);
+    // Keep the URL shareable and the back button working, without a second jump.
+    if (history.pushState) history.pushState(null, "", "#" + el.id);
   });
 })();
 
