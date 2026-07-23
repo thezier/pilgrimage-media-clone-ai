@@ -177,6 +177,19 @@ button { font: inherit; letter-spacing: inherit; }
   object-fit: cover;
 }
 
+/* Inlined (not <img src>) so it always renders as real vector paths, even
+   inside this absolutely-positioned, clip-path'd layer — some browsers
+   rasterize an external SVG referenced via <img> to a low-res bitmap once
+   it sits behind a clip-path, which looked pixelated at hero size.
+   preserveAspectRatio="xMidYMid slice" is the SVG-native equivalent of
+   object-fit: cover. */
+.hero__topo {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
 /* Bottom edge drops left→right. */
 .divider-down { clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - var(--divider))); }
 /* Bottom edge rises left→right. */
