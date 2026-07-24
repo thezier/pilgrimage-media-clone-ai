@@ -10,14 +10,19 @@
 // cron defined in wrangler.jsonc (`triggers.crons`) to keep the cache warm.
 //
 // Secrets (set via `wrangler secret put`, not committed):
-//   INSTAGRAM_ACCESS_TOKEN  — long-lived Page Access Token (pages_show_list,
-//                             pages_read_engagement, instagram_basic)
-//   INSTAGRAM_ACCOUNT_ID    — the linked Instagram Business Account's numeric ID
+//   INSTAGRAM_ACCESS_TOKEN  — token from the app's "API setup with Instagram
+//                             login" flow (an "IGAA..." token, tied to the
+//                             instagram_business_basic permission) — NOT a
+//                             classic Page Access Token, and NOT valid against
+//                             graph.facebook.com. This flow's tokens only work
+//                             against graph.instagram.com.
+//   INSTAGRAM_ACCOUNT_ID    — the Instagram-scoped account ID shown alongside
+//                             the token on that same setup page
 //   REFRESH_SECRET          — shared secret for POST /api/refresh-posts
 //
 // KV binding: INSTAGRAM_CACHE (see wrangler.jsonc kv_namespaces)
 
-const GRAPH_API = "https://graph.facebook.com/v21.0";
+const GRAPH_API = "https://graph.instagram.com/v21.0";
 const CACHE_KEY = "latest-posts";
 const POST_LIMIT = 8;
 const FIELDS = "id,caption,media_type,media_url,thumbnail_url,permalink,timestamp";
