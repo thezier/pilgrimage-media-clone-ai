@@ -197,6 +197,41 @@
   });
 })();
 
+// Latest Posts (homepage): the gallery ships with 8 real, hardcoded posts so
+// the section never looks empty and works with JS disabled. On load, this
+// swaps them for whatever /api/latest-posts (a Cloudflare Worker, cached from
+// the Instagram Graph API — see worker/instagram.js) currently has. If the
+// fetch fails or the cache is empty, the hardcoded posts just stay put.
+(function () {
+  "use strict";
+
+  var gallery = document.querySelector(".posts__gallery");
+  if (!gallery) return;
+
+  fetch("/api/latest-posts")
+    .then(function (res) {
+      return res.ok ? res.json() : null;
+    })
+    .then(function (data) {
+      if (!data || !data.ok || !data.posts || !data.posts.length) return;
+
+      var html = data.posts
+        .map(function (post) {
+          var caption = post.caption ? post.caption.replace(/"/g, "&quot;") : "";
+          return (
+            '<a href="' + post.permalink + '" target="_blank" rel="noopener noreferrer">' +
+            '<img src="' + post.image + '" alt="' + caption + '" loading="lazy" /></a>'
+          );
+        })
+        .join("");
+
+      gallery.innerHTML = html;
+    })
+    .catch(function () {
+      // Leave the hardcoded fallback posts as-is.
+    });
+})();
+
 // Contact form: submit in place via fetch, so the visitor stays on the page and
 // sees a status message. Without this, the form still works — it does a plain
 // POST and the Worker returns an HTML thank-you page.

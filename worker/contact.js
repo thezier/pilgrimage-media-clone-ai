@@ -1,17 +1,27 @@
-// Cloudflare Worker entry for new.pilgrimage.media.
+// Cloudflare Worker entry for pilgrimage.media.
 //
-// Two dynamic routes, both emailing via Resend; everything else falls through
-// to the static site (the ASSETS binding):
-//   POST /api/contact        — the site's own contact form
+// Dynamic routes, everything else falls through to the static site (the
+// ASSETS binding):
+//   POST /api/contact        — the site's own contact form (emails via Resend)
 //   POST /api/share-contact  — reciprocal "share your info back with Mike"
 //                               form on the NFC card page, card.pilgrimage.media
 //                               (a different origin — see CORS_ORIGIN below)
+//   GET  /api/latest-posts   — cached Instagram feed for the homepage's
+//                               "Latest Posts" section (see instagram.js)
+//   POST /api/refresh-posts  — manual Instagram cache refresh (instagram.js)
+//
+// Also runs a daily scheduled() handler (see wrangler.jsonc `triggers.crons`)
+// that refreshes the Instagram cache in the background.
 //
 // Secrets/vars (set in the Cloudflare dashboard, not committed):
-//   RESEND_API_KEY  — secret, from resend.com
-//   CONTACT_TO      — where enquiries are delivered
-//   CONTACT_FROM    — sender, on a Resend-verified domain
-// Defaults for the two addresses live in wrangler.jsonc `vars`.
+//   RESEND_API_KEY          — secret, from resend.com
+//   CONTACT_TO              — where enquiries are delivered
+//   CONTACT_FROM            — sender, on a Resend-verified domain (in `vars`)
+//   INSTAGRAM_ACCESS_TOKEN  — secret, long-lived Page Access Token
+//   INSTAGRAM_ACCOUNT_ID    — secret, the linked Instagram Business Account ID
+//   REFRESH_SECRET          — secret, gates POST /api/refresh-posts
+
+import { handleLatestPosts, handleRefreshPosts, refreshInstagramCache } from "./instagram.js";
 
 const REQUIRED = ["fname", "lname", "email", "message"];
 const SHARE_REQUIRED = ["name", "email"];
@@ -41,8 +51,28 @@ const handler = {
       return handleShareContact(request, env);
     }
 
+    if (url.pathname === "/api/latest-posts") {
+      if (request.method !== "GET") {
+        return json({ ok: false, error: "Method not allowed" }, 405);
+      }
+      return handleLatestPosts(env);
+    }
+
+    if (url.pathname === "/api/refresh-posts") {
+      if (request.method !== "POST") {
+        return json({ ok: false, error: "Method not allowed" }, 405);
+      }
+      return handleRefreshPosts(request, env);
+    }
+
     // Anything else is the static site.
     return env.ASSETS.fetch(request);
+  },
+
+  // Cron Trigger (wrangler.jsonc `triggers.crons`) — keeps the Instagram
+  // cache warm without any visitor ever waiting on the Graph API.
+  async scheduled(event, env, ctx) {
+    ctx.waitUntil(refreshInstagramCache(env));
   },
 };
 

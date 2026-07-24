@@ -51,5 +51,23 @@
     // unknown URL — wrong here, and actively bad for SEO, since every typo'd
     // path would look like a real page to a crawler.
     "not_found_handling": "404-page"
+  },
+
+  // Caches the homepage's "Latest Posts" data (fetched from the Instagram
+  // Graph API on a schedule below, not on every page view — see
+  // worker/instagram.js). GET /api/latest-posts reads from here.
+  "kv_namespaces": [
+    {
+      "binding": "INSTAGRAM_CACHE",
+      "id": "222c16985a2a45938f84bad555252d76"
+    }
+  ],
+
+  // Refreshes the Instagram cache once a day. A personal photography account
+  // doesn't post often enough to need anything tighter, and the Graph API
+  // token this hits doesn't need frequent calls to stay "fresh" — see
+  // worker/instagram.js's scheduled() handler.
+  "triggers": {
+    "crons": ["0 8 * * *"]
   }
 }
