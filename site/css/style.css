@@ -61,9 +61,15 @@
   }
 }
 
-/* 800px is where the nav un-collapses and the header padding changes. */
+/* 800px is where the nav un-collapses and the header padding changes.
+   Recalibrated 2026-07-23: the old formula's 6.11vw term grew faster than
+   the header itself (header padding is only 2.8vw — 1.4vw top + bottom),
+   so the dead space below the header widened on large screens (~30px gap
+   at 1440, ~63px at 2560). This version tracks the header's actual build
+   — 2.8vw padding + logo height (fs-wordmark * 5.8) + nav row — plus a
+   flat 6px breathing gap that no longer grows with viewport width. */
 @media (min-width: 800px) {
-  :root { --header-h: calc(46.5px + 6.11vw + var(--fs-wordmark) * 4.6); }
+  :root { --header-h: calc(40px + 2.8vw + var(--fs-wordmark) * 5.8); }
 }
 
 @media (min-width: 1440px) {
@@ -365,7 +371,12 @@ body.menu-open { overflow: hidden; }
    Hero
    --------------------------------------------------------------------- */
 .hero { z-index: 6; padding-top: var(--header-h); }
-.hero__grid { --fe-rows: 24; }
+/* Zeroes out the .fe-pad top inset just for the hero, so img-1 (already
+   pinned to grid row 1, as high as the row system allows) and the heading
+   sit right at the top of the grid instead of floating fe-pad-y below it.
+   Bottom padding is untouched — that space still leads into the next
+   section's divider. */
+.hero__grid { --fe-rows: 24; padding-top: 0; }
 @media (min-width: 768px) { .hero__grid { --fe-rows: 21; } }
 
 /* object-fit is CONTAIN, not cover — these render at essentially their
@@ -401,10 +412,10 @@ body.menu-open { overflow: hidden; }
 .hero__img-2   { grid-area: 11 / 1 / 17 / 7; }  /* bleeds into the gutter on purpose */
 .hero__img-3   { grid-area: 15 / 5 / 23 / 8; }
 @media (min-width: 768px) {
-  .hero__heading { grid-area: 2 / 11 / 9 / 21; }
+  .hero__heading { grid-area: 1 / 11 / 9 / 21; }
   .hero__img-1   { grid-area: 1 / 2 / 18 / 10; }
-  .hero__img-2   { grid-area: 13 / 9 / 22 / 19; }
-  .hero__img-3   { grid-area: 9 / 16 / 20 / 24; }
+  .hero__img-2   { grid-area: 11 / 9 / 20 / 19; }
+  .hero__img-3   { grid-area: 7 / 16 / 18 / 24; }
 }
 
 /* ---------------------------------------------------------------------
