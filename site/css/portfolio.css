@@ -65,15 +65,19 @@
     grid-template-columns: repeat(3, 1fr);
   }
 }
-/* Category pages only — smaller cards than the main /portfolio/ index, so
-   more of the topo background around the grid stays visible. */
-.category-page .project-grid { max-width: 1180px; margin: 0 auto; }
-@media (min-width: 600px) {
-  .category-page .project-grid { grid-template-columns: repeat(2, 1fr); }
+/* Category pages only — smaller cards than the main /portfolio/ index.
+   Flexbox + justify-content: center rather than a fixed-column grid, so a
+   category with fewer than 4 galleries (Health & Adventure has just 1)
+   centers them as a group instead of leaving them stuck against the left
+   edge with dead grid cells to the right. */
+.category-page .project-grid {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  max-width: 1180px;
+  margin: 0 auto;
 }
-@media (min-width: 768px) {
-  .category-page .project-grid { grid-template-columns: repeat(4, 1fr); }
-}
+.category-page .project-card { flex: 1 1 220px; max-width: 280px; }
 /* `height: auto` is load-bearing: the <img> carries intrinsic width/height
    attributes so the page doesn't jump while loading, and without this the
    attribute height beats aspect-ratio and the cards come out uneven. */

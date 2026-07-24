@@ -525,8 +525,7 @@ body.menu-open { overflow: hidden; }
 /* The two lead weights genuinely differ on the live site. */
 /* Bold, not italic — Nunito's italic face isn't loaded (italic is
    reserved for Gelasio headlines), so emphasis here is weight only. */
-.services__body em { font-style: normal; font-weight: 600; }
-.services__body p:first-child em { font-weight: 700; }
+.services__body em { font-style: normal; font-weight: 700; }
 
 /* ---------------------------------------------------------------------
    Client Spotlight — standalone section between Services and Latest
@@ -571,21 +570,12 @@ body.menu-open { overflow: hidden; }
 }
 .spotlight-cards { display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; }
 .spotlight-card { flex: 1 1 220px; max-width: 280px; }
-/* Placeholder stand-in for real session photos — swap the whole element
-   for an <img> once Ambrose's, Amy's, and Kalia's session photos are
-   picked. */
+/* Each card's own gallery cover photo (see build.mjs's cover image for
+   the same slug) rather than a placeholder. */
 .spotlight-card__photo {
   aspect-ratio: 4 / 5;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background: repeating-linear-gradient(
-    45deg,
-    var(--concrete, #ededE8),
-    var(--concrete, #ededE8) 10px,
-    rgba(0, 0, 0, 0.05) 10px,
-    rgba(0, 0, 0, 0.05) 20px
-  );
+  width: 100%;
+  object-fit: cover;
   border: 1px solid rgba(0, 0, 0, 0.12);
   margin-bottom: 12px;
 }
@@ -795,7 +785,7 @@ body.menu-open { overflow: hidden; }
 
 .contact-hero { padding-top: var(--header-h); }
 .contact-hero__grid { --fe-rows: 4; }
-.contact-hero__heading { grid-area: 2 / 3 / 4 / 9; }
+.contact-hero__heading { grid-area: 2 / 3 / 4 / 9; text-align: center; font-style: italic; }
 @media (min-width: 768px) { .contact-hero__heading { grid-area: 2 / 5 / 4 / 23; } }
 
 /* Full-bleed horizontal strip. Images keep their own aspect ratio at a fixed
@@ -814,20 +804,26 @@ body.menu-open { overflow: hidden; }
   object-fit: cover;
 }
 
+/* z-index + section-border/divider-down (added directly in the HTML) give
+   this the same diagonal-into-footer treatment as the category and
+   gallery pages; .footer-reveal on the footer bleeds white upward to
+   fill the cut. padding-bottom comes from .section's own rule now
+   instead of a manual bottom clamp. */
 .contact-form-section {
-  background: var(--dark);
+  z-index: 2;
   color: var(--white);
-  padding: clamp(3rem, 8vw, 5rem) 0 clamp(4rem, 10vw, 6rem);
+  padding-top: clamp(3rem, 8vw, 5rem);
 }
 .contact-form-section__inner {
   max-width: 1500px;
   margin: 0 auto;
-  padding: 0 var(--fe-gutter);
+  padding: 0 var(--fe-gutter) clamp(2rem, 6vw, 4rem);
 }
 .contact-form {
   display: grid;
   gap: 1.15rem;
   max-width: 640px;
+  margin: 0 auto;
 }
 .contact-form .field-group {
   border: 0;

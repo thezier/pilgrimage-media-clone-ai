@@ -82,8 +82,9 @@
       </div>
 
       <!-- ===== enquiry form ===== -->
-      <section class="contact-form-section">
-        <div class="contact-form-section__inner">
+      <section class="section contact-form-section">
+        <div class="section-border section-border--flush divider-down bg-dark"></div>
+        <div class="section-content contact-form-section__inner">
           <!-- Posts to the Worker at /api/contact. Works without JavaScript
                (native POST → an HTML thank-you page); main.js enhances it to
                submit in place. -->
@@ -96,7 +97,7 @@
             </div>
 
             <fieldset class="field-group">
-              <legend>Name</legend>
+              <legend class="visually-hidden">Name</legend>
               <div class="field-row">
                 <div class="field">
                   <label for="fname">First Name <span aria-hidden="true">*</span></label>
@@ -146,7 +147,7 @@
             </div>
 
             <div class="field">
-              <label for="budget">What is your budget?</label>
+              <label for="budget">Do you have a specific budget for this project?</label>
               <input id="budget" name="budget" type="text" />
             </div>
 
@@ -175,29 +176,44 @@
       </section>
     </main>
 
-    <footer class="site-footer">
+    <footer class="site-footer footer-reveal">
+      <div class="section-border bg-white"></div>
       <div class="fe-pad fe-grid site-footer__grid">
-        <h3 class="site-footer__wordmark">Pilgrimage Media</h3>
         <p class="site-footer__link-1"><a href="/fitness-athletes/">Athletes &amp; Fitness</a></p>
         <p class="site-footer__link-2"><a href="/sports-events/">Sports &amp; Events</a></p>
         <p class="site-footer__link-3"><a href="/health-adventure/">Health &amp; Adventure</a></p>
         <p class="site-footer__link-4"><a href="/about/">About</a></p>
         <p class="site-footer__link-5"><a href="/contact/">Contact</a></p>
 
-        <p class="site-footer__loop">Stay in the Loop<br />&mdash;</p>
+        <img class="site-footer__mark" src="/images/brand/pilgrimage-mountains.jpg" alt="Pilgrimage Media" width="642" height="493" loading="lazy" />
 
-        <div class="site-footer__news">
-          <h2 class="newsletter__heading">Subscribe to our newsletter</h2>
-          <form class="newsletter__form">
-            <div class="newsletter__field">
-              <label class="visually-hidden" for="newsletter-email">Email address</label>
-              <input class="newsletter__input" id="newsletter-email" type="email" name="email" />
-            </div>
-            <div class="newsletter__button-wrap">
-              <button class="newsletter__button" type="button">Sign up</button>
-            </div>
-          </form>
-        </div>
+        <ul class="site-footer__social">
+          <li>
+            <a href="https://instagram.com/pilgrimagemedia" target="_blank" rel="noopener noreferrer" aria-label="Pilgrimage Media on Instagram">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+                <rect x="2.5" y="2.5" width="19" height="19" rx="5" stroke="currentColor" stroke-width="1.6" />
+                <circle cx="12" cy="12" r="4.7" stroke="currentColor" stroke-width="1.6" />
+                <circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" />
+              </svg>
+              <span>Instagram</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.pinterest.com/pilgrimagemedia/" target="_blank" rel="noopener noreferrer" aria-label="Pilgrimage Media on Pinterest">
+              <img src="/images/brand/pinterest-icon.png" alt="" width="22" height="22" aria-hidden="true" />
+              <span>Pinterest</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.strava.com/athletes/mikethezier" target="_blank" rel="noopener noreferrer" aria-label="Pilgrimage Media on Strava">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+                <path d="M10.3 2.5 15.9 13.6h-3.4l-2.2-4.6-2.3 4.6H4.6z" fill="currentColor" />
+                <path d="m12.9 13.6 2 4 2-4h2.6l-4.6 8-4.6-8z" fill="currentColor" />
+              </svg>
+              <span>Strava</span>
+            </a>
+          </li>
+        </ul>
       </div>
     </footer>
 
