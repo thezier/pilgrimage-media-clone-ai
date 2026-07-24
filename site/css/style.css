@@ -395,6 +395,17 @@ body.menu-open { overflow: hidden; }
   height: 100%;
   object-fit: contain;
 }
+/* hero__img-1's Vimeo background embed. Vimeo's own background=1 mode
+   does the cover-style crop/scale internally (object-fit doesn't apply
+   to iframes), so this just fills the same box the photo used to. */
+.hero__video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
+  pointer-events: none;
+}
 
 /* The hero heading is the one block on the page that is vertically CENTRED
    within its grid area (measured offset 28px = (265-210)/2). Every other
