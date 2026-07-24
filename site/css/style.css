@@ -426,7 +426,10 @@ body.menu-open { overflow: hidden; }
 @media (min-width: 768px) { .portfolio__grid { --fe-rows: 24; } }
 
 .portfolio__heading { grid-area: 3 / 2 / 6 / 10; }
-.portfolio__rule    { grid-area: 6 / 2 / 7 / 10; }
+/* .rule's background: currentColor picks up the browser's own UA-default
+   gray for <hr> (not the inherited white from .on-dark) unless color is
+   set explicitly here. */
+.portfolio__rule    { grid-area: 6 / 2 / 7 / 10; background: var(--white); }
 /* Upright, tracked Lexend — not italic. Italic is reserved for Gelasio
    display headlines only. */
 .portfolio__eyebrow {
@@ -561,23 +564,34 @@ body.menu-open { overflow: hidden; }
 /* ---------------------------------------------------------------------
    Footer — plain block. No divider, no bleed, no z-index. No bottom
    padding, unlike the four sections above it.
+
+   Three columns: nav links (left), the mountain brand mark (center,
+   replacing the old text wordmark — redundant next to the mark), social
+   links (right). Newsletter signup removed 2026-07-23 (not needed yet).
    --------------------------------------------------------------------- */
 .site-footer {
   display: flex;
   align-items: center;
+  padding: 56px 0;
   background: var(--white);
   color: var(--black);
 }
-.site-footer__grid { --fe-rows: 23; width: 100%; }
-@media (min-width: 768px) { .site-footer__grid { --fe-rows: 9; } }
+.site-footer__grid { --fe-rows: 15; width: 100%; }
 
-/* Bold — matches the reference's small serif wordmark treatment. */
-.site-footer__wordmark { grid-area: 2 / 2 / 5 / 6; text-align: left; font-weight: 700; }
-.site-footer__link-1 { grid-area: 5 / 2 / 6 / 10; }
-.site-footer__link-2 { grid-area: 6 / 2 / 7 / 10; }
-.site-footer__link-3 { grid-area: 7 / 2 / 8 / 10; }
-.site-footer__link-4 { grid-area: 8 / 2 / 9 / 10; }
-.site-footer__link-5 { grid-area: 9 / 2 / 10 / 10; }
+/* Absolutely positioned + inset:0 + margin:auto centers the mark within
+   its grid area without the image's own size inflating the row tracks the
+   nav links share (same reasoning as .hero__figure img) — lets the logo
+   run much bigger than the text columns beside it without pushing gaps
+   into the link list. */
+.site-footer__mark { grid-area: 2 / 2 / 6 / 10; position: absolute; inset: 0; margin: auto; width: 260px; height: auto; }
+
+.site-footer__link-1 { grid-area: 6 / 2 / 7 / 10; }
+.site-footer__link-2 { grid-area: 7 / 2 / 8 / 10; }
+.site-footer__link-3 { grid-area: 8 / 2 / 9 / 10; }
+.site-footer__link-4 { grid-area: 9 / 2 / 10 / 10; }
+.site-footer__link-5 { grid-area: 10 / 2 / 11 / 10; }
+.site-footer__link-1, .site-footer__link-2, .site-footer__link-3,
+.site-footer__link-4, .site-footer__link-5 { text-align: center; }
 .site-footer__link-1 a,
 .site-footer__link-2 a,
 .site-footer__link-3 a,
@@ -592,66 +606,40 @@ body.menu-open { overflow: hidden; }
 .site-footer__link-5 a:hover {
   color: var(--highlight);
 }
-.site-footer__loop   { grid-area: 12 / 2 / 14 / 10; }
-.site-footer__news   { grid-area: 14 / 2 / 24 / 10; }
-@media (min-width: 768px) {
-  .site-footer__wordmark { grid-area: 2 / 2 / 4 / 14; }
-  .site-footer__link-1 { grid-area: 4 / 2 / 5 / 10; }
-  .site-footer__link-2 { grid-area: 5 / 2 / 6 / 10; }
-  .site-footer__link-3 { grid-area: 6 / 2 / 7 / 10; }
-  .site-footer__link-4 { grid-area: 7 / 2 / 8 / 10; }
-  .site-footer__link-5 { grid-area: 8 / 2 / 9 / 10; }
-  .site-footer__loop   { grid-area: 2 / 17 / 4 / 26; }
-  .site-footer__news   { grid-area: 4 / 17 / 10 / 26; }
-}
 
-/* Squarespace's `sqsrte-small`. Two lines: the label, then the em-dash
-   alone below it. */
-.site-footer__loop { font-size: 14px; line-height: 21.4px; }
-
-/* Although it is an <h2>, its measured size is the h3 size. */
-.newsletter__heading {
-  font-size: var(--fs-h3);
-  line-height: 1.2;
-  margin: 0 0 16px;
-  text-align: left;
+.site-footer__social {
+  grid-area: 12 / 2 / 15 / 10;
+  justify-self: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
-.newsletter__form { display: flex; flex-wrap: wrap; }
-.newsletter__field { margin-top: 16px; }
-.newsletter__input {
-  width: 284px;
-  max-width: 100%;
-  height: 66px;
-  padding: 22.4px 32px;
-  border: 1px solid rgba(0, 0, 0, 0.12);
-  background: var(--white);
-  color: var(--black);
-  font-family: inherit;
-  font-size: 16px;
-  font-weight: 400;
-  line-height: 19.2px;
-}
-.newsletter__button-wrap { margin-top: 16px; padding: 8px 4px 8px 0; }
-.newsletter__button {
+.site-footer__social a {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  width: 131px;
-  height: 64px;
-  padding: 22.4px 32px;
-  border: 0;
-  background: var(--olive);
-  color: var(--white);
-  font-family: "Lexend", sans-serif;
-  font-size: 16px;
-  font-weight: 500;
-  line-height: 19.2px;
-  /* Without nowrap the label wraps to two lines at this width. */
-  white-space: nowrap;
-  cursor: pointer;
-  transition: opacity 0.1s linear;
+  gap: 10px;
+  transition: color 0.15s linear;
 }
-.newsletter__button:hover { opacity: 0.8; }
+.site-footer__social a:hover { color: var(--highlight); }
+
+@media (min-width: 768px) {
+  .site-footer__grid { --fe-rows: 7; }
+  .site-footer__link-1 { grid-area: 2 / 2 / 3 / 10; }
+  .site-footer__link-2 { grid-area: 3 / 2 / 4 / 10; }
+  .site-footer__link-3 { grid-area: 4 / 2 / 5 / 10; }
+  .site-footer__link-4 { grid-area: 5 / 2 / 6 / 10; }
+  .site-footer__link-5 { grid-area: 6 / 2 / 7 / 10; }
+  .site-footer__link-1, .site-footer__link-2, .site-footer__link-3,
+  .site-footer__link-4, .site-footer__link-5 { text-align: left; }
+
+  .site-footer__mark { grid-area: 2 / 10 / 7 / 18; width: 400px; }
+
+  .site-footer__social { grid-area: 2 / 18 / 7 / 26; justify-self: end; align-items: flex-end; }
+}
 
 /* ---------------------------------------------------------------------
    About page
