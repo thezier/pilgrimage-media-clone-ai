@@ -25,12 +25,20 @@
   // version control with everything else. Cloudflare creates the DNS record and
   // manages the certificate itself — nothing to add by hand in the zone.
   //
-  // Deliberately a subdomain, not the apex: pilgrimage.media still points at
-  // Squarespace, and this runs alongside it for comparison rather than
-  // replacing it.
+  // 2026-07-24: pilgrimage.media (apex) and www both cut over from Squarespace
+  // to this Worker — the "new." staging subdomain stays too, alongside the
+  // real domain now rather than instead of it.
   "routes": [
     {
       "pattern": "new.pilgrimage.media",
+      "custom_domain": true
+    },
+    {
+      "pattern": "pilgrimage.media",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.pilgrimage.media",
       "custom_domain": true
     }
   ],
