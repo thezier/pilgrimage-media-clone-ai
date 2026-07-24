@@ -1,8 +1,11 @@
 // Cloudflare Worker entry for new.pilgrimage.media.
 //
-// It exists for ONE dynamic route — POST /api/contact, which emails the contact
-// form to the inbox via Resend. Every other request falls through to the static
-// site (the ASSETS binding), so the site stays static except for this handler.
+// Two dynamic routes, both emailing via Resend; everything else falls through
+// to the static site (the ASSETS binding):
+//   POST /api/contact        — the site's own contact form
+//   POST /api/share-contact  — reciprocal "share your info back with Mike"
+//                               form on the NFC card page, card.pilgrimage.media
+//                               (a different origin — see CORS_ORIGIN below)
 //
 // Secrets/vars (set in the Cloudflare dashboard, not committed):
 //   RESEND_API_KEY  — secret, from resend.com
@@ -11,8 +14,10 @@
 // Defaults for the two addresses live in wrangler.jsonc `vars`.
 
 const REQUIRED = ["fname", "lname", "email", "message"];
+const SHARE_REQUIRED = ["name", "email"];
 const MAX_LEN = 5000;
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const CORS_ORIGIN = "https://card.pilgrimage.media";
 
 const esc = (s = "") =>
   String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
@@ -28,12 +33,37 @@ const handler = {
       return handleContact(request, env);
     }
 
+    if (url.pathname === "/api/share-contact") {
+      if (request.method === "OPTIONS") return corsPreflight();
+      if (request.method !== "POST") {
+        return json({ ok: false, error: "Method not allowed" }, 405, corsHeaders());
+      }
+      return handleShareContact(request, env);
+    }
+
     // Anything else is the static site.
     return env.ASSETS.fetch(request);
   },
 };
 
 export default handler;
+
+// The card page (card.pilgrimage.media) is a different origin from this
+// Worker (new.pilgrimage.media), so its fetch() calls need CORS. Scoped to
+// that one origin rather than "*" — this endpoint sends real email.
+function corsHeaders() {
+  return { "Access-Control-Allow-Origin": CORS_ORIGIN, "Vary": "Origin" };
+}
+function corsPreflight() {
+  return new Response(null, {
+    status: 204,
+    headers: {
+      ...corsHeaders(),
+      "Access-Control-Allow-Methods": "POST, OPTIONS",
+      "Access-Control-Allow-Headers": "Content-Type",
+    },
+  });
+}
 
 async function handleContact(request, env) {
   // Accept both a JSON fetch (the enhanced form) and a plain urlencoded POST
@@ -133,25 +163,25 @@ async function handleContact(request, env) {
 }
 
 // JSON for the fetch path; a simple HTML page for the no-JS form POST.
-function reply(wantsHtml, body, status) {
-  if (!wantsHtml) return json(body, status);
+function reply(wantsHtml, body, status, extraHeaders, back) {
+  if (!wantsHtml) return json(body, status, extraHeaders);
   const msg = body.ok
     ? "Thanks — your message is on its way. I'll be in touch soon."
     : body.error || "Something went wrong.";
-  return new Response(page(body.ok, msg), {
+  return new Response(page(body.ok, msg, back), {
     status,
-    headers: { "content-type": "text/html; charset=utf-8" },
+    headers: { "content-type": "text/html; charset=utf-8", ...extraHeaders },
   });
 }
 
-function json(body, status) {
+function json(body, status, extraHeaders) {
   return new Response(JSON.stringify(body), {
     status,
-    headers: { "content-type": "application/json" },
+    headers: { "content-type": "application/json", ...extraHeaders },
   });
 }
 
-function page(ok, msg) {
+function page(ok, msg, back = { href: "/", label: "Back to home" }) {
   return `<!doctype html><html lang="en"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>${ok ? "Message sent" : "Something went wrong"} — Pilgrimage Media</title>
@@ -159,6 +189,83 @@ function page(ok, msg) {
 <body><main style="min-height:70vh;display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:1.5rem;padding:0 6vw">
 <h1>${ok ? "Message sent" : "Something went wrong"}</h1>
 <p>${esc(msg)}</p>
-<a class="btn btn-outline" href="/" style="height:68px">Back to home</a>
+<a class="btn btn-outline" href="${back.href}" style="height:68px">${back.label}</a>
 </main></body></html>`;
+}
+
+async function handleShareContact(request, env) {
+  const wantsHtml = (request.headers.get("accept") || "").includes("text/html");
+  const back = { href: "https://card.pilgrimage.media/", label: "Back to card" };
+  let data;
+  try {
+    const ct = request.headers.get("content-type") || "";
+    if (ct.includes("application/json")) {
+      data = await request.json();
+    } else {
+      data = Object.fromEntries((await request.formData()).entries());
+    }
+  } catch {
+    return reply(wantsHtml, { ok: false, error: "Could not read the form." }, 400, corsHeaders(), back);
+  }
+
+  // Honeypot, same convention as the main contact form.
+  if (data.company) return reply(wantsHtml, { ok: true }, 200, corsHeaders(), back);
+
+  for (const f of SHARE_REQUIRED) {
+    if (!data[f] || !String(data[f]).trim()) {
+      return reply(wantsHtml, { ok: false, error: "Please fill in your name and email." }, 400, corsHeaders(), back);
+    }
+  }
+  if (!EMAIL_RE.test(String(data.email).trim())) {
+    return reply(wantsHtml, { ok: false, error: "That email address doesn't look right." }, 400, corsHeaders(), back);
+  }
+
+  if (!env.RESEND_API_KEY || !env.CONTACT_TO) {
+    console.error(`share-contact not configured: ${!env.RESEND_API_KEY ? "RESEND_API_KEY " : ""}${!env.CONTACT_TO ? "CONTACT_TO" : ""} missing`);
+    return reply(wantsHtml, { ok: false, error: "This isn't available right now." }, 500, corsHeaders(), back);
+  }
+
+  const rows = [
+    ["Name", data.name],
+    ["Email", data.email],
+    ["Phone", data.phone],
+  ].filter(([, v]) => v && String(v).trim());
+
+  const textBody =
+    `New contact shared from the card.pilgrimage.media NFC card:\n\n` +
+    rows.map(([k, v]) => `${k}: ${v}`).join("\n");
+
+  const htmlBody =
+    `<p style="font-family:sans-serif;font-size:14px">New contact shared from the card.pilgrimage.media NFC card:</p>` +
+    `<table style="border-collapse:collapse;font-family:sans-serif;font-size:14px">` +
+    rows
+      .map(
+        ([k, v]) =>
+          `<tr><td style="padding:4px 12px 4px 0;color:#696d5e"><strong>${esc(k)}</strong></td><td style="padding:4px 0">${esc(v)}</td></tr>`,
+      )
+      .join("") +
+    `</table>`;
+
+  const res = await fetch("https://api.resend.com/emails", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${env.RESEND_API_KEY}`,
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      from: env.CONTACT_FROM || "Pilgrimage Media <contact@pilgrimage.media>",
+      to: [env.CONTACT_TO],
+      reply_to: String(data.email).trim(),
+      subject: `Card contact shared: ${data.name}`,
+      text: textBody,
+      html: htmlBody,
+    }),
+  });
+
+  if (!res.ok) {
+    console.error("Resend error", res.status, await res.text().catch(() => ""));
+    return reply(wantsHtml, { ok: false, error: "Couldn't send just now — please try again." }, 502, corsHeaders(), back);
+  }
+
+  return reply(wantsHtml, { ok: true }, 200, corsHeaders(), back);
 }
