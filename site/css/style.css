@@ -713,22 +713,37 @@ body.menu-open { overflow: hidden; }
 
 /* ---------------------------------------------------------------------
    About page
-   Neither section on this page has a diagonal divider — verified
-   clip-path: none on both.
+   about-intro now cuts a diagonal down into Fun Facts (bg-white, bled
+   upward to fill it) — same z-index/section-border mechanism used
+   elsewhere on the site. Fun Facts itself stays flat into the footer,
+   same as Latest Posts does on the homepage.
    --------------------------------------------------------------------- */
-.about-intro { padding-top: var(--header-h); }
+.about-intro { z-index: 2; padding-top: var(--header-h); }
+.fun-facts { z-index: 1; }
 .about-intro__grid { --fe-rows: 34; }
 @media (min-width: 768px) { .about-intro__grid { --fe-rows: 15; } }
 
-.about-intro__heading  { grid-area: 1 / 2 / 3 / 10; }
-.about-intro__sub      { grid-area: 3 / 2 / 6 / 10; }
+.about-intro__heading  { grid-area: 1 / 2 / 3 / 10; margin-top: clamp(16px, 4vw, 40px); font-style: italic; font-size: var(--fs-h2); }
+.about-intro__sub      {
+  grid-area: 3 / 2 / 6 / 10;
+  font-family: "Lexend", sans-serif;
+  font-weight: 500;
+  font-size: 16px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
 .about-intro__portrait { grid-area: 6 / 2 / 18 / 10; }
 .about-intro__body     { grid-area: 19 / 2 / 35 / 10; }
 @media (min-width: 768px) {
   .about-intro__heading  { grid-area: 1 / 2 / 3 / 15; }
-  .about-intro__sub      { grid-area: 3 / 2 / 5 / 15; }
+  /* Row span shrunk from 3/2/5/15 (2 rows) to 1 row — the subtitle text
+     doesn't need the second row now that it's small uppercase Lexend
+     instead of a big serif h3; that empty reserved row was the actual
+     gap (a negative margin on the item itself can't touch it — grid row
+     sizing doesn't respond to item margins the way block-flow does). */
+  .about-intro__sub      { grid-area: 3 / 2 / 4 / 15; }
   .about-intro__portrait { grid-area: 2 / 16 / 15 / 25; }
-  .about-intro__body     { grid-area: 5 / 2 / 16 / 15; }
+  .about-intro__body     { grid-area: 4 / 2 / 16 / 15; }
 }
 
 /* Unlike the hero images, this portrait is in normal flow on purpose: on the
@@ -754,27 +769,82 @@ body.menu-open { overflow: hidden; }
   padding: 0 var(--fe-gutter);
 }
 .fun-facts__heading { text-align: center; }
+
+/* Slider: three slides (film / coffee / wedding), one visible at a time.
+   All stacked in the same grid cell rather than display:none/block, so
+   switching slides can crossfade instead of hard-cutting. */
+.fun-facts__slider {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: clamp(2rem, 5vw, 3rem) auto 0;
+  max-width: 900px;
+}
+.fun-facts__track { display: grid; flex: 1; min-width: 0; }
+.fun-facts__slide {
+  grid-column: 1;
+  grid-row: 1;
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+}
+.fun-facts__slide.is-active {
+  opacity: 1;
+  visibility: visible;
+  pointer-events: auto;
+}
 .fun-facts__image {
-  max-width: 820px;
   width: 100%;
   height: auto;
-  margin: clamp(2rem, 5vw, 3rem) auto;
+  display: block;
 }
-.fun-facts__list {
+.fun-facts__text {
   max-width: 640px;
-  margin: 0 auto;
-  padding: 0;
-  list-style: none;
+  margin: 2rem auto 0;
   display: grid;
-  gap: 2.5rem;
+  gap: 1rem;
   text-align: center;
 }
-.fun-facts__list p { margin: 0; }
-.fun-facts__list a {
+.fun-facts__text p { margin: 0; }
+.fun-facts__text a {
   border-bottom: 1px solid currentColor;
   transition: color 0.15s linear, border-color 0.15s linear;
 }
-.fun-facts__list a:hover { color: var(--highlight); border-color: var(--highlight); }
+.fun-facts__text a:hover { color: var(--highlight); border-color: var(--highlight); }
+
+.fun-facts__arrow {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 8px;
+  border: 0;
+  background: none;
+  color: var(--black);
+  cursor: pointer;
+  opacity: 0.6;
+  transition: opacity 0.15s linear;
+}
+.fun-facts__arrow:hover { opacity: 1; }
+
+.fun-facts__dots {
+  display: flex;
+  justify-content: center;
+  gap: 10px;
+  margin-top: 1.75rem;
+}
+.fun-facts__dot {
+  width: 8px;
+  height: 8px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  transition: background-color 0.15s linear;
+}
+.fun-facts__dot.is-active { background: var(--highlight); }
 
 /* ---------------------------------------------------------------------
    Contact page

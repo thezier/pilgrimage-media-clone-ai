@@ -60,9 +60,9 @@
     </header>
 
     <main>
-      <!-- ===== intro: dark, no diagonal divider on this page ===== -->
-      <section class="section section--no-pad about-intro">
-        <div class="section-border section-border--flush bg-dark"></div>
+      <!-- ===== intro: dark, diagonal divider down into Fun Facts ===== -->
+      <section class="section about-intro">
+        <div class="section-border section-border--flush divider-down bg-dark"></div>
         <div class="section-content fe-grid about-intro__grid on-dark">
           <h1 class="about-intro__heading">About Me</h1>
           <h3 class="about-intro__sub">Photographer + Videographer</h3>
@@ -106,75 +106,131 @@
         </div>
       </section>
 
-      <!-- ===== fun facts: white ===== -->
-      <section class="fun-facts">
-        <div class="fun-facts__inner">
+      <!-- ===== fun facts: white, bleeds up to fill about-intro's cut ===== -->
+      <section class="section fun-facts">
+        <div class="section-border bg-white"></div>
+        <div class="section-content fun-facts__inner">
           <h2 class="fun-facts__heading">Fun Facts</h2>
 
-          <img
-            class="fun-facts__image"
-            src="/images/about/film-slide.jpg"
-            alt="Film frames from a shoot"
-            width="1000"
-            height="454"
-            loading="lazy"
-          />
+          <div class="fun-facts__slider">
+            <button type="button" class="fun-facts__arrow fun-facts__arrow--prev" id="fun-facts-prev" aria-label="Previous fun fact">
+              <svg viewBox="0 0 16 26" width="16" height="26" fill="none" aria-hidden="true">
+                <path d="M14 1 2 13l12 12" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
 
-          <ul class="fun-facts__list">
-            <li>
-              <p>I often shoot film (35mm and medium format) during photo shoots.</p>
-              <p>My go-to’s are my Canon 1V and Mamiya 645AFDII.</p>
-              <p>Portra 160 and Portra 400 are my favorite film stocks.</p>
-            </li>
-            <li>
-              <p>
-                My wife and I also run a coffee business. Currently we roast out
-                of our home kitchen and setup a coffee trailer during the week.
-              </p>
-              <p>Check that out here:</p>
-              <p>
-                <a href="https://rendezvouscoffee.co" target="_blank" rel="noopener noreferrer"
-                  >rendezvouscoffee.co</a
-                >
-              </p>
-            </li>
-            <li>
-              <p>I’m also a wedding photographer!</p>
-              <p>You can see my wedding, portrait, and other branding work here:</p>
-              <p>
-                <a href="https://mikethezier.com" target="_blank" rel="noopener noreferrer"
-                  >mikethezier.com</a
-                >
-              </p>
-            </li>
-          </ul>
+            <div class="fun-facts__track" id="fun-facts-track">
+              <div class="fun-facts__slide is-active">
+                <img
+                  class="fun-facts__image"
+                  src="/images/about/film-slide.jpg"
+                  alt="Film frames from a shoot"
+                  width="1000"
+                  height="454"
+                  loading="lazy"
+                />
+                <div class="fun-facts__text">
+                  <p>I often shoot film (35mm and medium format) during photo shoots.</p>
+                  <p>My go-to’s are my Canon 1V and Mamiya 645AFDII.</p>
+                  <p>Portra 160 and Portra 400 are my favorite film stocks.</p>
+                </div>
+              </div>
+              <div class="fun-facts__slide">
+                <img
+                  class="fun-facts__image"
+                  src="/images/about/coffee-slide.jpg"
+                  alt="Coffee roasting and the trailer"
+                  width="1000"
+                  height="454"
+                  loading="lazy"
+                />
+                <div class="fun-facts__text">
+                  <p>
+                    My wife and I also run a coffee business. Currently we roast out
+                    of our home kitchen and setup a coffee trailer during the week.
+                  </p>
+                  <p>Check that out here:</p>
+                  <p>
+                    <a href="https://rendezvouscoffee.co" target="_blank" rel="noopener noreferrer"
+                      >rendezvouscoffee.co</a
+                    >
+                  </p>
+                </div>
+              </div>
+              <div class="fun-facts__slide">
+                <img
+                  class="fun-facts__image"
+                  src="/images/about/wedding-slide.jpg"
+                  alt="Wedding photography work"
+                  width="1000"
+                  height="454"
+                  loading="lazy"
+                />
+                <div class="fun-facts__text">
+                  <p>I’m also a wedding photographer!</p>
+                  <p>You can see my wedding, portrait, and other branding work here:</p>
+                  <p>
+                    <a href="https://mikethezier.com" target="_blank" rel="noopener noreferrer"
+                      >mikethezier.com</a
+                    >
+                  </p>
+                </div>
+              </div>
+            </div>
+
+            <button type="button" class="fun-facts__arrow fun-facts__arrow--next" id="fun-facts-next" aria-label="Next fun fact">
+              <svg viewBox="0 0 16 26" width="16" height="26" fill="none" aria-hidden="true">
+                <path d="m2 1 12 12L2 25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+              </svg>
+            </button>
+          </div>
+
+          <div class="fun-facts__dots" id="fun-facts-dots">
+            <button type="button" class="fun-facts__dot is-active" aria-label="Fun fact 1 of 3"></button>
+            <button type="button" class="fun-facts__dot" aria-label="Fun fact 2 of 3"></button>
+            <button type="button" class="fun-facts__dot" aria-label="Fun fact 3 of 3"></button>
+          </div>
         </div>
       </section>
     </main>
 
     <footer class="site-footer">
       <div class="fe-pad fe-grid site-footer__grid">
-        <h3 class="site-footer__wordmark">Pilgrimage Media</h3>
         <p class="site-footer__link-1"><a href="/fitness-athletes/">Athletes &amp; Fitness</a></p>
         <p class="site-footer__link-2"><a href="/sports-events/">Sports &amp; Events</a></p>
         <p class="site-footer__link-3"><a href="/health-adventure/">Health &amp; Adventure</a></p>
         <p class="site-footer__link-4"><a href="/about/">About</a></p>
         <p class="site-footer__link-5"><a href="/contact/">Contact</a></p>
 
-        <p class="site-footer__loop">Stay in the Loop<br />&mdash;</p>
+        <img class="site-footer__mark" src="/images/brand/pilgrimage-mountains.jpg" alt="Pilgrimage Media" width="642" height="493" loading="lazy" />
 
-        <div class="site-footer__news">
-          <h2 class="newsletter__heading">Subscribe to our newsletter</h2>
-          <form class="newsletter__form">
-            <div class="newsletter__field">
-              <label class="visually-hidden" for="newsletter-email">Email address</label>
-              <input class="newsletter__input" id="newsletter-email" type="email" name="email" />
-            </div>
-            <div class="newsletter__button-wrap">
-              <button class="newsletter__button" type="button">Sign up</button>
-            </div>
-          </form>
-        </div>
+        <ul class="site-footer__social">
+          <li>
+            <a href="https://instagram.com/pilgrimagemedia" target="_blank" rel="noopener noreferrer" aria-label="Pilgrimage Media on Instagram">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+                <rect x="2.5" y="2.5" width="19" height="19" rx="5" stroke="currentColor" stroke-width="1.6" />
+                <circle cx="12" cy="12" r="4.7" stroke="currentColor" stroke-width="1.6" />
+                <circle cx="17.4" cy="6.6" r="1.15" fill="currentColor" />
+              </svg>
+              <span>Instagram</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.pinterest.com/pilgrimagemedia/" target="_blank" rel="noopener noreferrer" aria-label="Pilgrimage Media on Pinterest">
+              <img src="/images/brand/pinterest-icon.png" alt="" width="22" height="22" aria-hidden="true" />
+              <span>Pinterest</span>
+            </a>
+          </li>
+          <li>
+            <a href="https://www.strava.com/athletes/mikethezier" target="_blank" rel="noopener noreferrer" aria-label="Pilgrimage Media on Strava">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" aria-hidden="true">
+                <path d="M10.3 2.5 15.9 13.6h-3.4l-2.2-4.6-2.3 4.6H4.6z" fill="currentColor" />
+                <path d="m12.9 13.6 2 4 2-4h2.6l-4.6 8-4.6-8z" fill="currentColor" />
+              </svg>
+              <span>Strava</span>
+            </a>
+          </li>
+        </ul>
       </div>
     </footer>
 

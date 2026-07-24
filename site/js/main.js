@@ -88,6 +88,44 @@
   });
 })();
 
+// Fun Facts slider (About page): three slides, prev/next arrows + dots.
+// Only present there — #fun-facts-track doesn't exist elsewhere, so this
+// is a no-op on every other page.
+(function () {
+  "use strict";
+
+  var track = document.getElementById("fun-facts-track");
+  if (!track) return;
+
+  var slides = Array.prototype.slice.call(track.querySelectorAll(".fun-facts__slide"));
+  var dots = Array.prototype.slice.call(document.querySelectorAll("#fun-facts-dots .fun-facts__dot"));
+  var prevBtn = document.getElementById("fun-facts-prev");
+  var nextBtn = document.getElementById("fun-facts-next");
+  var index = 0;
+
+  function show(i) {
+    index = (i + slides.length) % slides.length;
+    slides.forEach(function (slide, n) {
+      slide.classList.toggle("is-active", n === index);
+    });
+    dots.forEach(function (dot, n) {
+      dot.classList.toggle("is-active", n === index);
+    });
+  }
+
+  prevBtn.addEventListener("click", function () {
+    show(index - 1);
+  });
+  nextBtn.addEventListener("click", function () {
+    show(index + 1);
+  });
+  dots.forEach(function (dot, n) {
+    dot.addEventListener("click", function () {
+      show(n);
+    });
+  });
+})();
+
 // Gallery lightbox: click any photo in a project's masonry gallery to view it
 // full-size, with prev/next and keyboard navigation through the rest of that
 // gallery. Only present on individual project pages — .project-gallery and
