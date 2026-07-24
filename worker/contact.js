@@ -259,6 +259,12 @@ async function handleShareContact(request, env) {
       subject: `Card contact shared: ${data.name}`,
       text: textBody,
       html: htmlBody,
+      attachments: [
+        {
+          filename: `${String(data.name).trim().replace(/[^a-z0-9]+/gi, "-").replace(/^-+|-+$/g, "") || "contact"}.vcf`,
+          content: toBase64(vCard(data)),
+        },
+      ],
     }),
   });
 
@@ -268,4 +274,25 @@ async function handleShareContact(request, env) {
   }
 
   return reply(wantsHtml, { ok: true }, 200, corsHeaders(), back);
+}
+
+// vCard text values escape backslash, comma, semicolon and newlines per RFC 6350.
+const vEsc = (s = "") => String(s).trim().replace(/\\/g, "\\\\").replace(/[;,]/g, (c) => "\\" + c).replace(/\r?\n/g, "\\n");
+
+function vCard(data) {
+  const lines = [
+    "BEGIN:VCARD",
+    "VERSION:3.0",
+    `N:;${vEsc(data.name)};;;`,
+    `FN:${vEsc(data.name)}`,
+    `EMAIL;TYPE=INTERNET:${vEsc(data.email)}`,
+  ];
+  if (data.phone && String(data.phone).trim()) lines.push(`TEL;TYPE=CELL:${vEsc(data.phone)}`);
+  lines.push("END:VCARD");
+  return lines.join("\r\n");
+}
+
+// UTF-8-safe base64 — btoa() alone only handles Latin1.
+function toBase64(str) {
+  return btoa(unescape(encodeURIComponent(str)));
 }
