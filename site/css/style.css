@@ -500,8 +500,6 @@ body.menu-open { overflow: hidden; }
 .services__rule    { grid-area: 5 / 2 / 6 / 10; }
 .services__eyebrow { grid-area: 6 / 2 / 8 / 10; }
 .services__body    { grid-area: 8 / 2 / 16 / 9; }
-/* Row 27 on mobile is deliberate — rows 16-27 are empty so the photo
-   shows through below the text. Reproduce via grid-area, not a margin. */
 .services__cta     { grid-area: 27 / 3 / 29 / 9; }
 @media (min-width: 768px) {
   .services__heading { grid-area: 4 / 2 / 6 / 14; }
@@ -529,6 +527,88 @@ body.menu-open { overflow: hidden; }
    reserved for Gelasio headlines), so emphasis here is weight only. */
 .services__body em { font-style: normal; font-weight: 600; }
 .services__body p:first-child em { font-weight: 700; }
+
+/* ---------------------------------------------------------------------
+   Client Spotlight — standalone section between Services and Latest
+   Posts. Plain white bg (no photo needed): it's the same light "chapter"
+   as Services and Posts, so a flat bg-white still needs the divider-up
+   clip-path + z-index for the seam to render, even though the color it
+   reveals is identical to what's already there.
+   --------------------------------------------------------------------- */
+.progress { z-index: 2; }
+.progress__grid { --fe-rows: 16; }
+@media (min-width: 768px) { .progress__grid { --fe-rows: 16; } }
+
+/* Single wrapper for heading + eyebrow + cards, instead of three
+   separately-positioned grid items. justify-self: center shrinks the
+   wrapper to its own content width (the cards row, its widest child) and
+   centers that as a block; align-items: flex-end inside then right-aligns
+   heading/eyebrow to that same shrunk width — so their right edge always
+   lands exactly on the cards row's right edge (Kalia's photo), wherever
+   centering happens to put it, rather than a fixed px guess. */
+.progress__inner {
+  grid-area: 2 / 2 / 15 / 10;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-self: center;
+  gap: 12px;
+}
+@media (min-width: 768px) {
+  .progress__inner { grid-area: 3 / 2 / 16 / 26; gap: 16px; }
+}
+.spotlight-cards { margin-top: 8px; }
+
+.progress__heading, .progress__eyebrow { text-align: right; }
+.progress__eyebrow {
+  font-family: "Lexend", sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  opacity: 0.7;
+  margin: 0;
+}
+.spotlight-cards { display: flex; gap: 32px; flex-wrap: wrap; justify-content: center; }
+.spotlight-card { flex: 1 1 220px; max-width: 280px; }
+/* Placeholder stand-in for real session photos — swap the whole element
+   for an <img> once Ambrose's, Amy's, and Kalia's session photos are
+   picked. */
+.spotlight-card__photo {
+  aspect-ratio: 4 / 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: repeating-linear-gradient(
+    45deg,
+    var(--concrete, #ededE8),
+    var(--concrete, #ededE8) 10px,
+    rgba(0, 0, 0, 0.05) 10px,
+    rgba(0, 0, 0, 0.05) 20px
+  );
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  margin-bottom: 12px;
+}
+.spotlight-card__photo span {
+  font-family: "Lexend", sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: rgba(0, 0, 0, 0.4);
+  text-align: center;
+  padding: 0 12px;
+}
+.spotlight-card__type {
+  font-family: "Lexend", sans-serif;
+  font-weight: 500;
+  font-size: 11px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--highlight);
+  margin: 0 0 4px;
+}
+.spotlight-card__name { font-size: var(--fs-em); margin: 0 0 6px; }
+.spotlight-card__caption { font-size: 14px; line-height: 1.5; color: inherit; opacity: 0.85; }
 
 /* ---------------------------------------------------------------------
    Latest Posts — the ONE section with no diagonal. It keeps the upward
@@ -837,3 +917,105 @@ body.menu-open { overflow: hidden; }
   white-space: nowrap;
   border: 0;
 }
+
+/* ---------------------------------------------------------------------
+   Category pages (/fitness-athletes/, /sports-events/, /health-adventure/)
+   Same dark section the topo-hero used, minus the topo art — flat
+   bg-dark instead. Title + gallery grid both sit on it; the diagonal cut
+   at the bottom is filled by the footer's own bled-up white background
+   (.footer-reveal — shared with individual project pages below), same
+   mechanism as before.
+   --------------------------------------------------------------------- */
+.category-hero { z-index: 2; padding-top: var(--header-h); }
+.category-hero__title {
+  padding: 24px 0 40px;
+  text-align: center;
+}
+.category-hero__title h1 { margin: 0; font-size: var(--fs-h2); font-style: italic; }
+/* Gelasio has no weight below 400, so the thin look borrows Lexend
+   (200 fetched specifically for this) instead of trying to fake a
+   lighter serif. */
+.category-hero__title .amp { color: var(--highlight); font-family: "Lexend", sans-serif; font-weight: 200; font-style: normal; }
+/* Shared by category.html and project.html — bleeds white upward to fill
+   whichever dark section's diagonal cut sits directly above it. */
+.footer-reveal { position: relative; z-index: 1; }
+
+/* ---------------------------------------------------------------------
+   Individual project pages (/portfolio/<slug>/)
+   Same dark-section + diagonal-into-footer treatment as category pages.
+   --------------------------------------------------------------------- */
+.project-page-hero { z-index: 2; padding-top: var(--header-h); }
+
+/* Masonry gallery — plain CSS columns rather than a JS library, matching
+   the "no framework" rule for this site. Natural aspect ratios throughout
+   (no cropping), packed tightly like the reference Mike sent (a Pic-Time
+   client gallery + a Squarespace portrait page) rather than the old fixed
+   2-up grid with an every-third-image full-bleed break. */
+.project-gallery {
+  column-count: 2;
+  column-gap: var(--fe-gap);
+  padding-bottom: clamp(3rem, 8vw, 6rem);
+}
+@media (min-width: 600px) { .project-gallery { column-count: 3; } }
+@media (min-width: 1100px) { .project-gallery { column-count: 4; } }
+.project-gallery figure {
+  break-inside: avoid;
+  margin: 0 0 var(--fe-gap);
+}
+.project-gallery img { width: 100%; height: auto; display: block; cursor: pointer; }
+
+/* Lightbox — plain CSS + vanilla JS (see js/main.js), matching the site's
+   no-framework rule. One fixed overlay, reused for every photo clicked. */
+.lightbox {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.92);
+  padding: clamp(16px, 5vw, 64px);
+}
+.lightbox[hidden] { display: none; }
+.lightbox__img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+.lightbox__close,
+.lightbox__prev,
+.lightbox__next {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px;
+  border: 0;
+  background: none;
+  color: var(--white);
+  cursor: pointer;
+  opacity: 0.8;
+  transition: opacity 0.15s linear;
+}
+.lightbox__close:hover,
+.lightbox__prev:hover,
+.lightbox__next:hover {
+  opacity: 1;
+}
+.lightbox__close { top: clamp(8px, 3vw, 24px); right: clamp(8px, 3vw, 24px); }
+.lightbox__prev { left: clamp(4px, 2vw, 16px); top: 50%; transform: translateY(-50%); }
+.lightbox__next { right: clamp(4px, 2vw, 16px); top: 50%; transform: translateY(-50%); }
+body.lightbox-open { overflow: hidden; }
+
+/* Gallery titles in Lexend rather than the default Gelasio serif, to read
+   more like a label than a headline. */
+.category-page .project-card h3 {
+  font-family: "Lexend", sans-serif;
+  font-weight: 500;
+  font-size: 17px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+/* The summary shown here (see build.mjs) reads better upright than in the
+   .project-eyebrow base style's italic. */
+.category-page .project-card .project-eyebrow { font-style: normal; }

@@ -80,9 +80,23 @@ const picture = ({ sizes, width, height }, alt, sizesAttr) => {
 };
 
 // --- render -----------------------------------------------------------------
+// The three homepage/footer links (Athletes & Fitness, Sports & Events,
+// Health & Adventure) point at these root-level URLs. They used to 404 —
+// nothing ever generated them. Mapped here rather than derived from the
+// category string so a typo'd or renamed category in PocketBase can't
+// silently break a live URL.
+const CATEGORY_SLUGS = {
+  "Athletes & Fitness": "fitness-athletes",
+  "Sports & Events": "sports-events",
+  "Health & Adventure": "health-adventure",
+};
+const SITE = path.resolve(ROOT, "../../site");
+
 const projectTpl = await tpl("project.html");
 const indexTpl = await tpl("index.html");
+const categoryTpl = await tpl("category.html");
 const cards = [];
+const cardsByCategory = {};
 
 for (const p of projects) {
   const coverImg = p.cover ? await responsive(p, p.cover, p.slug, [CARD_WIDTH, 1600]) : null;
@@ -136,13 +150,22 @@ for (const p of projects) {
   await writeFile(path.join(OUT, p.slug, "index.html"), html);
   console.log(`  /portfolio/${p.slug}/  — ${figures.length} images`);
 
-  cards.push(
-    `<a class="project-card" href="/portfolio/${p.slug}/">
+  const card = `<a class="project-card" href="/portfolio/${p.slug}/">
           ${coverImg ? picture(coverImg, p.title, "(min-width: 768px) 33vw, 100vw") : ""}
           <h3>${esc(p.title)}</h3>
           <p class="project-eyebrow">${esc(p.category)}</p>
-        </a>`,
-  );
+        </a>`;
+  cards.push(card);
+
+  // Category pages already say the category in their own heading, so their
+  // cards show each project's own one-line summary underneath instead —
+  // more useful than repeating the category on every card.
+  const categoryCard = `<a class="project-card" href="/portfolio/${p.slug}/">
+          ${coverImg ? picture(coverImg, p.title, "(min-width: 768px) 33vw, 100vw") : ""}
+          <h3>${esc(p.title)}</h3>
+          <p class="project-eyebrow">${esc(p.summary)}</p>
+        </a>`;
+  (cardsByCategory[p.category] ??= []).push(categoryCard);
 }
 
 await writeFile(
@@ -152,5 +175,30 @@ await writeFile(
 // Lives with the rest of the site's stylesheets, not inside /portfolio/,
 // because the project pages share /css/style.css for tokens and chrome.
 await writeFile(path.resolve(OUT, "../css/portfolio.css"), await tpl("portfolio.css"));
+
+// --- category pages -----------------------------------------------------
+// Root-level, not under /portfolio/ — that's the URL the homepage and
+// footer links already use (/fitness-athletes/, etc.), so this is the only
+// change needed to make those links resolve.
+for (const [category, slug] of Object.entries(CATEGORY_SLUGS)) {
+  const catCards = cardsByCategory[category] ?? [];
+  const dir = path.join(SITE, slug);
+  await rm(dir, { recursive: true, force: true });
+  await mkdir(dir, { recursive: true });
+  await writeFile(
+    path.join(dir, "index.html"),
+    fill(categoryTpl, {
+      heading: esc(category),
+      // Wraps just the "&" in a span so it can be colored separately from
+      // the rest of the title (see .category-hero__title .amp in style.css).
+      headingHtml: esc(category).replace(/&amp;/g, '<span class="amp">&amp;</span>'),
+      description: `${category} — selected work from Pilgrimage Media.`,
+      path: `/${slug}/`,
+      count: String(catCards.length),
+      cards: catCards.join("\n        "),
+    }),
+  );
+  console.log(`  /${slug}/  — ${catCards.length} project(s)`);
+}
 
 console.log(`\n  wrote ${OUT}`);

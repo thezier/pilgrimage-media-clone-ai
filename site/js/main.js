@@ -88,6 +88,77 @@
   });
 })();
 
+// Gallery lightbox: click any photo in a project's masonry gallery to view it
+// full-size, with prev/next and keyboard navigation through the rest of that
+// gallery. Only present on individual project pages — .project-gallery and
+// #lightbox don't exist elsewhere, so this is a no-op there.
+(function () {
+  "use strict";
+
+  var gallery = document.querySelector(".project-gallery");
+  var lightbox = document.getElementById("lightbox");
+  if (!gallery || !lightbox) return;
+
+  var img = document.getElementById("lightbox-img");
+  var closeBtn = document.getElementById("lightbox-close");
+  var prevBtn = document.getElementById("lightbox-prev");
+  var nextBtn = document.getElementById("lightbox-next");
+  var photos = Array.prototype.slice.call(gallery.querySelectorAll("img"));
+  var index = 0;
+  var opener = null;
+
+  function show(i) {
+    index = (i + photos.length) % photos.length;
+    var source = photos[index];
+    // The <img>'s own src is already the largest generated size (see
+    // build.mjs), so no separate full-res asset is needed here.
+    img.src = source.src;
+    img.alt = source.alt;
+  }
+
+  function open(i, trigger) {
+    opener = trigger || null;
+    show(i);
+    lightbox.hidden = false;
+    document.body.classList.add("lightbox-open");
+    closeBtn.focus();
+  }
+
+  function close() {
+    lightbox.hidden = true;
+    document.body.classList.remove("lightbox-open");
+    // Return focus to the thumbnail that opened it, not wherever the DOM
+    // default would land (usually <body>).
+    if (opener) opener.focus();
+  }
+
+  gallery.addEventListener("click", function (e) {
+    var clicked = e.target.closest("img");
+    if (!clicked) return;
+    open(photos.indexOf(clicked), clicked);
+  });
+
+  closeBtn.addEventListener("click", close);
+  prevBtn.addEventListener("click", function () {
+    show(index - 1);
+  });
+  nextBtn.addEventListener("click", function () {
+    show(index + 1);
+  });
+
+  // Click on the scrim (not the image or the nav buttons) also closes it.
+  lightbox.addEventListener("click", function (e) {
+    if (e.target === lightbox) close();
+  });
+
+  document.addEventListener("keydown", function (e) {
+    if (lightbox.hidden) return;
+    if (e.key === "Escape") close();
+    else if (e.key === "ArrowLeft") show(index - 1);
+    else if (e.key === "ArrowRight") show(index + 1);
+  });
+})();
+
 // Contact form: submit in place via fetch, so the visitor stays on the page and
 // sees a status message. Without this, the form still works — it does a plain
 // POST and the Worker returns an HTML thank-you page.

@@ -22,6 +22,10 @@ const FACES = [
   { family: "Gelasio", weight: 400, style: "normal" },
   { family: "Gelasio", weight: 700, style: "normal" },
   { family: "Gelasio", weight: 400, style: "italic" },
+  // Thin weight, added 2026-07-24 for the "&" in category page titles —
+  // Gelasio (the serif used for those titles) has no weight below 400,
+  // so this one character borrows Lexend's ExtraLight instead.
+  { family: "Lexend", weight: 200, style: "normal" },
   { family: "Lexend", weight: 400, style: "normal" },
   { family: "Lexend", weight: 500, style: "normal" },
   { family: "Lexend", weight: 600, style: "normal" },
