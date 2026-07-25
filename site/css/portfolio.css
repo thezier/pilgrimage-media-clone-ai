@@ -53,9 +53,22 @@
    (masonry columns, next to the other dark-section/diagonal-footer rules
    it's paired with) — nothing left to declare here. */
 
-/* Vimeo embeds, rendered as ordinary gallery figures so they flow into the
-   masonry columns like photos do. aspect-ratio (rather than a padding-top
-   hack) keeps the iframe at 16:9 at any column width. */
+/* Vimeo embeds. Their own stacked, full-width section above the photo
+   masonry — not mixed into .project-gallery's columns, where a 16:9 video
+   would be squeezed to the width of one column and read as tiny next to
+   portrait photos. */
+.project-videos {
+  display: flex;
+  flex-direction: column;
+  gap: var(--fe-gap);
+  max-width: min(960px, 100%);
+  margin: 0 auto clamp(2rem, 5vw, 3rem);
+}
+.project-videos__item {
+  margin: 0;
+}
+/* aspect-ratio (rather than a padding-top hack) keeps the iframe at 16:9
+   at any width. */
 .video-embed {
   position: relative;
   width: 100%;
