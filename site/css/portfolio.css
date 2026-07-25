@@ -57,11 +57,14 @@
    masonry — not mixed into .project-gallery's columns, where a 16:9 video
    would be squeezed to the width of one column and read as tiny next to
    portrait photos. */
+/* auto-fit + collapsing empty tracks means N videos evenly split full width
+   (side by side) down to one per row on narrow viewports — no media query
+   needed. minmax(280px, ...) is the floor before a row wraps. */
 .project-videos {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: var(--fe-gap);
-  max-width: min(960px, 100%);
+  max-width: min(1200px, 100%);
   margin: 0 auto clamp(2rem, 5vw, 3rem);
 }
 .project-videos__item {
