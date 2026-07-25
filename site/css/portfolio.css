@@ -65,6 +65,7 @@
 .project-videos {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center;
   gap: var(--fe-gap);
   margin: 0 0 clamp(2rem, 5vw, 3rem);
 }
