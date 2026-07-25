@@ -53,25 +53,28 @@
    (masonry columns, next to the other dark-section/diagonal-footer rules
    it's paired with) — nothing left to declare here. */
 
-/* Vimeo embeds. Their own stacked, full-width section above the photo
-   masonry — not mixed into .project-gallery's columns, where a 16:9 video
-   would be squeezed to the width of one column and read as tiny next to
-   portrait photos. */
-/* auto-fit + collapsing empty tracks means N videos evenly split full width
-   (side by side) down to one per row on narrow viewports — no media query
-   needed. minmax(280px, ...) is the floor before a row wraps. */
+/* Vimeo embeds. Their own full-width section above the photo masonry, not
+   mixed into .project-gallery's columns — a video squeezed to one column's
+   width there would read as tiny next to portrait photos. Full width, same
+   as .project-gallery below it — auto-fit + collapsing empty tracks means N
+   videos evenly split that width (side by side) down to one per row on
+   narrow viewports, no media query needed. minmax(320px) is the floor
+   before a row wraps. */
 .project-videos {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
   gap: var(--fe-gap);
-  max-width: min(1200px, 100%);
-  margin: 0 auto clamp(2rem, 5vw, 3rem);
+  margin: 0 0 clamp(2rem, 5vw, 3rem);
 }
 .project-videos__item {
   margin: 0;
 }
-/* aspect-ratio (rather than a padding-top hack) keeps the iframe at 16:9
-   at any width. */
+/* aspect-ratio (rather than a padding-top hack) sizes the iframe at any
+   width. 16:9 here is only a fallback for the rare case build.mjs couldn't
+   fetch a video's real aspect ratio from Vimeo's oEmbed API — normally each
+   figure gets an inline aspect-ratio matching its own source (vertical
+   phone clips are common here, and forcing those into 16:9 pillarboxes them
+   with dark bars instead of actually filling the box). */
 .video-embed {
   position: relative;
   width: 100%;
