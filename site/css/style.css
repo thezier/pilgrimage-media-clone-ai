@@ -722,6 +722,21 @@ body.menu-open { overflow: hidden; }
 .site-footer__link-5 { grid-area: 10 / 2 / 11 / 10; }
 .site-footer__link-1, .site-footer__link-2, .site-footer__link-3,
 .site-footer__link-4, .site-footer__link-5 { text-align: center; }
+
+/* Service area. Deliberately dropped into rows that were already empty in
+   both layouts — row 11 on mobile (between the links and the social list),
+   row 7 on desktop (below the last link) — so this adds a line of text
+   without changing the footer's height. Set smaller and dimmer than the
+   nav links so it reads as a caption, not a sixth menu item. */
+.site-footer__area {
+  grid-area: 11 / 2 / 12 / 10;
+  text-align: center;
+  margin: 0;
+  align-self: center;
+  font-size: 13px;
+  letter-spacing: 0.02em;
+  opacity: 0.65;
+}
 .site-footer__link-1 a,
 .site-footer__link-2 a,
 .site-footer__link-3 a,
@@ -765,6 +780,8 @@ body.menu-open { overflow: hidden; }
   .site-footer__link-5 { grid-area: 6 / 2 / 7 / 10; }
   .site-footer__link-1, .site-footer__link-2, .site-footer__link-3,
   .site-footer__link-4, .site-footer__link-5 { text-align: left; }
+
+  .site-footer__area { grid-area: 7 / 2 / 8 / 10; text-align: left; align-self: start; }
 
   .site-footer__mark { grid-area: 2 / 10 / 7 / 18; width: 400px; }
 
@@ -949,6 +966,22 @@ body.menu-open { overflow: hidden; }
   margin: 0 auto;
   padding: 0 var(--fe-gutter) clamp(2rem, 6vw, 4rem);
 }
+/* Sits above the form and shares its column so the two read as one block.
+   Slightly larger than body copy and a touch dimmed — it introduces the form
+   rather than competing with it. */
+.contact-intro {
+  max-width: 640px;
+  margin: 0 auto clamp(2rem, 5vw, 3rem);
+}
+.contact-intro p {
+  margin: 0 0 1rem;
+  font-size: 17px;
+  line-height: 1.65;
+  opacity: 0.88;
+}
+.contact-intro p:last-child { margin-bottom: 0; }
+.contact-intro strong { font-weight: 700; opacity: 1; }
+
 .contact-form {
   display: grid;
   gap: 1.15rem;

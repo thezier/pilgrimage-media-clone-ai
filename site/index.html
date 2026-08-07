@@ -3,10 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Fitness &amp; Sports Photography + Video | Pilgrimage Media</title>
+    <title>Fitness &amp; Sports Photographer, Temecula CA | Pilgrimage Media</title>
     <meta
       name="description"
-      content="Photography and video for athletes, trainers, teams and brands across Southern California. Personal branding, Progress Sessions, and commercial work."
+      content="Fitness, sports and athlete photography and video by Mike Thezier — based in Temecula and shooting across San Diego, Orange County and Southern California."
     />
     <link rel="canonical" href="https://pilgrimage.media/" />
 
@@ -22,20 +22,20 @@
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Pilgrimage Media" />
     <meta property="og:url" content="https://pilgrimage.media/" />
-    <meta property="og:title" content="Fitness &amp; Sports Photography + Video | Pilgrimage Media" />
+    <meta property="og:title" content="Fitness &amp; Sports Photographer, Temecula CA | Pilgrimage Media" />
     <meta
       property="og:description"
-      content="Photography and video for athletes, trainers, teams and brands across Southern California."
+      content="Fitness, sports and athlete photography and video — Temecula, San Diego and Orange County."
     />
     <meta property="og:image" content="https://pilgrimage.media/images/og-default.jpg" />
     <meta property="og:image:width" content="1200" />
     <meta property="og:image:height" content="630" />
     <meta property="og:image:alt" content="A runner mid-stride on a trail, photographed in black and white" />
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content="Fitness &amp; Sports Photography + Video | Pilgrimage Media" />
+    <meta name="twitter:title" content="Fitness &amp; Sports Photographer, Temecula CA | Pilgrimage Media" />
     <meta
       name="twitter:description"
-      content="Photography and video for athletes, trainers, teams and brands across Southern California."
+      content="Fitness, sports and athlete photography and video — Temecula, San Diego and Orange County."
     />
     <meta name="twitter:image" content="https://pilgrimage.media/images/og-default.jpg" />
 
@@ -66,10 +66,20 @@
             "logo": "https://pilgrimage.media/images/brand/pilgrimage-logo.png",
             "email": "contact@pilgrimage.media",
             "founder": { "@id": "https://pilgrimage.media/about/#mike" },
-            "areaServed": {
-              "@type": "State",
-              "name": "Southern California"
+            "address": {
+              "@type": "PostalAddress",
+              "addressLocality": "Temecula",
+              "addressRegion": "CA",
+              "addressCountry": "US"
             },
+            "areaServed": [
+              { "@type": "City", "name": "Temecula", "address": { "@type": "PostalAddress", "addressRegion": "CA", "addressCountry": "US" } },
+              { "@type": "City", "name": "Murrieta", "address": { "@type": "PostalAddress", "addressRegion": "CA", "addressCountry": "US" } },
+              { "@type": "City", "name": "San Diego", "address": { "@type": "PostalAddress", "addressRegion": "CA", "addressCountry": "US" } },
+              { "@type": "AdministrativeArea", "name": "Orange County, California" },
+              { "@type": "AdministrativeArea", "name": "Riverside County, California" },
+              { "@type": "AdministrativeArea", "name": "Southern California" }
+            ],
             "serviceType": [
               "Fitness photography",
               "Sports photography",
@@ -990,6 +1000,10 @@ c11 13 20 38 20 55 0 18 18 87 40 154 172 528 170 1017 -6 1538 -62 183 -76
         <p class="site-footer__link-3"><a href="/health-adventure/">Health &amp; Adventure</a></p>
         <p class="site-footer__link-4"><a href="/about/">About</a></p>
         <p class="site-footer__link-5"><a href="/contact/">Contact</a></p>
+
+        <!-- Service area, stated once site-wide. Sits in a grid row that was
+             already empty in both layouts, so the footer's height is unchanged. -->
+        <p class="site-footer__area">Based in Temecula, CA — San Diego &amp; Orange County</p>
 
         <img class="site-footer__mark" src="/images/brand/pilgrimage-mountains.jpg" alt="Pilgrimage Media" width="642" height="493" loading="lazy" />
 
