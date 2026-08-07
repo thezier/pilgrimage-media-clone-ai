@@ -308,11 +308,15 @@
 // poster underneath (the video's own first frame) covers that gap; this just
 // decides when to hand over.
 //
-// The player talks over postMessage: it posts {event:"ready"} when loaded, then
-// {event:"play"} once playback starts, after we subscribe. If that protocol
-// ever changes we would never reveal the video at all, so a grace timer reveals
-// it regardless a few seconds after the iframe's own load event — worst case is
-// the black box we already had, never worse.
+// The player talks over postMessage: it posts {event:"ready"} when loaded, and
+// then whichever events we subscribe to. We wait for `timeupdate` with a
+// non-zero time rather than `play` — `play` fires when playback is *requested*,
+// which is a beat before the first frame is actually on screen, and revealing
+// there produced a visible flash of empty background between hiding the poster
+// and the video painting. A non-zero timeupdate means frames are really moving.
+//
+// The CSS reveals the video on its own after 6s regardless, so a change to this
+// protocol can only cost us the poster, never the video.
 (function () {
   "use strict";
 
@@ -347,8 +351,8 @@
 
     // The Turnstile shell loads at this origin too but never speaks this
     // protocol, so only the real player gets us here.
-    if (data.event === "ready") post({ method: "addEventListener", value: "play" });
-    if (data.event === "play" || data.event === "playing") reveal();
+    if (data.event === "ready") post({ method: "addEventListener", value: "timeupdate" });
+    if (data.event === "timeupdate" && data.data && data.data.seconds > 0) reveal();
   });
 
   frame.addEventListener("load", function () {
