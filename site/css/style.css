@@ -415,10 +415,21 @@ body.menu-open { overflow: hidden; }
   height: 100%;
   border: 0;
   pointer-events: none;
+
+  /* The reveal is an animation rather than a transition so it also fires with
+     no JavaScript at all: the 6s delay is a floor, not the intended path.
+     main.js normally adds .is-playing well before then, which restarts the same
+     keyframes with no delay and fades the video in at once. Without JS — or if
+     an earlier script on the page throws — the video still appears on its own,
+     which is no worse than the black box this replaced. */
   opacity: 0;
-  transition: opacity 500ms ease;
+  animation: hero-video-in 500ms ease 6s forwards;
 }
-.hero__video.is-playing { opacity: 1; }
+.hero__video.is-playing { animation: hero-video-in 500ms ease 0s forwards; }
+
+@keyframes hero-video-in {
+  to { opacity: 1; }
+}
 
 /* The still frame under the video. `cover`, not `contain` like the sibling
    photos — it has to match how Vimeo's background mode crops, or the swap
