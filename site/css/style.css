@@ -823,6 +823,25 @@ body.menu-open { overflow: hidden; }
   .about-intro__body     { grid-area: 4 / 2 / 16 / 15; }
 }
 
+/* Credentials line, sitting between the subtitle and the prose. Set in the
+   highlight gold and a step smaller than the subtitle so the two read as a
+   pair rather than compete — subtitle says the job, this says the licences. */
+.about-intro__creds {
+  margin: 0 0 clamp(1.25rem, 3vw, 1.75rem);
+  font-family: "Lexend", sans-serif;
+  font-weight: 500;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--highlight);
+}
+/* Separator as a styled span rather than a literal "·" in the sentence, so
+   screen readers don't announce it and it can dim independently. */
+.about-intro__creds span {
+  opacity: 0.45;
+  margin: 0 0.55em;
+}
+
 /* Unlike the hero images, this portrait is in normal flow on purpose: on the
    live site it is TALLER than its grid area and grows the row to fit. Pinning
    it absolutely (as the hero images need) would cap it at the area and lose

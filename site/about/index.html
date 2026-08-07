@@ -51,11 +51,37 @@
             "url": "https://pilgrimage.media/about/",
             "image": "https://pilgrimage.media/images/about/portrait.jpg",
             "worksFor": { "@id": "https://pilgrimage.media/#business" },
+            "hasCredential": [
+              {
+                "@type": "EducationalOccupationalCredential",
+                "name": "Certified Personal Trainer (CPT)",
+                "credentialCategory": "Professional Certification",
+                "recognizedBy": {
+                  "@type": "Organization",
+                  "name": "International Sports Sciences Association",
+                  "alternateName": "ISSA",
+                  "url": "https://www.issaonline.com/"
+                }
+              },
+              {
+                "@type": "EducationalOccupationalCredential",
+                "name": "Part 107 Remote Pilot Certificate",
+                "credentialCategory": "License",
+                "recognizedBy": {
+                  "@type": "GovernmentOrganization",
+                  "name": "Federal Aviation Administration",
+                  "alternateName": "FAA",
+                  "url": "https://www.faa.gov/"
+                }
+              }
+            ],
             "knowsAbout": [
               "Fitness photography",
               "Sports photography",
               "Videography",
-              "Film photography"
+              "Film photography",
+              "Aerial photography",
+              "Personal training"
             ],
             "sameAs": [
               "https://instagram.com/pilgrimagemedia",
@@ -132,6 +158,16 @@
           </div>
 
           <div class="about-intro__body">
+            <!-- Credentials, for the people who scan rather than read. Lives
+                 inside the body block rather than as its own grid item: the
+                 body already begins on the row directly below the subtitle, so
+                 this lands exactly where a separate item would without having
+                 to re-cut the grid rows around it. The paragraph further down
+                 is what actually argues the point. -->
+            <p class="about-intro__creds">
+              ISSA-Certified Personal Trainer<span aria-hidden="true">·</span>FAA
+              Part 107 Licensed
+            </p>
             <p>
               My name is Mike Thezier (pronounced: tee-zee-ey) - my last name
               looks nothing like it sounds. I was born and raised in California
@@ -157,6 +193,15 @@
               between here, San Diego and Orange County — gyms, trailheads,
               gymnasiums and coastline, wherever the training actually happens.
               I'll travel further when a project asks for it.
+            </p>
+            <p>
+              I'm also an ISSA-certified personal trainer. That's part of why I
+              shoot the way I do — I know what a good rep looks like, so I can
+              catch the moment without asking anyone to hold a pose that breaks
+              their form. It's also where Progress Sessions came from: I know
+              what months of consistent work actually look like, and I think
+              that's worth photographing. And I'm FAA Part 107 licensed, so
+              aerial is on the table when a location earns it.
             </p>
             <p>
               It's my goal to make photographs that tell your story. No matter
