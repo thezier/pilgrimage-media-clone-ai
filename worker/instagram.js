@@ -27,9 +27,28 @@ const CACHE_KEY = "latest-posts";
 const POST_LIMIT = 8;
 const FIELDS = "id,caption,media_type,media_url,thumbnail_url,permalink,timestamp";
 
+// Instagram's media_url values are SIGNED CDN links with an expiry — a cached
+// entry stays valid JSON long after its images start returning 403. The cron
+// refreshes daily, so anything older than MAX_CACHE_AGE_MS means the refresh
+// has been failing and these URLs are probably dead. Serving them anyway is
+// worse than serving nothing: the homepage would swap eight broken images in
+// over its working fallbacks. Reporting not-ok keeps the fallbacks up.
+// (Learned the hard way: the cron stopped succeeding on 2026-07-25 and the
+// section sat empty until someone noticed.)
+const MAX_CACHE_AGE_MS = 3 * 24 * 60 * 60 * 1000;
+
 export async function handleLatestPosts(env) {
   const cached = await env.INSTAGRAM_CACHE.get(CACHE_KEY, "json");
   if (!cached) return json({ ok: false, error: "Not cached yet" }, 503);
+
+  const age = Date.now() - Date.parse(cached.updated);
+  if (Number.isFinite(age) && age > MAX_CACHE_AGE_MS) {
+    console.error(
+      `Instagram cache is ${Math.round(age / 86400000)}d old — refresh is failing. Serving not-ok so the homepage keeps its fallback posts.`,
+    );
+    return json({ ok: false, error: "Cache stale", updated: cached.updated }, 503);
+  }
+
   return json({ ok: true, posts: cached.posts, updated: cached.updated });
 }
 
