@@ -538,7 +538,14 @@ body.menu-open { overflow: hidden; }
   .services__heading { grid-area: 4 / 2 / 6 / 14; }
   .services__rule    { grid-area: 6 / 2 / 7 / 11; }
   .services__eyebrow { grid-area: 8 / 2 / 9 / 14; }
-  .services__body    { grid-area: 9 / 2 / 14 / 14; }
+  /* Ends at line 11, not 14. The background photo's subject lies with her
+     shoes reaching in from the right, and at line 14 the last service item's
+     line-endings ran across them — dark text on a dark shoe. Line 11 stops the
+     column ~37px clear of the shoes, and is where .services__rule already ends,
+     so the text now aligns with the rule under "Services" instead of
+     overhanging it. Side benefit: the measure drops from ~85 characters to
+     ~64, which is inside the comfortable range rather than well past it. */
+  .services__body    { grid-area: 9 / 2 / 14 / 11; }
   .services__cta     { grid-area: 15 / 2 / 17 / 7; }
 }
 
