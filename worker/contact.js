@@ -21,7 +21,12 @@
 //   INSTAGRAM_ACCOUNT_ID    — secret, the linked Instagram Business Account ID
 //   REFRESH_SECRET          — secret, gates POST /api/refresh-posts
 
-import { handleLatestPosts, handleRefreshPosts, refreshInstagramCache } from "./instagram.js";
+import {
+  handleLatestPosts,
+  handleRefreshPosts,
+  handleInstagramImage,
+  refreshInstagramCache,
+} from "./instagram.js";
 
 const REQUIRED = ["fname", "lname", "email", "message"];
 const SHARE_REQUIRED = ["name", "email"];
@@ -63,6 +68,17 @@ const handler = {
         return json({ ok: false, error: "Method not allowed" }, 405);
       }
       return handleRefreshPosts(request, env);
+    }
+
+    // The homepage's Instagram thumbnails, served from our own cache rather
+    // than Instagram's CDN — see the header comment in instagram.js for why.
+    if (url.pathname.startsWith("/api/ig/")) {
+      // HEAD as well as GET — it's an image URL, and crawlers and caches
+      // legitimately probe those with HEAD.
+      if (request.method !== "GET" && request.method !== "HEAD") {
+        return json({ ok: false, error: "Method not allowed" }, 405);
+      }
+      return handleInstagramImage(request, env, url.pathname.slice("/api/ig/".length));
     }
 
     // Anything else is the static site.

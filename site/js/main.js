@@ -202,53 +202,28 @@
 // swaps them for whatever /api/latest-posts (a Cloudflare Worker, cached from
 // the Instagram Graph API — see worker/instagram.js) currently has.
 //
-// The swap only happens if the replacement images ACTUALLY LOAD. That is not
-// paranoia: Instagram's `media_url` values are signed CDN links that expire
-// after days, so a cached response can be perfectly well-formed JSON and still
-// point at eight dead images. That is exactly what happened — the refresh cron
-// stopped succeeding on 2026-07-25, the URLs went 403, and the old code swapped
-// them in over the working fallbacks and left the section blank. Verify first,
-// then replace; anything less and a stale cache empties the homepage.
+// The images come from OUR origin (/api/ig/<post id>), not Instagram's CDN —
+// the Worker downloads and stores them, so they never expire. See the header
+// comment in worker/instagram.js.
+//
+// This used to preload and verify all eight before swapping, because Instagram's
+// signed URLs could expire and leave the grid pointing at dead images. That
+// check is gone: the Worker now only lists a post whose bytes it actually
+// stored, so a broken link can't reach here. Keeping the check would have meant
+// eagerly downloading every image on page load just to prove it exists, which
+// defeats loading="lazy" for the majority of visitors who never scroll this far.
 (function () {
   "use strict";
 
   var gallery = document.querySelector(".posts__gallery");
   if (!gallery) return;
 
-  // Resolves true only if the image actually decodes. Never rejects, and gives
-  // up after 8s so one hanging request can't hold the whole swap hostage.
-  function loads(url) {
-    return new Promise(function (resolve) {
-      var img = new Image();
-      var done = false;
-      function settle(ok) {
-        if (done) return;
-        done = true;
-        resolve(ok);
-      }
-      img.onload = function () { settle(img.naturalWidth > 0); };
-      img.onerror = function () { settle(false); };
-      setTimeout(function () { settle(false); }, 8000);
-      img.src = url;
-    });
-  }
-
   fetch("/api/latest-posts")
     .then(function (res) {
       return res.ok ? res.json() : null;
     })
-    .then(async function (data) {
+    .then(function (data) {
       if (!data || !data.ok || !data.posts || !data.posts.length) return;
-
-      var checks = await Promise.all(data.posts.map(function (p) { return loads(p.image); }));
-      var usable = data.posts.filter(function (_, i) { return checks[i]; });
-
-      // Partial failures would leave a ragged grid mixing live and stale posts,
-      // so this is all-or-nothing: keep the hardcoded set unless every image
-      // came back. They are real photos of real work — not a placeholder we
-      // need to rush past.
-      if (usable.length !== data.posts.length) return;
-      data = { posts: usable };
 
       // An Instagram caption is not alt text: it runs to hundreds of characters
       // and trails a block of hashtags. Take the first line, drop the hashtags,
