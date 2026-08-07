@@ -22,6 +22,13 @@
 /images/*
   Cache-Control: public, max-age=604800
 
+# The hero video. Same week-long cache as images rather than a year: the
+# filename is stable and hand-written, so an immutable cache would strand
+# anyone who already has it if the clip is ever re-cut. Rename it (…-v2.mp4)
+# if you want to force an instant swap.
+/videos/*
+  Cache-Control: public, max-age=604800
+
 /css/*
   Cache-Control: public, max-age=0, must-revalidate
 

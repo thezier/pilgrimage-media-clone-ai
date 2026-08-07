@@ -10,15 +10,6 @@
     />
     <link rel="canonical" href="https://pilgrimage.media/" />
 
-    <!-- The hero video is a Vimeo embed, and Vimeo now runs a Cloudflare
-         Turnstile check in front of the player: the iframe navigates twice and
-         pulls from four origins before a frame paints. Warming the connections
-         here overlaps those handshakes with the rest of the page load. -->
-    <link rel="preconnect" href="https://player.vimeo.com" />
-    <link rel="preconnect" href="https://challenges.cloudflare.com" />
-    <link rel="preconnect" href="https://f.vimeocdn.com" crossorigin />
-    <link rel="dns-prefetch" href="https://i.vimeocdn.com" />
-
     <meta property="og:type" content="website" />
     <meta property="og:site_name" content="Pilgrimage Media" />
     <meta property="og:url" content="https://pilgrimage.media/" />
@@ -803,32 +794,27 @@ c11 13 20 38 20 55 0 18 18 87 40 154 172 528 170 1017 -6 1538 -62 183 -76
             <img src="/images/hero-1.jpg" alt="An athlete tying her hair back on a dirt trail before a run" width="434" height="578" fetchpriority="high" />
           </div>
           <div class="hero__figure hero__img-2">
-            <!-- The video's own first frame, held under the iframe. Vimeo's
-                 player boots to a black box with a spinner (it now runs a
-                 Cloudflare Turnstile check before the player, which costs two
-                 full iframe navigations), so without this the hero shows a
-                 black hole for several seconds. main.js fades the iframe in
-                 once playback actually starts. -->
-            <picture class="hero__video-poster">
-              <source srcset="/images/hero-video-poster.webp" type="image/webp" />
-              <img
-                src="/images/hero-video-poster.jpg"
-                alt="Athletes pressing a barbell overhead during a training session at The Forge gym"
-                width="1280"
-                height="720"
-                fetchpriority="high"
-                decoding="async"
-              />
-            </picture>
-            <iframe
+            <!-- Self-hosted, served from the same origin as the page. This was
+                 a Vimeo background embed, which now boots through a Cloudflare
+                 Turnstile check: two full iframe navigations across four
+                 origins before a single frame painted, and a black box with a
+                 spinner for the whole wait. A plain <video> needs none of that,
+                 and its own `poster` attribute covers the decode gap — which is
+                 why there is no longer a poster <picture> or any reveal
+                 JavaScript here.
+                 `playsinline` is what stops iOS taking the video fullscreen. -->
+            <video
               class="hero__video"
-              src="https://player.vimeo.com/video/1111741330?background=1&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;dnt=1"
-              title="The Forge — training session film by Pilgrimage Media"
-              frameborder="0"
-              allow="autoplay; fullscreen"
+              src="/videos/the-forge-720.mp4"
+              poster="/images/hero-video-poster.webp"
+              autoplay
+              muted
+              loop
+              playsinline
+              preload="auto"
               aria-hidden="true"
               tabindex="-1"
-            ></iframe>
+            ></video>
           </div>
           <div class="hero__figure hero__img-3">
             <img src="/portfolio/amy/img/2026_03_amy_fintess_256_ekexn6xh6r-1024.webp" alt="A runner striding through shallow water along the shoreline at sunset" width="1024" height="1364" loading="lazy" />

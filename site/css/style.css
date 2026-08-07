@@ -399,49 +399,22 @@ body.menu-open { overflow: hidden; }
   height: 100%;
   object-fit: contain;
 }
-/* hero__img-1's Vimeo background embed. Vimeo's own background=1 mode
-   does the cover-style crop/scale internally (object-fit doesn't apply
-   to iframes), so this just fills the same box the photo used to.
-
-   It starts transparent and is faded in by main.js once the player reports
-   it is actually playing — until then the poster below shows through. The
-   iframe is opaque black from the moment it loads (Vimeo's Turnstile shell
-   sets `background:#000`), so without this it would paint over the poster
-   immediately and defeat the point. */
+/* The hero's self-hosted background video. `cover`, not `contain` like the
+   sibling photos: the clip is 16:9 and this box is not, and cover is what the
+   old Vimeo background embed did internally. The poster image is cropped the
+   same way, so the handover from poster to first frame doesn't jump.
+   No opacity/reveal machinery here any more — a native <video> shows its own
+   poster until it can play, which is the whole thing the old JS existed to
+   fake for an iframe. */
 .hero__video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
+  object-fit: cover;
   border: 0;
   pointer-events: none;
-
-  /* The reveal is an animation rather than a transition so it also fires with
-     no JavaScript at all: the 6s delay is a floor, not the intended path.
-     main.js normally adds .is-playing well before then, which restarts the same
-     keyframes with no delay and fades the video in at once. Without JS — or if
-     an earlier script on the page throws — the video still appears on its own,
-     which is no worse than the black box this replaced. */
-  opacity: 0;
-  animation: hero-video-in 500ms ease 6s forwards;
 }
-.hero__video.is-playing { animation: hero-video-in 500ms ease 0s forwards; }
-
-@keyframes hero-video-in {
-  to { opacity: 1; }
-}
-
-/* The still frame under the video. `cover`, not `contain` like the sibling
-   photos — it has to match how Vimeo's background mode crops, or the swap
-   from poster to video would visibly jump. */
-.hero__video-poster,
-.hero__figure .hero__video-poster img {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-.hero__figure .hero__video-poster img { object-fit: cover; }
 
 /* The hero heading is the one block on the page that is vertically CENTRED
    within its grid area (measured offset 28px = (265-210)/2). Every other
