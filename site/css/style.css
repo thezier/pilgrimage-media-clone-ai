@@ -526,7 +526,17 @@ body.menu-open { overflow: hidden; }
 .services { z-index: 3; }
 .services__grid { --fe-rows: 32; }
 @media (min-width: 768px) { .services__grid { --fe-rows: 20; } }
-.services .section-border > img { object-position: 50% 50%; }
+/* Anchored slightly left of centre rather than at 50%.
+   The crop here is height-driven, so as the viewport narrows the photo zooms
+   and its subject marches LEFT into the text column — at 992px and below her
+   shoes landed under the last service item even after that column was pulled
+   in to grid line 11. Narrowing the text further can't fix it (clearing 800px
+   would need a ~170px-wide column), but showing 5% more of the photo's empty
+   left side moves her right at every width. Measured clearance between the
+   text's right edge and her leading shoe: 77px at 1440, 67 at 1280, 56 at
+   1100, 48 at 992, 42 at 900, 35 at 800. Don't raise this past ~0.46 or the
+   narrow-viewport clearances go negative again. */
+.services .section-border > img { object-position: 45% 50%; }
 
 /* Demoted to <h2> (see .portfolio__heading) but still drawn at the h1 step. */
 .services__heading { grid-area: 3 / 2 / 5 / 10; font-size: var(--fs-h1); line-height: 1.056; }
