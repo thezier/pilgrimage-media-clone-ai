@@ -3,24 +3,84 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>About — Pilgrimage Media</title>
+    <title>About Mike Thezier — Fitness Photographer | Pilgrimage Media</title>
     <!-- The live site ships an empty meta description on every page; written
          properly here. -->
     <meta
       name="description"
-      content="Mike Thezier — photographer and videographer. Born and raised in California, shooting film and digital for athletes, teams and brands."
+      content="Mike Thezier is the photographer and videographer behind Pilgrimage Media — shooting film and digital for athletes, teams and brands across Southern California."
     />
     <link rel="canonical" href="https://pilgrimage.media/about/" />
 
     <meta property="og:type" content="profile" />
-    <meta property="og:title" content="About — Pilgrimage Media" />
-    <meta property="og:description" content="Mike Thezier — photographer and videographer." />
+    <meta property="og:site_name" content="Pilgrimage Media" />
+    <meta property="og:url" content="https://pilgrimage.media/about/" />
+    <meta property="og:title" content="About Mike Thezier — Fitness Photographer | Pilgrimage Media" />
+    <meta
+      property="og:description"
+      content="The photographer and videographer behind Pilgrimage Media — shooting film and digital for athletes, teams and brands."
+    />
     <meta property="og:image" content="https://pilgrimage.media/images/about/portrait.jpg" />
+    <meta property="og:image:width" content="768" />
+    <meta property="og:image:height" content="1024" />
+    <meta property="og:image:alt" content="Portrait of photographer Mike Thezier" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="About Mike Thezier — Fitness Photographer | Pilgrimage Media" />
+    <meta
+      name="twitter:description"
+      content="The photographer and videographer behind Pilgrimage Media — shooting film and digital for athletes, teams and brands."
+    />
+    <meta name="twitter:image" content="https://pilgrimage.media/images/about/portrait.jpg" />
 
     <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/css/fonts.css" />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="preload" href="/fonts/gelasio-400.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/lexend-700.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/gelasio-400-italic.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/lexend-500.woff2" as="font" type="font/woff2" crossorigin />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "Person",
+            "@id": "https://pilgrimage.media/about/#mike",
+            "name": "Mike Thezier",
+            "jobTitle": "Photographer and Videographer",
+            "url": "https://pilgrimage.media/about/",
+            "image": "https://pilgrimage.media/images/about/portrait.jpg",
+            "worksFor": { "@id": "https://pilgrimage.media/#business" },
+            "knowsAbout": [
+              "Fitness photography",
+              "Sports photography",
+              "Videography",
+              "Film photography"
+            ],
+            "sameAs": [
+              "https://instagram.com/pilgrimagemedia",
+              "https://www.strava.com/athletes/mikethezier",
+              "https://mikethezier.com"
+            ]
+          },
+          {
+            "@type": "AboutPage",
+            "@id": "https://pilgrimage.media/about/#page",
+            "url": "https://pilgrimage.media/about/",
+            "name": "About Mike Thezier",
+            "mainEntity": { "@id": "https://pilgrimage.media/about/#mike" },
+            "isPartOf": { "@id": "https://pilgrimage.media/#website" },
+            "breadcrumb": {
+              "@type": "BreadcrumbList",
+              "itemListElement": [
+                { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pilgrimage.media/" },
+                { "@type": "ListItem", "position": 2, "name": "About" }
+              ]
+            }
+          }
+        ]
+      }
+    </script>
   </head>
 
   <body>

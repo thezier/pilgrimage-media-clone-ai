@@ -11,7 +11,7 @@ cd "$(dirname "${BASH_SOURCE[0]}")/.."
 
 PB_URL="${PB_URL:-http://100.123.155.98:8090}"
 
-echo "==> 1/4  Checking the CMS is reachable"
+echo "==> 1/5  Checking the CMS is reachable"
 if ! curl -sf --max-time 10 "$PB_URL/api/health" >/dev/null; then
   echo "    Can't reach PocketBase at $PB_URL"
   echo "    Is Tailscale running? Is the Pi up? Check with:"
@@ -20,10 +20,15 @@ if ! curl -sf --max-time 10 "$PB_URL/api/health" >/dev/null; then
 fi
 echo "    ok"
 
-echo "==> 2/4  Generating portfolio pages"
+echo "==> 2/5  Generating portfolio pages"
 PB_URL="$PB_URL" node prototype/portfolio-cms/build.mjs
 
-echo "==> 3/4  Committing"
+# After the pages exist, so a newly published project lands in the sitemap the
+# same run it goes live.
+echo "==> 3/5  Regenerating the sitemap"
+node scripts/generate-sitemap.mjs
+
+echo "==> 4/5  Committing"
 if git diff --quiet && git diff --cached --quiet; then
   echo "    nothing changed — site is already up to date"
   exit 0
@@ -32,8 +37,8 @@ git add site/
 git commit -q -m "Publish: regenerate portfolio pages from the CMS"
 echo "    $(git rev-parse --short HEAD)"
 
-echo "==> 4/4  Pushing (Cloudflare deploys automatically)"
+echo "==> 5/5  Pushing (Cloudflare deploys automatically)"
 git push -q origin master
 echo
-echo "Pushed. Live in ~1 minute at https://new.pilgrimage.media"
+echo "Pushed. Live in ~1 minute at https://pilgrimage.media"
 echo "Watch the build:  gh run list --limit 1"

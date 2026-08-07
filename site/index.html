@@ -3,26 +3,136 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Pilgrimage Media</title>
+    <title>Fitness &amp; Sports Photography + Video | Pilgrimage Media</title>
     <meta
       name="description"
-      content="Media for those on a journey to make themselves and others better. Photography and videography for athletes, teams and brands."
+      content="Photography and video for athletes, trainers, teams and brands across Southern California. Personal branding, Progress Sessions, and commercial work."
     />
     <link rel="canonical" href="https://pilgrimage.media/" />
 
+    <!-- The hero video is a Vimeo embed, and Vimeo now runs a Cloudflare
+         Turnstile check in front of the player: the iframe navigates twice and
+         pulls from four origins before a frame paints. Warming the connections
+         here overlaps those handshakes with the rest of the page load. -->
+    <link rel="preconnect" href="https://player.vimeo.com" />
+    <link rel="preconnect" href="https://challenges.cloudflare.com" />
+    <link rel="preconnect" href="https://f.vimeocdn.com" crossorigin />
+    <link rel="dns-prefetch" href="https://i.vimeocdn.com" />
+
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Pilgrimage Media" />
+    <meta property="og:site_name" content="Pilgrimage Media" />
+    <meta property="og:url" content="https://pilgrimage.media/" />
+    <meta property="og:title" content="Fitness &amp; Sports Photography + Video | Pilgrimage Media" />
     <meta
       property="og:description"
-      content="Media for those on a journey to make themselves and others better."
+      content="Photography and video for athletes, trainers, teams and brands across Southern California."
     />
-    <meta property="og:image" content="https://pilgrimage.media/images/portfolio-bg.jpg" />
+    <meta property="og:image" content="https://pilgrimage.media/images/og-default.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="A runner mid-stride on a trail, photographed in black and white" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Fitness &amp; Sports Photography + Video | Pilgrimage Media" />
+    <meta
+      name="twitter:description"
+      content="Photography and video for athletes, trainers, teams and brands across Southern California."
+    />
+    <meta name="twitter:image" content="https://pilgrimage.media/images/og-default.jpg" />
 
     <link rel="icon" href="/favicon.ico" />
+    <!-- fonts.css is linked rather than @import-ed from style.css: an @import
+         cannot start downloading until style.css has itself arrived and parsed,
+         which pushes every font a full round trip further down the critical
+         path. Two parallel links cost one connection and save that hop. -->
+    <link rel="stylesheet" href="/css/fonts.css" />
     <link rel="stylesheet" href="/css/style.css" />
-    <!-- Preload the two faces used above the fold so headings don't reflow. -->
+    <!-- Preload only what actually renders above the fold: the hero headline
+         (Gelasio roman + italic) and the nav (Lexend 500). -->
     <link rel="preload" href="/fonts/gelasio-400.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/lexend-700.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/gelasio-400-italic.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/lexend-500.woff2" as="font" type="font/woff2" crossorigin />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "ProfessionalService",
+            "@id": "https://pilgrimage.media/#business",
+            "name": "Pilgrimage Media",
+            "url": "https://pilgrimage.media/",
+            "description": "Photography and video for athletes, trainers, teams and brands — personal branding, ongoing Progress Sessions, and commercial work.",
+            "image": "https://pilgrimage.media/images/og-default.jpg",
+            "logo": "https://pilgrimage.media/images/brand/pilgrimage-logo.png",
+            "email": "contact@pilgrimage.media",
+            "founder": { "@id": "https://pilgrimage.media/about/#mike" },
+            "areaServed": {
+              "@type": "State",
+              "name": "Southern California"
+            },
+            "serviceType": [
+              "Fitness photography",
+              "Sports photography",
+              "Athlete personal branding",
+              "Commercial photography",
+              "Videography"
+            ],
+            "sameAs": [
+              "https://instagram.com/pilgrimagemedia",
+              "https://www.pinterest.com/pilgrimagemedia/",
+              "https://www.strava.com/athletes/mikethezier",
+              "https://vimeo.com/pilgrimagemedia"
+            ],
+            "hasOfferCatalog": {
+              "@type": "OfferCatalog",
+              "name": "Services",
+              "itemListElement": [
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Personal Branding",
+                    "description": "Photography and video for athletes, trainers and coaches building a healthier, more vibrant future through movement and discipline."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Progress Sessions",
+                    "description": "An ongoing record of your training, strength and growth — not a transformation shoot or a posed portrait."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Commercial Photography & Videography",
+                    "description": "Work for teams and brands that inspire action, build community, and redefine what it means to live vibrantly."
+                  }
+                },
+                {
+                  "@type": "Offer",
+                  "itemOffered": {
+                    "@type": "Service",
+                    "name": "Content for Web & Social Media",
+                    "description": "Curated visuals optimized for digital platforms — built to connect, convert and inspire."
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "@type": "WebSite",
+            "@id": "https://pilgrimage.media/#website",
+            "url": "https://pilgrimage.media/",
+            "name": "Pilgrimage Media",
+            "publisher": { "@id": "https://pilgrimage.media/#business" },
+            "inLanguage": "en-US"
+          }
+        ]
+      }
+    </script>
   </head>
 
   <body>
@@ -667,17 +777,34 @@ c11 13 20 38 20 55 0 18 18 87 40 154 172 528 170 1017 -6 1538 -62 183 -76
 </svg>
         </div>
         <div class="section-content fe-pad fe-grid hero__grid">
-          <h2 class="hero__heading">
+          <h1 class="hero__heading">
             Media for those <em>on a journey</em> to make themselves and others better.
-          </h2>
+          </h1>
           <div class="hero__figure hero__img-1">
-            <img src="/images/hero-1.jpg" alt="" width="434" height="578" fetchpriority="high" />
+            <img src="/images/hero-1.jpg" alt="An athlete tying her hair back on a dirt trail before a run" width="434" height="578" fetchpriority="high" />
           </div>
           <div class="hero__figure hero__img-2">
+            <!-- The video's own first frame, held under the iframe. Vimeo's
+                 player boots to a black box with a spinner (it now runs a
+                 Cloudflare Turnstile check before the player, which costs two
+                 full iframe navigations), so without this the hero shows a
+                 black hole for several seconds. main.js fades the iframe in
+                 once playback actually starts. -->
+            <picture class="hero__video-poster">
+              <source srcset="/images/hero-video-poster.webp" type="image/webp" />
+              <img
+                src="/images/hero-video-poster.jpg"
+                alt="Athletes pressing a barbell overhead during a training session at The Forge gym"
+                width="1280"
+                height="720"
+                fetchpriority="high"
+                decoding="async"
+              />
+            </picture>
             <iframe
               class="hero__video"
-              src="https://player.vimeo.com/video/1111741330?background=1&autoplay=1&loop=1&muted=1"
-              title=""
+              src="https://player.vimeo.com/video/1111741330?background=1&amp;autoplay=1&amp;loop=1&amp;muted=1&amp;dnt=1"
+              title="The Forge — training session film by Pilgrimage Media"
               frameborder="0"
               allow="autoplay; fullscreen"
               aria-hidden="true"
@@ -685,7 +812,7 @@ c11 13 20 38 20 55 0 18 18 87 40 154 172 528 170 1017 -6 1538 -62 183 -76
             ></iframe>
           </div>
           <div class="hero__figure hero__img-3">
-            <img src="/portfolio/amy/img/2026_03_amy_fintess_256_ekexn6xh6r-1024.webp" alt="" width="1024" height="1364" loading="lazy" />
+            <img src="/portfolio/amy/img/2026_03_amy_fintess_256_ekexn6xh6r-1024.webp" alt="A runner striding through shallow water along the shoreline at sunset" width="1024" height="1364" loading="lazy" />
           </div>
         </div>
       </section>
@@ -693,10 +820,10 @@ c11 13 20 38 20 55 0 18 18 87 40 154 172 528 170 1017 -6 1538 -62 183 -76
       <!-- ================= portfolio ================= -->
       <section class="section portfolio" id="portfolio">
         <div class="section-border divider-up bg-olive">
-          <img src="/images/portfolio-bg.jpg" alt="" loading="lazy" />
+          <img src="/images/portfolio-bg.jpg" alt="A black-and-white photograph of a runner mid-stride on a trail" width="2500" height="1559" loading="lazy" />
         </div>
         <div class="section-content fe-grid portfolio__grid on-dark">
-          <h1 class="portfolio__heading">View the Galleries</h1>
+          <h2 class="portfolio__heading">View the Galleries</h2>
           <hr class="rule portfolio__rule" />
           <p class="portfolio__eyebrow">Portfolio image categories</p>
 
@@ -736,10 +863,10 @@ c11 13 20 38 20 55 0 18 18 87 40 154 172 528 170 1017 -6 1538 -62 183 -76
       <!-- ================= services ================= -->
       <section class="section services" id="services">
         <div class="section-border divider-up bg-white">
-          <img src="/images/services-bg.jpg" alt="" loading="lazy" />
+          <img src="/images/services-bg.jpg" alt="An overhead black-and-white photograph of an athlete in a push-up position beside a medicine ball" width="2500" height="1278" loading="lazy" />
         </div>
         <div class="section-content fe-grid services__grid on-light">
-          <h1 class="services__heading">Services</h1>
+          <h2 class="services__heading">Services</h2>
           <hr class="rule services__rule" />
           <p class="services__eyebrow">Photography / Videography</p>
 
@@ -780,7 +907,7 @@ c11 13 20 38 20 55 0 18 18 87 40 154 172 528 170 1017 -6 1538 -62 183 -76
 
           <div class="spotlight-cards">
             <a class="spotlight-card" href="/portfolio/ambrose/">
-              <img class="spotlight-card__photo" src="/portfolio/ambrose/img/2026_03_21_ambrose_025_xu0u1i9d9p-800.webp" alt="Ambrose" loading="lazy" />
+              <img class="spotlight-card__photo" src="/portfolio/ambrose/img/2026_03_21_ambrose_025_xu0u1i9d9p-800.webp" alt="Ambrose, a personal trainer, photographed during a branding session" loading="lazy" />
               <p class="spotlight-card__type">Personal Branding</p>
               <h3 class="spotlight-card__name">Ambrose</h3>
               <p class="spotlight-card__caption">
@@ -791,7 +918,7 @@ c11 13 20 38 20 55 0 18 18 87 40 154 172 528 170 1017 -6 1538 -62 183 -76
               </p>
             </a>
             <a class="spotlight-card" href="/portfolio/amy/">
-              <img class="spotlight-card__photo" src="/portfolio/amy/img/2026_03_amy_fintess_124_jhjfyny6jm-800.webp" alt="Amy" loading="lazy" />
+              <img class="spotlight-card__photo" src="/portfolio/amy/img/2026_03_amy_fintess_124_jhjfyny6jm-800.webp" alt="Amy training during a Progress Session in San Diego" loading="lazy" />
               <p class="spotlight-card__type">Progress Session</p>
               <h3 class="spotlight-card__name">Amy</h3>
               <p class="spotlight-card__caption">
@@ -801,7 +928,7 @@ c11 13 20 38 20 55 0 18 18 87 40 154 172 528 170 1017 -6 1538 -62 183 -76
               </p>
             </a>
             <a class="spotlight-card" href="/portfolio/kalia/">
-              <img class="spotlight-card__photo" src="/portfolio/kalia/img/hero_1_w3axmonvyb-800.webp" alt="Kalia" loading="lazy" />
+              <img class="spotlight-card__photo" src="/portfolio/kalia/img/hero_1_w3axmonvyb-800.webp" alt="Kalia lifting during a morning Progress Session" loading="lazy" />
               <p class="spotlight-card__type">Progress Session</p>
               <h3 class="spotlight-card__name">Kalia</h3>
               <p class="spotlight-card__caption">
@@ -825,22 +952,22 @@ c11 13 20 38 20 55 0 18 18 87 40 154 172 528 170 1017 -6 1538 -62 183 -76
 
           <div class="posts__gallery">
             <a href="https://www.instagram.com/p/DPeh0HdkkwX/" target="_blank" rel="noopener noreferrer">
-              <img src="/images/posts/post-1.jpg" alt="" loading="lazy" />
+              <img src="/images/posts/post-1.jpg" alt="A runner on a dirt trail at golden hour" loading="lazy" />
             </a>
-            <div><img src="/images/posts/post-2.jpg" alt="" loading="lazy" /></div>
+            <div><img src="/images/posts/post-2.jpg" alt="An athlete's hands planted on a mat mid push-up" loading="lazy" /></div>
             <a href="https://www.instagram.com/p/DPEgDesEYBD/" target="_blank" rel="noopener noreferrer">
-              <img src="/images/posts/post-3.jpg" alt="" loading="lazy" />
+              <img src="/images/posts/post-3.jpg" alt="A motion-blurred close-up of running shoes striking pavement" loading="lazy" />
             </a>
             <a href="https://www.instagram.com/p/DPAEwqMkprD/" target="_blank" rel="noopener noreferrer">
-              <img src="/images/posts/post-4.jpg" alt="" loading="lazy" />
+              <img src="/images/posts/post-4.jpg" alt="A black-and-white frame of an athlete training with battle ropes" loading="lazy" />
             </a>
-            <div><img src="/images/posts/post-5.jpg" alt="" loading="lazy" /></div>
-            <div><img src="/images/posts/post-6.jpg" alt="" loading="lazy" /></div>
+            <div><img src="/images/posts/post-5.jpg" alt="An aerial photograph of surf and kelp along a rocky coastline" loading="lazy" /></div>
+            <div><img src="/images/posts/post-6.jpg" alt="An athlete standing over a steel mace on a concrete training pad" loading="lazy" /></div>
             <a href="https://www.instagram.com/p/DOGsA-IEYT8/" target="_blank" rel="noopener noreferrer">
-              <img src="/images/posts/post-7.jpg" alt="" loading="lazy" />
+              <img src="/images/posts/post-7.jpg" alt="An overhead frame of an athlete's shadow beside a kettlebell and medicine ball" loading="lazy" />
             </a>
             <a href="https://www.instagram.com/p/DOFMlEGiar7/" target="_blank" rel="noopener noreferrer">
-              <img src="/images/posts/post-8.jpg" alt="" loading="lazy" />
+              <img src="/images/posts/post-8.jpg" alt="An athlete tying her hair back on a trail before a run" loading="lazy" />
             </a>
           </div>
 

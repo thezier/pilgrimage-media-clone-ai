@@ -1,0 +1,14 @@
+# pilgrimage.media
+#
+# Without this file Cloudflare serves its own managed robots.txt, which carries
+# the AI content-signal boilerplate and no Sitemap line at all — so nothing ever
+# pointed a crawler at the sitemap. This file replaces it.
+
+User-agent: *
+Allow: /
+
+# No crawlable content lives under /api/ — it is the contact form endpoint and
+# the Instagram cache feed.
+Disallow: /api/
+
+Sitemap: https://pilgrimage.media/sitemap.xml

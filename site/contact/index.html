@@ -3,22 +3,58 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Contact — Pilgrimage Media</title>
+    <title>Contact — Book a Fitness or Sports Shoot | Pilgrimage Media</title>
     <meta
       name="description"
-      content="Get in touch about personal branding, commercial photography and videography, or content for web and social."
+      content="Get in touch about personal branding, Progress Sessions, commercial photography and videography, or content for web and social. Based in Southern California."
     />
     <link rel="canonical" href="https://pilgrimage.media/contact/" />
 
     <meta property="og:type" content="website" />
-    <meta property="og:title" content="Contact — Pilgrimage Media" />
-    <meta property="og:description" content="Let's connect." />
-    <meta property="og:image" content="https://pilgrimage.media/images/contact/strip-4.jpg" />
+    <meta property="og:site_name" content="Pilgrimage Media" />
+    <meta property="og:url" content="https://pilgrimage.media/contact/" />
+    <meta property="og:title" content="Contact — Book a Fitness or Sports Shoot | Pilgrimage Media" />
+    <meta
+      property="og:description"
+      content="Get in touch about personal branding, Progress Sessions, commercial work, or content for web and social."
+    />
+    <meta property="og:image" content="https://pilgrimage.media/images/og-default.jpg" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
+    <meta property="og:image:alt" content="A runner mid-stride on a trail, photographed in black and white" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="Contact — Book a Fitness or Sports Shoot | Pilgrimage Media" />
+    <meta
+      name="twitter:description"
+      content="Get in touch about personal branding, Progress Sessions, commercial work, or content for web and social."
+    />
+    <meta name="twitter:image" content="https://pilgrimage.media/images/og-default.jpg" />
 
     <link rel="icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="/css/fonts.css" />
     <link rel="stylesheet" href="/css/style.css" />
     <link rel="preload" href="/fonts/gelasio-400.woff2" as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href="/fonts/lexend-700.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/gelasio-400-italic.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fonts/lexend-500.woff2" as="font" type="font/woff2" crossorigin />
+
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "ContactPage",
+        "@id": "https://pilgrimage.media/contact/#page",
+        "url": "https://pilgrimage.media/contact/",
+        "name": "Contact Pilgrimage Media",
+        "isPartOf": { "@id": "https://pilgrimage.media/#website" },
+        "about": { "@id": "https://pilgrimage.media/#business" },
+        "breadcrumb": {
+          "@type": "BreadcrumbList",
+          "itemListElement": [
+            { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://pilgrimage.media/" },
+            { "@type": "ListItem", "position": 2, "name": "Contact" }
+          ]
+        }
+      }
+    </script>
   </head>
 
   <!-- The hero on this page is WHITE, so the transparent header's white text
@@ -71,14 +107,15 @@
       <!-- ===== full-bleed image strip =====
            The live site scrolls this as a carousel with arrow controls. Built
            as a static strip: no JS, and it reads the same at a glance. -->
-      <div class="contact-strip" role="presentation">
-        <img src="/images/contact/strip-1.jpg" alt="" loading="lazy" />
-        <img src="/images/contact/strip-2.jpg" alt="" loading="lazy" />
-        <img src="/images/contact/strip-3.jpg" alt="" loading="lazy" />
-        <img src="/images/contact/strip-4.jpg" alt="" loading="lazy" />
-        <img src="/images/contact/strip-5.jpg" alt="" loading="lazy" />
-        <img src="/images/contact/strip-6.jpg" alt="" loading="lazy" />
-        <img src="/images/contact/strip-7.jpg" alt="" loading="lazy" />
+      <!-- Real work, not decoration: these carry alt text and are indexable. -->
+      <div class="contact-strip">
+        <img src="/images/contact/strip-1.jpg" alt="A black-and-white frame of an athlete straining under a loaded barbell" loading="lazy" />
+        <img src="/images/contact/strip-2.jpg" alt="A close-up of running shoes on a dirt trail" loading="lazy" />
+        <img src="/images/contact/strip-3.jpg" alt="A runner on a trail in a hooded sweatshirt" loading="lazy" />
+        <img src="/images/contact/strip-4.jpg" alt="A woman in a wide-brim hat looking out over a green marsh" loading="lazy" />
+        <img src="/images/contact/strip-5.jpg" alt="A black-and-white frame of a football team seen from behind on the sideline" loading="lazy" />
+        <img src="/images/contact/strip-6.jpg" alt="An athlete catching her breath on a trail, hands behind her head" loading="lazy" />
+        <img src="/images/contact/strip-7.jpg" alt="An athlete seated on wooden steps after a session" loading="lazy" />
       </div>
 
       <!-- ===== enquiry form ===== -->

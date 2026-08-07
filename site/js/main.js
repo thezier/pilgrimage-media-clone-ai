@@ -215,12 +215,22 @@
     .then(function (data) {
       if (!data || !data.ok || !data.posts || !data.posts.length) return;
 
+      // An Instagram caption is not alt text: it runs to hundreds of characters
+      // and trails a block of hashtags. Take the first line, drop the hashtags,
+      // and cap it at a length a screen reader can actually sit through.
+      function altFrom(caption) {
+        if (!caption) return "Recent work from Pilgrimage Media";
+        var line = caption.split("\n")[0].replace(/#\S+/g, "").trim();
+        if (!line) return "Recent work from Pilgrimage Media";
+        if (line.length > 120) line = line.slice(0, 117).trim() + "…";
+        return line.replace(/"/g, "&quot;");
+      }
+
       var html = data.posts
         .map(function (post) {
-          var caption = post.caption ? post.caption.replace(/"/g, "&quot;") : "";
           return (
             '<a href="' + post.permalink + '" target="_blank" rel="noopener noreferrer">' +
-            '<img src="' + post.image + '" alt="' + caption + '" loading="lazy" /></a>'
+            '<img src="' + post.image + '" alt="' + altFrom(post.caption) + '" loading="lazy" /></a>'
           );
         })
         .join("");
@@ -287,5 +297,61 @@
       show("Couldn't send — check your connection and try again.", true);
       button.disabled = false;
     }
+  });
+})();
+
+// Hero video: fade the Vimeo iframe in only once it is genuinely playing.
+//
+// Vimeo's embed boots to an opaque black box with a spinner — it now serves a
+// Cloudflare Turnstile check first, so reaching the real player costs two full
+// iframe navigations plus the player bundle before a single frame paints. The
+// poster underneath (the video's own first frame) covers that gap; this just
+// decides when to hand over.
+//
+// The player talks over postMessage: it posts {event:"ready"} when loaded, then
+// {event:"play"} once playback starts, after we subscribe. If that protocol
+// ever changes we would never reveal the video at all, so a grace timer reveals
+// it regardless a few seconds after the iframe's own load event — worst case is
+// the black box we already had, never worse.
+(function () {
+  "use strict";
+
+  var frame = document.querySelector(".hero__video");
+  if (!frame) return;
+
+  var VIMEO_ORIGIN = "https://player.vimeo.com";
+  var revealed = false;
+
+  function reveal() {
+    if (revealed) return;
+    revealed = true;
+    frame.classList.add("is-playing");
+  }
+
+  function post(message) {
+    if (frame.contentWindow) {
+      frame.contentWindow.postMessage(JSON.stringify(message), VIMEO_ORIGIN);
+    }
+  }
+
+  window.addEventListener("message", function (e) {
+    if (e.origin !== VIMEO_ORIGIN || e.source !== frame.contentWindow) return;
+
+    var data;
+    try {
+      data = typeof e.data === "string" ? JSON.parse(e.data) : e.data;
+    } catch {
+      return;
+    }
+    if (!data) return;
+
+    // The Turnstile shell loads at this origin too but never speaks this
+    // protocol, so only the real player gets us here.
+    if (data.event === "ready") post({ method: "addEventListener", value: "play" });
+    if (data.event === "play" || data.event === "playing") reveal();
+  });
+
+  frame.addEventListener("load", function () {
+    setTimeout(reveal, 4000);
   });
 })();

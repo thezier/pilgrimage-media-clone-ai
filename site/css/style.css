@@ -6,7 +6,11 @@
    Safe to hand-edit; there is no build step.
    ===================================================================== */
 
-@import url("fonts.css");
+/* fonts.css is NOT @import-ed here. An @import cannot begin downloading until
+   this file has arrived and been parsed, so it serialises the font CSS — and
+   therefore the fonts themselves — one round trip behind the stylesheet. Every
+   page links both sheets directly in <head> instead, so they fetch in parallel.
+   If you add a page, link /css/fonts.css or it will render in Times. */
 
 /* ---------------------------------------------------------------------
    Tokens
@@ -397,7 +401,13 @@ body.menu-open { overflow: hidden; }
 }
 /* hero__img-1's Vimeo background embed. Vimeo's own background=1 mode
    does the cover-style crop/scale internally (object-fit doesn't apply
-   to iframes), so this just fills the same box the photo used to. */
+   to iframes), so this just fills the same box the photo used to.
+
+   It starts transparent and is faded in by main.js once the player reports
+   it is actually playing — until then the poster below shows through. The
+   iframe is opaque black from the moment it loads (Vimeo's Turnstile shell
+   sets `background:#000`), so without this it would paint over the poster
+   immediately and defeat the point. */
 .hero__video {
   position: absolute;
   inset: 0;
@@ -405,7 +415,22 @@ body.menu-open { overflow: hidden; }
   height: 100%;
   border: 0;
   pointer-events: none;
+  opacity: 0;
+  transition: opacity 500ms ease;
 }
+.hero__video.is-playing { opacity: 1; }
+
+/* The still frame under the video. `cover`, not `contain` like the sibling
+   photos — it has to match how Vimeo's background mode crops, or the swap
+   from poster to video would visibly jump. */
+.hero__video-poster,
+.hero__figure .hero__video-poster img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.hero__figure .hero__video-poster img { object-fit: cover; }
 
 /* The hero heading is the one block on the page that is vertically CENTRED
    within its grid area (measured offset 28px = (265-210)/2). Every other
@@ -413,7 +438,18 @@ body.menu-open { overflow: hidden; }
    on the block's inner flex wrapper. */
 /* Plain Gelasio, same as every other heading — no more bold uppercase
    Lexend treatment. */
-.hero__heading { grid-area: 1 / 2 / 7 / 11; align-self: center; }
+/* The hero headline is the page's <h1> — it is the one line that says what
+   this site is, so it should be the document's top heading rather than the
+   "View the Galleries" band further down. The type scale is pinned to the h2
+   step here so the markup change is invisible: this has always rendered at
+   --fs-h2 and still does, at every breakpoint. Same trick in reverse on
+   .portfolio__heading / .services__heading below. */
+.hero__heading {
+  grid-area: 1 / 2 / 7 / 11;
+  align-self: center;
+  font-size: var(--fs-h2);
+  line-height: 1.114;
+}
 /* "on a journey" — italic Gelasio in the highlight gold. */
 .hero__heading em {
   font-style: italic;
@@ -436,7 +472,8 @@ body.menu-open { overflow: hidden; }
 .portfolio__grid { --fe-rows: 29; }
 @media (min-width: 768px) { .portfolio__grid { --fe-rows: 24; } }
 
-.portfolio__heading { grid-area: 3 / 2 / 6 / 10; }
+/* Demoted to <h2> (the hero owns the h1 now) but still drawn at the h1 step. */
+.portfolio__heading { grid-area: 3 / 2 / 6 / 10; font-size: var(--fs-h1); line-height: 1.056; }
 /* .rule's background: currentColor picks up the browser's own UA-default
    gray for <hr> (not the inherited white from .on-dark) unless color is
    set explicitly here. */
@@ -507,7 +544,8 @@ body.menu-open { overflow: hidden; }
 @media (min-width: 768px) { .services__grid { --fe-rows: 20; } }
 .services .section-border > img { object-position: 50% 50%; }
 
-.services__heading { grid-area: 3 / 2 / 5 / 10; }
+/* Demoted to <h2> (see .portfolio__heading) but still drawn at the h1 step. */
+.services__heading { grid-area: 3 / 2 / 5 / 10; font-size: var(--fs-h1); line-height: 1.056; }
 .services__rule    { grid-area: 5 / 2 / 6 / 10; }
 .services__eyebrow { grid-area: 6 / 2 / 8 / 10; }
 .services__body    { grid-area: 8 / 2 / 16 / 9; }
